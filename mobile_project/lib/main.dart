@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mobile_project/views/CartScreen.dart';
+import 'package:mobile_project/views/DetailProduct.dart';
 import 'models/firebase_options.dart';
 import 'package:mobile_project/views/AddProductsPage.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
@@ -28,7 +30,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/detailProduct': (context) => const DetialProduct(),
+        '/cart': (context) => const CartScreen()
+      },
     );
   }
 }
