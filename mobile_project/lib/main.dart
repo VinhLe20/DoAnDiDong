@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'models/firebase_options.dart';
 import 'package:mobile_project/views/AddProductsPage.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
@@ -7,7 +9,10 @@ import 'package:mobile_project/views/OrderPage.dart';
 import 'package:mobile_project/views/ProductEditPage.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

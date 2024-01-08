@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "874865929219",
+    "project_id": "taka-app-96b9b",
+    "storage_bucket": "taka-app-96b9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874865929219:android:0c8719e9876e1a0fe57236",
+        "android_client_info": {
+          "package_name": "com.example.mobile_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHQr7SM2_fMT96uJD0B-4yDqF42uOEAW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
