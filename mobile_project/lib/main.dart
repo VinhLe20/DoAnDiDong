@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_project/views/AddProductsPage.dart';
+import 'package:mobile_project/views/LoginScreen.dart';
+import 'package:mobile_project/views/OrderConfirmationPage.dart';
+import 'package:mobile_project/views/OrderPage.dart';
+import 'package:mobile_project/views/ProductEditPage.dart';
+import 'package:mobile_project/views/SalesRegistration.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,12 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: null,
     );
   }
 }
