@@ -10,9 +10,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> imagelist = [
-    "assect/h1.jpg",
-    "assect/h2.jpg",
-    "assect/h1.jpg",
+    "assets/h1.jpg",
+    "assets/h2.jpg",
+    "assets/h1.jpg",
   ];
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,19 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               height: 50,
+              width: MediaQuery.of(context).size.width / 1.2,
               padding: EdgeInsets.fromLTRB(0, 0, 230, 0),
-              child: IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  showSearch(
-                      context: context, delegate: CustomSearchDelegate());
-                },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      showSearch(
+                          context: context, delegate: CustomSearchDelegate());
+                    },
+                  ),
+                ],
               ),
               color: Colors.grey[350],
             ),
@@ -66,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
+                        height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
