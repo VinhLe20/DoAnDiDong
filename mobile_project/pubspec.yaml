@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   carousel_slider: ^4.2.1
+  cloud_firestore: ^4.14.0
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,7 +40,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.24.2
   firebase_storage: ^11.6.0
-  cloud_firestore: ^4.14.0
   image_picker: ^1.0.7
   get:
   firebase_auth: ^4.16.0

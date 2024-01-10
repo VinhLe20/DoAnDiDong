@@ -24,14 +24,19 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               height: 50,
-              padding: const EdgeInsets.fromLTRB(0, 0, 230, 0),
-              color: Colors.grey[350],
-              child: IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {
-                  showSearch(
-                      context: context, delegate: CustomSearchDelegate());
-                },
+              width: MediaQuery.of(context).size.width / 1.2,
+              padding: EdgeInsets.fromLTRB(0, 0, 230, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      showSearch(
+                          context: context, delegate: CustomSearchDelegate());
+                    },
+                  ),
+                ],
               ),
             ),
             IconButton(
@@ -66,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
+                        height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: const BoxDecoration(
