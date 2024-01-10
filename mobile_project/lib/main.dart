@@ -12,11 +12,13 @@ import 'package:mobile_project/views/ProductEditPage.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
 }
+ 
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -30,12 +32,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const HomeScreen(),
-        '/detailProduct': (context) => const DetialProduct(),
-        '/cart': (context) => const CartScreen()
-      },
+      // initialRoute: '/',
+      // routes: {
+      //   '/': (context) => const HomeScreen(),
+      //   '/detailProduct': (context) => const DetialProduct(),
+      //   '/cart': (context) => const CartScreen()
+      // },
+      home: HomeScreen(),
     );
   }
 }
