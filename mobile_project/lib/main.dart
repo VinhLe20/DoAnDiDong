@@ -26,18 +26,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        // initialRoute: '/',
-        // routes: {
-        //   '/': (context) => const HomeScreen(),
-        //   '/detailProduct': (context) => const DetialProduct(),
-        //   '/cart': (context) => const CartScreen()
-        //  },
-        home: HomeScreen());
+// <<<<<<< HEAD
+//         debugShowCheckedModeBanner: false,
+//         title: 'Flutter Demo',
+//         theme: ThemeData(
+//           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+//           useMaterial3: true,
+//         ),
+//         // initialRoute: '/',
+//         // routes: {
+//         //   '/': (context) => const HomeScreen(),
+//         //   '/detailProduct': (context) => const DetialProduct(),
+//         //   '/cart': (context) => const CartScreen()
+//         //  },
+//         home: HomeScreen());
+// =======
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/detailProduct': (context) => const DetialProduct(),
+        '/cart': (context) => const CartScreen()
+      },
+    );
   }
 }

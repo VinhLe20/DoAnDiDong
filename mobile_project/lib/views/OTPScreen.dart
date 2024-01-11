@@ -1,13 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-class OTPScreen extends StatelessWidget {
-  const OTPScreen({Key? key}) : super(key: key);
+import 'package:mobile_project/models/User.dart';
+import 'package:mobile_project/views/HomeScreen.dart';
+import 'package:mobile_project/views/LoginScreen.dart';
+import 'package:pinput/pinput.dart';
 
+class OTPScreen extends StatefulWidget {
+  OTPScreen({super.key, required this.phone});
+  String phone;
+  @override
+  State<OTPScreen> createState() => _OTPScreenState();
+}
+
+class _OTPScreenState extends State<OTPScreen> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController _otpController = TextEditingController();
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    String _verificationId = "";
+    var code = "";
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_back)),
+        leading:
+            IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -15,140 +32,94 @@ class OTPScreen extends StatelessWidget {
             const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Nhập mã xác minh', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
+                Text(
+                  'Nhập mã xác minh',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
               ],
             ),
             const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: Text('Để xác minh số điện thoại là của bạn, nhập mã gồm 6 chữ số vừa được gửi đến 09xxxxxxxx', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),)
+                Expanded(
+                  child: Text(
+                    'Để xác minh số điện thoại là của bạn, nhập mã gồm 6 chữ số vừa được gửi đến 09xxxxxxxx',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                )
               ],
             ),
-            Form(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 68,
-                    width: 64,
-                    child: TextFormField(
-                      onChanged: (value){
-                        if(value.length==1){
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      onSaved: (pin1){},
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 68,
-                    width: 64,
-                    child: TextFormField(
-                      onChanged: (value){
-                        if(value.length==1){
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      onSaved: (pin2){},
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 68,
-                    width: 64,
-                    child: TextFormField(
-                      onChanged: (value){
-                        if(value.length==1){
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      onSaved: (pin3){},
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 68,
-                    width: 64,
-                    child: TextFormField(
-                      onChanged: (value){
-                        if(value.length==1){
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      onSaved: (pin4){},
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 68,
-                    width: 64,
-                    child: TextFormField(
-                      onChanged: (value){
-                        if(value.length==1){
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      onSaved: (pin5){},
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 68,
-                    width: 64,
-                    child: TextFormField(
-                      onChanged: (value){
-                        if(value.length==1){
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      onSaved: (pin6){},
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  )
-                ],
-              ) 
-            
+            SizedBox(
+              height: 20,
+            ),
+            Pinput(
+              length: 6,
+              onChanged: (value) {
+                code = value;
+              },
+              showCursor: true,
+              onCompleted: (pin) => print(pin),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                  onPressed: () async {
+                    try {
+                      SaveUser();
+                      PhoneAuthCredential credential =
+                          PhoneAuthProvider.credential(
+                              verificationId: LoginScreen.verify,
+                              smsCode: code);
+                      await _auth.signInWithCredential(credential);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
+                    } catch (e) {
+                      print("Wrong Otp");
+                    }
+                  },
+                  child: const Text("Verify Phone Number")),
+            ),
+            Row(
+              children: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Edit Phone Number ?",
+                      style: TextStyle(color: Colors.black),
+                    ))
+              ],
             )
           ],
         ),
       ),
     );
+  }
+
+  Future<void> addUser(User2 user) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.phone)
+          .set(user.tomap());
+    } catch (e) {
+      print("loi ");
+    }
+  }
+
+  void SaveUser() {
+    User2 user2 = User2(Ten: '', Diachi: '', phone: widget.phone,shop: false,Image: '');
+    //print(phone);
+    addUser(user2);
   }
 }
