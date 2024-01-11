@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddProductsPage extends StatefulWidget {
   const AddProductsPage({super.key});
@@ -8,6 +10,10 @@ class AddProductsPage extends StatefulWidget {
 }
 
 class _AddProductsPageState extends State<AddProductsPage> {
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _price = TextEditingController();
+  final TextEditingController _describe = TextEditingController();
+  final TextEditingController _quantity = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +55,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
               height: 8,
             ),
             TextField(
+              controller: _name,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -75,6 +82,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
               height: 8,
             ),
             TextField(
+              controller: _price,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -101,6 +109,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
               height: 8,
             ),
             TextField(
+              controller: _describe,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -117,7 +126,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
               children: [
                 Expanded(
                   child: Text(
-                    "Loại Sản Phẩm ",
+                    "Số lượng",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
@@ -127,7 +136,8 @@ class _AddProductsPageState extends State<AddProductsPage> {
               height: 8,
             ),
             TextField(
-              keyboardType: TextInputType.text,
+              controller: _quantity,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0)),
@@ -143,7 +153,9 @@ class _AddProductsPageState extends State<AddProductsPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    saveProduct();
+                  },
                   child: Text(
                     "Lưu",
                     style: TextStyle(fontSize: 20, color: Colors.white),
@@ -160,5 +172,25 @@ class _AddProductsPageState extends State<AddProductsPage> {
         ),
       ),
     );
+  }
+
+  Future<void> addProduct(Product product) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('product')
+          .doc(product.TenSP)
+          .set(product.tomap());
+    } catch (e) {
+      print('Error adding profile to Firestore: $e');
+    }
+  }
+
+  void saveProduct() {
+    Product product = Product(
+        TenSP: _name.text,
+        GiaSP: _price.text,
+        MoTa: _describe.text,
+        SoLuong: _quantity.text);
+    addProduct(product);
   }
 }

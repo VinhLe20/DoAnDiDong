@@ -1,5 +1,11 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_project/views/HomeScreen.dart';
+import 'package:get/get.dart';
+import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/models/ImagePicker.dart';
+import 'package:mobile_project/views/AccountScreen.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -10,10 +16,33 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final TextEditingController _ten = TextEditingController();
+  final controller = Get.put(imagePicker());
+  static Account acc = Account("", "", "", false, "");
+  void _loadData() {
+    Account.getData("0937569365").then((value) {
+      setState(() {
+        acc = Account.acc;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool ontap = false;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.popAndPushNamed(context, '/');
+          },
+        ),
         title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             // crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,30 +54,46 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
+              const Text(
                 "Hồ sơ của tôi",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                SizedBox(
-                  width: 20,
+              MaterialButton(
+                onPressed: () {
+                  controller.pickImage();
+                  ontap = true;
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Obx(() {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: Image.file(
+                                        File(controller.image.value.path))),
+                              ]),
+                          const Text("Chỉnh sửa hình ảnh"),
+                        ]);
+                  }),
                 ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage("assect/h3.jpg"),
-                    radius: 40,
-                  ),
-                ]),
-                Text("Chỉnh sửa hình ảnh"),
-              ]),
-              SizedBox(
+              ),
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 // thickness: 2,
                 color: Colors.black,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextFormField(
@@ -58,7 +103,7 @@ class _ProfileState extends State<Profile> {
                     filled: true,
                     labelText: "Tên Người dùng",
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelStyle: TextStyle(color: Colors.black),
+                    labelStyle: const TextStyle(color: Colors.black),
                     fillColor: Colors.white.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -71,7 +116,7 @@ class _ProfileState extends State<Profile> {
                       color: Colors.black,
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextFormField(
@@ -81,7 +126,7 @@ class _ProfileState extends State<Profile> {
                     filled: true,
                     labelText: "Điện thoại",
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelStyle: TextStyle(color: Colors.black),
+                    labelStyle: const TextStyle(color: Colors.black),
                     fillColor: Colors.white.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -94,7 +139,7 @@ class _ProfileState extends State<Profile> {
                       color: Colors.black,
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextFormField(
@@ -104,7 +149,7 @@ class _ProfileState extends State<Profile> {
                     filled: true,
                     labelText: "Địa chỉ",
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelStyle: TextStyle(color: Colors.black),
+                    labelStyle: const TextStyle(color: Colors.black),
                     fillColor: Colors.white.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -117,26 +162,26 @@ class _ProfileState extends State<Profile> {
                       color: Colors.black,
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Divider(
+              const Divider(
                 // thickness: 2,
                 color: Colors.black,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 170,
               ),
               Row(children: [
-                SizedBox(
+                const SizedBox(
                   width: 280,
                 ),
                 ElevatedButton(
-                  child: Text(
-                    "Lưu",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.uploadImageToFirebase();
+                    controller.updateAccount(
+                        "0937569365", controller.networdImage.value.toString());
+                  },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -144,9 +189,13 @@ class _ProfileState extends State<Profile> {
                             0.0), // Đặt độ cong của góc thành 0 để tạo nút vuông
                       ),
                     ),
-                    minimumSize: MaterialStateProperty.all(Size(90, 50)),
+                    minimumSize: MaterialStateProperty.all(const Size(90, 50)),
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  child: const Text(
+                    "Lưu",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ])

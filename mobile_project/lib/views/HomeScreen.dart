@@ -24,8 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               height: 50,
-              width: MediaQuery.of(context).size.width / 1.2,
-              padding: EdgeInsets.fromLTRB(0, 0, 230, 0),
+              width: MediaQuery.of(context).size.width / 1.5,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -38,14 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              color: Colors.grey[350],
             ),
             IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: const Icon(Icons.shopping_cart),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.chat_sharp),
+              icon: const Icon(Icons.chat_sharp),
               onPressed: () {},
             ),
           ],
@@ -62,8 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 300,
                   enlargeCenterPage: true,
                   autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
                   autoPlayCurve: Curves.fastOutSlowIn,
                   // enlargeFactor: 0.3,
                   // scrollDirection: Axis.horizontal,
@@ -74,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Container(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: BoxDecoration(
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: const BoxDecoration(
                           color: Colors.amber,
                         ),
                         child: Image.asset(
@@ -88,20 +86,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 }).toList(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
-            Text("Sản phẩm giảm giá"),
+            const Text("Sản phẩm giảm giá"),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Container(
                 width: MediaQuery.of(context).size.width / 2.2,
                 color: Colors.grey[300],
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: SizedBox(
                   child: Column(
                     children: [
                       Image.asset(
-                        "assect/h2.jpg",
+                        "assets/h2.jpg",
                         height: 130,
                         width: 130,
                       ),
@@ -133,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "đã bán 20",
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 8),
                                 )
                               ])
                         ],
@@ -146,12 +144,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 width: MediaQuery.of(context).size.width / 2.2,
                 color: Colors.grey[300],
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: SizedBox(
                   child: Column(
                     children: [
                       Image.asset(
-                        "assect/h1.jpg",
+                        "assets/h1.jpg",
                         height: 130,
                         width: 130,
                       ),
@@ -183,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "đã bán 20",
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 8),
                                 )
                               ])
                         ],
@@ -193,19 +191,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ]),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Container(
                 width: MediaQuery.of(context).size.width / 2.2,
                 color: Colors.grey[300],
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: SizedBox(
                   child: Column(
                     children: [
                       Image.asset(
-                        "assect/h2.jpg",
+                        "assets/h2.jpg",
                         height: 130,
                         width: 130,
                       ),
@@ -237,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "đã bán 20",
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 8),
                                 )
                               ])
                         ],
@@ -250,12 +248,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 width: MediaQuery.of(context).size.width / 2.2,
                 color: Colors.grey[300],
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: SizedBox(
                   child: Column(
                     children: [
                       Image.asset(
-                        "assect/h1.jpg",
+                        "assets/h1.jpg",
                         height: 130,
                         width: 130,
                       ),
@@ -287,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "đã bán 20",
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 8),
                                 )
                               ])
                         ],
@@ -309,7 +307,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -320,7 +318,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
         close(context, "");
       },
@@ -338,7 +336,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // Gợi ý khi người dùng bắt đầu nhập
-    return Center(
+    return const Center(
       child: Text('Gợi ý tìm kiếm'),
     );
   }

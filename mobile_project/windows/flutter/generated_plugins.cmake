@@ -4,11 +4,10 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   cloud_firestore
-<<<<<<< HEAD
-=======
+  file_selector_windows
   firebase_auth
->>>>>>> 59a29683b43b3cccf7737d8a44a2df8dd218bf29
   firebase_core
+  firebase_storage
   smart_auth
 )
 
