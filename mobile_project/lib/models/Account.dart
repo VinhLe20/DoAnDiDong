@@ -13,14 +13,16 @@ class Account {
     QuerySnapshot querySnapshot = await users.get();
     for (var doc in querySnapshot.docs) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      if (phone == data["Phone"]) {
+      if (phone == doc.id) {
         acc = Account(data["Name"], data["Phone"], data["Adress"], data["Shop"],
             data["Image"]);
       }
     }
   }
 
-  Future<void> updateAccount(String phone, String image) async {
+  Future<void> updateAccount(
+      String phone, String image, String name, String adress) async {
+    Map<String, dynamic> dataToUpdate;
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     QuerySnapshot querySnapshot = await users.get();
     querySnapshot.docs.forEach((doc) async {
@@ -29,16 +31,35 @@ class Account {
         CollectionReference collection =
             FirebaseFirestore.instance.collection('users');
         DocumentReference document = collection.doc(doc.id);
-        Map<String, dynamic> dataToUpdate = {
-          'Image': image,
-        };
+        if (image.isNotEmpty)
+          dataToUpdate = {'Image': image, 'Adress': adress, 'Name': name};
+        else
+          dataToUpdate = {'Adress': adress, 'Name': name};
         try {
           await document.update(dataToUpdate);
-          print('Document successfully updated');
-        } catch (e) {
-          print('Error updating document: $e');
-        }
+        } catch (e) {}
       }
     });
   }
+  // Future<void> updateAccount(
+  //     String phone, String image, String name, String adress) async {
+  //   Map<String, dynamic> dataToUpdate;
+  //   CollectionReference users = FirebaseFirestore.instance.collection('users');
+  //   QuerySnapshot querySnapshot = await users.get();
+  //   querySnapshot.docs.forEach((doc) async {
+  //     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+  //     if (phone == data["Phone"]) {
+  //       CollectionReference collection =
+  //           FirebaseFirestore.instance.collection('users');
+  //       DocumentReference document = collection.doc(doc.id);
+  //       if (image.isNotEmpty)
+  //         dataToUpdate = {'Image': image, 'Adress': adress, 'Name': name};
+  //       else
+  //         dataToUpdate = {'Adress': adress, 'Name': name};
+  //       try {
+  //         await document.update(dataToUpdate);
+  //       } catch (e) {}
+  //     }
+  //   });
+  // }
 }

@@ -4,6 +4,7 @@ import 'package:mobile_project/views/AccountScreen.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
+import 'package:mobile_project/views/MainSCreen.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'models/firebase_options.dart';
 
@@ -30,10 +31,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomeScreen(),
-        '/detailProduct': (context) => const DetialProduct(),
+        '/': (context) => const MainScreen(),
         '/cart': (context) => const CartScreen(),
-        '/changeProfile': (context) => const Profile()
+        '/changeProfile': (context) => const Profile(),
+        '/profile': (context) => const AccountScreen()
       },
     );
   }
