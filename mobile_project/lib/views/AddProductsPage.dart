@@ -189,8 +189,10 @@ class _AddProductsPageState extends State<AddProductsPage> {
     Product product = Product(
         TenSP: _name.text,
         GiaSP: _price.text,
+        Giamgia: _price.text,
         MoTa: _describe.text,
-        SoLuong: _quantity.text);
+        SoLuong: _quantity.text,
+        Trangthai: true);
     addProduct(product);
   }
 }

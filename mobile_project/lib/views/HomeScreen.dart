@@ -1,5 +1,24 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/product.dart';
+
+Future<List<Product>> getProducts() async {
+  List<Product> products = [];
+
+  QuerySnapshot querySnapshot =
+      await FirebaseFirestore.instance.collection('product').get();
+
+  querySnapshot.docs.forEach((doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    Product product = Product.fromMap(data);
+    if (product.Trangthai == true) {
+      products.add(product);
+    }
+  });
+
+  return products;
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/h2.jpg",
     "assets/h1.jpg",
   ];
+  late Future<List<Product>> futureProducts;
+
+  @override
+  void initState() {
+    super.initState();
+    futureProducts = getProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,255 +76,94 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 300,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  // enlargeFactor: 0.3,
-                  // scrollDirection: Axis.horizontal,
-                ),
-                items: imagelist.map((imagePath) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: const BoxDecoration(
-                          color: Colors.amber,
+      body: FutureBuilder<List<Product>>(
+          future: futureProducts,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Đã xảy ra lỗi: ${snapshot.error}');
+            } else {
+              List<Product> products = snapshot.data ?? [];
+              return Expanded(
+                child: SingleChildScrollView(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                      Container(
+                        child: CarouselSlider(
+                          options: CarouselOptions(
+                            height: 300,
+                            enlargeCenterPage: true,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                          ),
+                          items: imagelist.map((imagePath) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.amber,
+                                  ),
+                                  child: Image.asset(
+                                    imagePath,
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
                         ),
-                        child: Image.asset(
-                          imagePath,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            const Text("Sản phẩm giảm giá"),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              Container(
-                width: MediaQuery.of(context).size.width / 2.2,
-                color: Colors.grey[300],
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/h2.jpg",
-                        height: 130,
-                        width: 130,
                       ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Điện thoại Iphone 15 promax 1TB",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "50.000.000 VND",
-                            style: TextStyle(
-                                color: Colors.red,
-                                decoration: TextDecoration.lineThrough,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12),
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "45.000.000 VND",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Expanded(
+                        child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 8.0,
+                              mainAxisSpacing: 8.0,
+                            ),
+                            itemCount: products.length,
+                            // shrinkWrap: true,
+                            // physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                  //  title: Text(products[index].name),
+                                  subtitle: Column(
+                                    children: [
+                                      Image.asset(
+                                        "assets/h2.jpg",
+                                        height: 130,
+                                        width: 130,
+                                      ),
+                                      Text(
+                                        ' ${products[index].TenSP.toString()}',
+                                      ),
+                                      Text(
+                                        ' ${products[index].GiaSP.toString()}',
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Text(
-                                  "đã bán 20",
-                                  style: TextStyle(fontSize: 8),
-                                )
-                              ])
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              //   Padding(padding: EdgeInsets.all(10)),
-              Container(
-                width: MediaQuery.of(context).size.width / 2.2,
-                color: Colors.grey[300],
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/h1.jpg",
-                        height: 130,
-                        width: 130,
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Điện thoại Iphone 15 promax 1TB",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "50.000.000 VND",
-                            style: TextStyle(
-                                color: Colors.red,
-                                decoration: TextDecoration.lineThrough,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12),
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "45.000.000 VND",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                Text(
-                                  "đã bán 20",
-                                  style: TextStyle(fontSize: 8),
-                                )
-                              ])
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ]),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              Container(
-                width: MediaQuery.of(context).size.width / 2.2,
-                color: Colors.grey[300],
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/h2.jpg",
-                        height: 130,
-                        width: 130,
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Điện thoại Iphone 15 promax 1TB",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "50.000.000 VND",
-                            style: TextStyle(
-                                color: Colors.red,
-                                decoration: TextDecoration.lineThrough,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12),
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "45.000.000 VND",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                Text(
-                                  "đã bán 20",
-                                  style: TextStyle(fontSize: 8),
-                                )
-                              ])
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              //   Padding(padding: EdgeInsets.all(10)),
-              Container(
-                width: MediaQuery.of(context).size.width / 2.2,
-                color: Colors.grey[300],
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/h1.jpg",
-                        height: 130,
-                        width: 130,
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Điện thoại Iphone 15 promax 1TB",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "50.000.000 VND",
-                            style: TextStyle(
-                                color: Colors.red,
-                                decoration: TextDecoration.lineThrough,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12),
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "45.000.000 VND",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                Text(
-                                  "đã bán 20",
-                                  style: TextStyle(fontSize: 8),
-                                )
-                              ])
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ]),
-          ],
-        ),
-      ),
+                              );
+                            }),
+                      )
+                    ])),
+              );
+            }
+          }),
     );
   }
 }
@@ -327,7 +193,6 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // Xử lý kết quả tìm kiếm và hiển thị
     return Center(
       child: Text('Kết quả tìm kiếm cho: $query'),
     );
@@ -335,7 +200,6 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // Gợi ý khi người dùng bắt đầu nhập
     return const Center(
       child: Text('Gợi ý tìm kiếm'),
     );
