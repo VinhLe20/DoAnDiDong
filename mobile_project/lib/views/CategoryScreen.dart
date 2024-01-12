@@ -21,179 +21,193 @@ class _CategoryScreenState extends State<CategoryScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 50.0),
-        child: SingleChildScrollView(
-          child: Column(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: 100,
-                    width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.black54),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.sports),
-                        Text("Thể thao & du lịch", textAlign: TextAlign.center)
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 100,
-                    width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.black54),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.sports),
-                        Text("Ô tô- xe máy", textAlign: TextAlign.center),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 100,
-                    width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.black54),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.sports),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10.0),
-                          child: Text("Bách hóa online",
-                              textAlign: TextAlign.center),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Container(
+                height: 120,
+                width: MediaQuery.of(context).size.width / 3 - 30,
+                decoration: const BoxDecoration(color: Colors.grey),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width / 3 - 30,
-                      decoration: const BoxDecoration(color: Colors.black54),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.sports),
-                          Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Text("Nhà cửa", textAlign: TextAlign.center),
-                          )
-                        ],
-                      ),
+                    Image.asset(
+                      "assets/thethaovadulich.png",
+                      fit: BoxFit.cover,
+                      width: 70,
+                      height: 70,
                     ),
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width / 3 - 30,
-                      decoration: const BoxDecoration(color: Colors.black54),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.sports),
-                          Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Text("Sắc đẹp", textAlign: TextAlign.center),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width / 3 - 30,
-                      decoration: const BoxDecoration(color: Colors.black54),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.sports),
-                          Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Text("Máy tính & Laptop",
-                                textAlign: TextAlign.center),
-                          )
-                        ],
-                      ),
-                    )
+                    Text("Thể thao & du lịch", textAlign: TextAlign.center)
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Container(
+                height: 120,
+                width: MediaQuery.of(context).size.width / 3 - 30,
+                decoration: const BoxDecoration(color: Colors.grey),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width / 3 - 30,
-                      decoration: const BoxDecoration(color: Colors.black54),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.sports),
-                          Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Text("Đồng hồ", textAlign: TextAlign.center),
-                          )
-                        ],
-                      ),
+                    Image.asset(
+                      "assets/otoxemay.png",
+                      fit: BoxFit.cover,
+                      width: 70,
+                      height: 70,
                     ),
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width / 3 - 30,
-                      decoration: const BoxDecoration(color: Colors.black54),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/Thoitrangnam.png",
-                            fit: BoxFit.cover,
-                            width: 70,
-                            height: 70,
-                          ),
-                          Text("Thời trang nam", textAlign: TextAlign.center)
-                        ],
-                      ),
+                    Text("Ô tô- xe máy", textAlign: TextAlign.center),
+                  ],
+                ),
+              ),
+              Container(
+                height: 120,
+                width: MediaQuery.of(context).size.width / 3 - 30,
+                decoration: const BoxDecoration(color: Colors.grey),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/bachoa.png",
+                      fit: BoxFit.cover,
+                      width: 70,
+                      height: 70,
                     ),
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width / 3 - 30,
-                      decoration: const BoxDecoration(color: Colors.black54),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/Thoitrangnu.png",
-                            fit: BoxFit.cover,
-                            width: 70,
-                            height: 70,
-                          ),
-                          Text("Thời trang nữ", textAlign: TextAlign.center)
-                        ],
-                      ),
-                    ),
+                    Text("Bách hóa online", textAlign: TextAlign.center)
                   ],
                 ),
               )
             ],
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 120,
+                  width: MediaQuery.of(context).size.width / 3 - 30,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/nha.png",
+                        fit: BoxFit.cover,
+                        width: 70,
+                        height: 70,
+                      ),
+                      Text("Nhà cửa", textAlign: TextAlign.center)
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 120,
+                  width: MediaQuery.of(context).size.width / 3 - 30,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/giay.png",
+                        fit: BoxFit.cover,
+                        width: 70,
+                        height: 70,
+                      ),
+                      Text("Giày dép", textAlign: TextAlign.center)
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 120,
+                  width: MediaQuery.of(context).size.width / 3 - 30,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/maytinh.png",
+                        fit: BoxFit.cover,
+                        width: 70,
+                        height: 70,
+                      ),
+                      Text("Máy tính & Laptop", textAlign: TextAlign.center)
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 120,
+                  width: MediaQuery.of(context).size.width / 3 - 30,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/dongho.png",
+                        fit: BoxFit.cover,
+                        width: 70,
+                        height: 70,
+                      ),
+                      Text("Đồng hồ", textAlign: TextAlign.center)
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 120,
+                  width: MediaQuery.of(context).size.width / 3 - 30,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/Thoitrangnam.png",
+                        fit: BoxFit.cover,
+                        width: 70,
+                        height: 70,
+                      ),
+                      Text("Thời trang nam", textAlign: TextAlign.center)
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 120,
+                  width: MediaQuery.of(context).size.width / 3 - 30,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/Thoitrangnu.png",
+                        fit: BoxFit.cover,
+                        width: 70,
+                        height: 70,
+                      ),
+                      Text("Thời trang nữ", textAlign: TextAlign.center)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
