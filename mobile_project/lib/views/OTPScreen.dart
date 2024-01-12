@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_project/models/User.dart';
-import 'package:mobile_project/views/HomeScreen.dart';
+
 import 'package:mobile_project/views/LoginScreen.dart';
+import 'package:mobile_project/views/Profile.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPScreen extends StatefulWidget {
@@ -81,7 +82,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               smsCode: code);
                       await _auth.signInWithCredential(credential);
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => const Profile()));
                     } catch (e) {
                       print("Wrong Otp");
                     }
