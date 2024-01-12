@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/views/OrderPage.dart';
 
 Future<List<Product>> getProducts() async {
   List<Product> products = [];
@@ -44,89 +45,89 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        showSearch(
+                            context: context, delegate: CustomSearchDelegate());
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.chat_sharp),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+        body: Column(
           children: [
             Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      showSearch(
-                          context: context, delegate: CustomSearchDelegate());
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: 300,
+                  enlargeCenterPage: true,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                ),
+                items: imagelist.map((imagePath) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: const BoxDecoration(
+                          color: Colors.amber,
+                        ),
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      );
                     },
-                  ),
-                ],
+                  );
+                }).toList(),
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.shopping_cart),
-              onPressed: () {},
+            SizedBox(
+              height: 20,
             ),
-            IconButton(
-              icon: const Icon(Icons.chat_sharp),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
-      body: FutureBuilder<List<Product>>(
-          future: futureProducts,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Đã xảy ra lỗi: ${snapshot.error}');
-            } else {
-              List<Product> products = snapshot.data ?? [];
-              return Expanded(
-                child: SingleChildScrollView(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      Container(
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: 300,
-                            enlargeCenterPage: true,
-                            autoPlay: true,
-                            autoPlayInterval: const Duration(seconds: 3),
-                            autoPlayAnimationDuration:
-                                const Duration(milliseconds: 800),
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                          ),
-                          items: imagelist.map((imagePath) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Container(
-                                  height: MediaQuery.of(context).size.height,
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.amber,
-                                  ),
-                                  child: Image.asset(
-                                    imagePath,
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Expanded(
+            InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => OrderPage()));
+              },
+              child: FutureBuilder<List<Product>>(
+                  future: futureProducts,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                    } else {
+                      List<Product> products = snapshot.data ?? [];
+
+                      return Expanded(
                         child: GridView.builder(
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
@@ -135,13 +136,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisSpacing: 8.0,
                             ),
                             itemCount: products.length,
-                            // shrinkWrap: true,
+                            shrinkWrap: true,
                             // physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Card(
                                 child: ListTile(
                                   //  title: Text(products[index].name),
                                   subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Image.asset(
                                         "assets/h2.jpg",
@@ -150,21 +153,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Text(
                                         ' ${products[index].TenSP.toString()}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
                                       ),
                                       Text(
-                                        ' ${products[index].GiaSP.toString()}',
+                                        ' ${products[index].GiaSP.toString()} VND',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ],
                                   ),
                                 ),
                               );
                             }),
-                      )
-                    ])),
-              );
-            }
-          }),
-    );
+                      );
+                    }
+                  }),
+            ),
+          ],
+        ));
   }
 }
 
