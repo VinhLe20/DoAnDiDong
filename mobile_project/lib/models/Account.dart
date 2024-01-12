@@ -1,5 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+class UserProfile {
+  static String userName = "";
+  static String userPhone = "";
+  static String userAddress = "";
+}
+
 class Account {
   String name;
   String phone;
@@ -16,6 +22,9 @@ class Account {
       if (phone == doc.id) {
         acc = Account(data["Name"], data["Phone"], data["Adress"], data["Shop"],
             data["Image"]);
+        UserProfile.userName = acc.name;
+        UserProfile.userPhone = acc.phone;
+        UserProfile.userAddress = acc.adress;
       }
     }
   }

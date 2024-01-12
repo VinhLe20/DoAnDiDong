@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 
 class AccountScreen extends StatefulWidget {
+  
   const AccountScreen({super.key});
 
   @override

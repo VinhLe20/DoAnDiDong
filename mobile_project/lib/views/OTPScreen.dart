@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_project/models/User.dart';
-
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:pinput/pinput.dart';
@@ -119,7 +118,8 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   void SaveUser() {
-    User2 user2 = User2(Ten: '', Diachi: '', phone: widget.phone,shop: false,Image: '');
+    User2 user2 =
+        User2(Ten: '', Diachi: '', phone: widget.phone, shop: false, Image: '');
     //print(phone);
     addUser(user2);
   }

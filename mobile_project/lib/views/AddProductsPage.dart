@@ -188,7 +188,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
   void saveProduct() {
     Product product = Product(
         TenSP: _name.text,
-        GiaSP: _price.text,
+        GiaSP: _price.hashCode,
         Giamgia: _price.text,
         MoTa: _describe.text,
         SoLuong: _quantity.text,

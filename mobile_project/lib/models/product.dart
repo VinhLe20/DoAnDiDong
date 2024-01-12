@@ -1,6 +1,8 @@
+import 'dart:ffi';
+
 class Product {
   String TenSP;
-  String GiaSP;
+  num GiaSP;
   String Giamgia;
   String MoTa;
   String SoLuong;

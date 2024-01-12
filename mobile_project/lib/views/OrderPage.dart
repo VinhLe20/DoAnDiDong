@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
 
 class OrderPage extends StatefulWidget {
@@ -13,6 +14,8 @@ class _OrderPageState extends State<OrderPage> {
   int SoLuong = 0;
   @override
   Widget build(BuildContext context) {
+    String userPhone = UserProfile.userPhone;
+    String userAddress = UserProfile.userAddress;
     return Scaffold(
       appBar: AppBar(
         title: Text("Đặt Hàng"),
@@ -51,7 +54,7 @@ class _OrderPageState extends State<OrderPage> {
                         height: 50,
                       ),
                       Text(
-                        "đ ${double.parse(widget.product.GiaSP)}",
+                        "đ ${widget.product.GiaSP.toString()}",
                         style: TextStyle(color: Colors.red, fontSize: 18),
                       ),
                       Row(
@@ -112,7 +115,7 @@ class _OrderPageState extends State<OrderPage> {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+              Row(
                 children: [
                   Expanded(
                       child: Text(
@@ -122,7 +125,7 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                   Expanded(
                       child: Text(
-                    "09xxxxxxx",
+                    "${userPhone}",
                     textAlign: TextAlign.right,
                     style: TextStyle(fontSize: 20),
                   )),
@@ -136,7 +139,7 @@ class _OrderPageState extends State<OrderPage> {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+              Row(
                 children: [
                   Expanded(
                       child: Text(
@@ -146,7 +149,7 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                   Expanded(
                       child: Text(
-                    "Cần Giuộc,Long An,Việt Nam",
+                    "${userAddress}",
                     textAlign: TextAlign.right,
                     style: TextStyle(fontSize: 20),
                   )),
@@ -175,7 +178,7 @@ class _OrderPageState extends State<OrderPage> {
                         height: 8,
                       ),
                       Text(
-                        "${(SoLuong * double.parse(widget.product.GiaSP)).toString()}VND",
+                        "${(SoLuong * widget.product.GiaSP).toString()}VND",
                         style: TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     ],
