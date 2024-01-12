@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/product.dart';
 
 class OrderPage extends StatefulWidget {
-  const OrderPage({super.key});
+  final Product product;
+  const OrderPage({super.key, required this.product});
 
   @override
   State<OrderPage> createState() => _OrderPageState();
@@ -14,7 +16,12 @@ class _OrderPageState extends State<OrderPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Đặt Hàng"),
-        leading: Icon(Icons.arrow_back_outlined),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_outlined),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -36,39 +43,44 @@ class _OrderPageState extends State<OrderPage> {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Điện Thoại Iphone 15 Pro Max 1TB",
-                        style: TextStyle(fontSize: 15),
+                      Text(
+                        '${widget.product.TenSP.toString()}',
+                        style: TextStyle(fontSize: 18),
                       ),
                       const SizedBox(
                         height: 50,
                       ),
-                      const Text(
-                        "đ 46.990.000",
-                        style: TextStyle(color: Colors.red, fontSize: 15),
+                      Text(
+                        "đ ${double.parse(widget.product.GiaSP)}",
+                        style: TextStyle(color: Colors.red, fontSize: 18),
                       ),
                       Row(
                         children: [
                           IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  SoLuong++;
-                                });
-                              },
-                              icon: Icon(Icons.remove)),
-                          Text("$SoLuong"),
+                            onPressed: () {
+                              setState(() {
+                                SoLuong--;
+                                if (SoLuong < 0) {
+                                  SoLuong = 0;
+                                }
+                              });
+                            },
+                            icon: Icon(Icons.remove),
+                          ),
+                          Text(
+                            "$SoLuong",
+                            style: TextStyle(fontSize: 18),
+                          ),
                           IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  SoLuong--;
-                                  if (SoLuong < 0) {
-                                    SoLuong = 0;
-                                  }
-                                });
-                              },
-                              icon: Icon(Icons.add))
+                            onPressed: () {
+                              setState(() {
+                                SoLuong++;
+                              });
+                            },
+                            icon: Icon(Icons.add),
+                          ),
                         ],
-                      ),
+                      )
                     ],
                   ))
                 ],
@@ -151,7 +163,7 @@ class _OrderPageState extends State<OrderPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Expanded(
+                  Expanded(
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -162,8 +174,8 @@ class _OrderPageState extends State<OrderPage> {
                       SizedBox(
                         height: 8,
                       ),
-                      const Text(
-                        "đ 46.990.000",
+                      Text(
+                        "${(SoLuong * double.parse(widget.product.GiaSP)).toString()}VND",
                         style: TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     ],

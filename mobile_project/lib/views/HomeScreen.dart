@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/views/DetailProduct.dart';
 import 'package:mobile_project/views/OrderPage.dart';
 
 Future<List<Product>> getProducts() async {
@@ -113,10 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 20,
             ),
             InkWell(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => OrderPage()));
-              },
               child: FutureBuilder<List<Product>>(
                   future: futureProducts,
                   builder: (context, snapshot) {
@@ -139,32 +136,43 @@ class _HomeScreenState extends State<HomeScreen> {
                             shrinkWrap: true,
                             // physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return Card(
-                                child: ListTile(
-                                  //  title: Text(products[index].name),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/h2.jpg",
-                                        height: 130,
-                                        width: 130,
-                                      ),
-                                      Text(
-                                        ' ${products[index].TenSP.toString()}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                      Text(
-                                        ' ${products[index].GiaSP.toString()} VND',
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          OrderPage(product: products[index]),
+                                    ),
+                                  );
+                                },
+                                child: Card(
+                                  child: ListTile(
+                                    //  title: Text(products[index].name),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Image.asset(
+                                          "assets/h2.jpg",
+                                          height: 130,
+                                          width: 130,
+                                        ),
+                                        Text(
+                                          ' ${products[index].TenSP.toString()}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 17),
+                                        ),
+                                        Text(
+                                          ' ${products[index].GiaSP.toString()} VND',
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
