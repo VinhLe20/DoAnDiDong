@@ -6,8 +6,6 @@ import 'package:mobile_project/views/DetailProduct.dart';
 import 'package:mobile_project/views/OrderPage.dart';
 
 Future<List<Product>> getProducts() async {
-  List<Product> products = [];
-
   QuerySnapshot querySnapshot =
       await FirebaseFirestore.instance.collection('product').get();
 
@@ -21,6 +19,8 @@ Future<List<Product>> getProducts() async {
 
   return products;
 }
+
+List<Product> products = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -46,143 +46,142 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width / 1.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        showSearch(
-                            context: context, delegate: CustomSearchDelegate());
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.shopping_cart),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.chat_sharp),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-        body: Column(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 300,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                ),
-                items: imagelist.map((imagePath) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: const BoxDecoration(
-                          color: Colors.amber,
-                        ),
-                        child: Image.asset(
-                          imagePath,
-                          fit: BoxFit.cover,
-                        ),
-                      );
+              height: 50,
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      showSearch(
+                          context: context, delegate: CustomSearchDelegate());
                     },
-                  );
-                }).toList(),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 20,
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {},
             ),
-            InkWell(
-              child: FutureBuilder<List<Product>>(
-                  future: futureProducts,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Đã xảy ra lỗi: ${snapshot.error}');
-                    } else {
-                      List<Product> products = snapshot.data ?? [];
-
-                      return Expanded(
-                        child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 8.0,
-                              mainAxisSpacing: 8.0,
-                            ),
-                            itemCount: products.length,
-                            shrinkWrap: true,
-                            // physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          OrderPage(product: products[index]),
-                                    ),
-                                  );
-                                },
-                                child: Card(
-                                  child: ListTile(
-                                    //  title: Text(products[index].name),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          "assets/h2.jpg",
-                                          height: 130,
-                                          width: 130,
-                                        ),
-                                        Text(
-                                          ' ${products[index].TenSP.toString()}',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                        Text(
-                                          ' ${products[index].GiaSP} VND',
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
-                      );
-                    }
-                  }),
+            IconButton(
+              icon: const Icon(Icons.chat_sharp),
+              onPressed: () {},
             ),
           ],
-        ));
+        ),
+      ),
+      body: Column(
+        children: [
+          Container(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: 300,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+              ),
+              items: imagelist.map((imagePath) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: const BoxDecoration(
+                        color: Colors.amber,
+                      ),
+                      child: Image.asset(
+                        imagePath,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          InkWell(
+            child: FutureBuilder<List<Product>>(
+                future: futureProducts,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                  } else {
+                    List<Product> products = snapshot.data ?? [];
+                    return Expanded(
+                      child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                          ),
+                          itemCount: products.length,
+                          shrinkWrap: true,
+                          // physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OrderPage(
+                                              product: products[index],
+                                            )));
+                              }, 
+                              child: Card(
+                                child: ListTile(
+                                  //  title: Text(products[index].name),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Image.asset(
+                                        "assets/h2.jpg",
+                                        height: 130,
+                                        width: 130,
+                                      ),
+                                      Text(
+                                        ' ${products[index].TenSP.toString()}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
+                                      ),
+                                      Text(
+                                        ' ${products[index].GiaSP.toString()} VND',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    );
+                  }
+                }),
+          )
+        ],
+      ),
+    );
   }
 }
 

@@ -178,7 +178,8 @@ class _OrderPageState extends State<OrderPage> {
                         height: 8,
                       ),
                       Text(
-                        "${(SoLuong * widget.product.GiaSP).toString()}VND",
+                        "giá",
+                        // "${(SoLuong *int.parse(widget.product.GiaSP) )}VND",
                         style: TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     ],

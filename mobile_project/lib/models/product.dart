@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 class Product {
   String TenSP;
-  num GiaSP;
+  String GiaSP;
   String Giamgia;
   String MoTa;
   String SoLuong;
@@ -21,7 +21,7 @@ class Product {
       "MoTa": MoTa,
       "SoLuong": SoLuong,
       "TrangThai": Trangthai,
-      "Giamgia": Giamgia
+      "GiamGia": Giamgia
     };
   }
 
@@ -32,6 +32,6 @@ class Product {
         MoTa: map['MoTa'] ?? '',
         Trangthai: map['TrangThai'] ?? '',
         SoLuong: map['SoLuong'] ?? '',
-        Giamgia: map['Giamgia'] ?? '');
+        Giamgia: map['GiamGia'] ?? '');
   }
 }
