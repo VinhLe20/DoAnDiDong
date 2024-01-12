@@ -4,6 +4,7 @@ import 'package:mobile_project/views/AccountScreen.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
+import 'package:mobile_project/views/MainSCreen.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'models/firebase_options.dart';
 
@@ -28,14 +29,23 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // initialRoute: '/',
-      // routes: {
-      //   '/': (context) => const HomeScreen(),
-      //   '/detailProduct': (context) => const DetialProduct(),
-      //   '/cart': (context) => const CartScreen(),
-      //   '/changeProfile': (context) => const Profile()
-      // },
-      home: HomeScreen(),
+// <<<<<<< HEAD
+//       // initialRoute: '/',
+//       // routes: {
+//       //   '/': (context) => const HomeScreen(),
+//       //   '/detailProduct': (context) => const DetialProduct(),
+//       //   '/cart': (context) => const CartScreen(),
+//       //   '/changeProfile': (context) => const Profile()
+//       // },
+//       home: HomeScreen(),
+// =======
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MainScreen(),
+        '/cart': (context) => const CartScreen(),
+        '/changeProfile': (context) => const Profile(),
+        '/profile': (context) => const AccountScreen()
+      },
     );
   }
 }

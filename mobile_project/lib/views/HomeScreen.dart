@@ -2,11 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/views/DetailProduct.dart';
 import 'package:mobile_project/views/OrderPage.dart';
 
 Future<List<Product>> getProducts() async {
-  List<Product> products = [];
-
   QuerySnapshot querySnapshot =
       await FirebaseFirestore.instance.collection('product').get();
 
@@ -20,6 +19,8 @@ Future<List<Product>> getProducts() async {
 
   return products;
 }
+
+List<Product> products = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -77,47 +78,44 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        body: Column(
-          children: [
-            Container(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 300,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: 300,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                  ),
+                  items: imagelist.map((imagePath) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: const BoxDecoration(
+                            color: Colors.amber,
+                          ),
+                          child: Image.asset(
+                            imagePath,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
                 ),
-                items: imagelist.map((imagePath) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: const BoxDecoration(
-                          color: Colors.amber,
-                        ),
-                        child: Image.asset(
-                          imagePath,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => OrderPage()));
-              },
-              child: FutureBuilder<List<Product>>(
+              SizedBox(
+                height: 20,
+              ),
+              FutureBuilder<List<Product>>(
                   future: futureProducts,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -127,29 +125,50 @@ class _HomeScreenState extends State<HomeScreen> {
                     } else {
                       List<Product> products = snapshot.data ?? [];
 
-                      return Expanded(
-                        child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 8.0,
-                              mainAxisSpacing: 8.0,
-                            ),
-                            itemCount: products.length,
-                            shrinkWrap: true,
-                            // physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Card(
+                      return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                          ),
+                          itemCount: products.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetialProduct(
+                                            pro: products[index])));
+                              },
+                              child: Card(
+                                elevation: 7,
                                 child: ListTile(
                                   //  title: Text(products[index].name),
                                   subtitle: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Image.asset(
-                                        "assets/h2.jpg",
-                                        height: 130,
-                                        width: 130,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          //  Container(
+                                          //  height: 100,
+                                          //   width: 100,
+                                          //    padding: EdgeInsets.all(10),
+                                          // margin: EdgeInsets.all(10),
+                                          //child:
+                                          Image.asset(
+                                            "assets/h2.jpg",
+                                            height: 120,
+                                            width: 120,
+                                          ),
+                                          //   ),
+                                        ],
                                       ),
                                       Text(
                                         ' ${products[index].TenSP.toString()}',
@@ -160,20 +179,49 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Text(
                                         ' ${products[index].GiaSP.toString()} VND',
                                         style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
+                                          color: Colors.red,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          decorationColor: Colors.red,
+                                          decorationThickness: 2.0,
+                                        ),
                                       ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            ' ${products[index].Giamgia.toString()} VND',
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Text(
+                                            'Đã bán ${products[index].SoLuong.toString()}',
+                                            style: TextStyle(
+                                              //   color: Colors.red,
+                                              fontSize: 10,
+                                              //   fontWeight: FontWeight.w500
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      )
                                     ],
                                   ),
                                 ),
-                              );
-                            }),
-                      );
+                              ),
+                            );
+                          });
                     }
                   }),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }

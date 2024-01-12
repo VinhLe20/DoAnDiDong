@@ -15,8 +15,11 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final TextEditingController _ten = TextEditingController();
-  final controller = Get.put(imagePicker());
+  TextEditingController _ten = TextEditingController();
+  TextEditingController _diachi = TextEditingController();
+  TextEditingController _phone = TextEditingController();
+  imagePicker image = imagePicker();
+  bool onTap = false;
   static Account acc = Account("", "", "", false, "");
   void _loadData() {
     Account.getData("0937569365").then((value) {
@@ -34,13 +37,16 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    bool ontap = false;
+    String netword;
+    _phone.text = acc.phone;
+    _ten.text = acc.name;
+    _diachi.text = acc.adress;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.popAndPushNamed(context, '/');
+            Navigator.pushReplacementNamed(context, '/');
           },
         ),
         title: const Row(
@@ -59,31 +65,35 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               MaterialButton(
-                onPressed: () {
-                  controller.pickImage();
-                  ontap = true;
+                onPressed: () async {
+                  await image.pickImage();
+                  setState(() {
+                    onTap = true;
+                  });
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Obx(() {
-                    return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                    height: 100,
-                                    width: 100,
-                                    child: Image.file(
-                                        File(controller.image.value.path))),
-                              ]),
-                          const Text("Chỉnh sửa hình ảnh"),
-                        ]);
-                  }),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  height: 100,
+                                  width: 100,
+                                  child: onTap
+                                      ? Image.file(File(imagePicker.path))
+                                      : Image.network(acc.image)),
+                            ]),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: const Text("Chỉnh sửa hình ảnh"),
+                        ),
+                      ]),
                 ),
               ),
               const SizedBox(
@@ -120,7 +130,7 @@ class _ProfileState extends State<Profile> {
                 height: 20,
               ),
               TextFormField(
-                controller: _ten,
+                controller: _phone,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                     filled: true,
@@ -143,7 +153,7 @@ class _ProfileState extends State<Profile> {
                 height: 20,
               ),
               TextFormField(
-                controller: _ten,
+                controller: _diachi,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                     filled: true,
@@ -178,9 +188,14 @@ class _ProfileState extends State<Profile> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    controller.uploadImageToFirebase();
-                    controller.updateAccount(
-                        "0937569365", controller.networdImage.value.toString());
+                    image.uploadImageToFirebase();
+                    netword = imagePicker.imageNetwork;
+                    if (onTap)
+                      acc.updateAccount(
+                          "0937569365", netword, _ten.text, _diachi.text);
+                    else
+                      acc.updateAccount(
+                          "0937569365", "", _ten.text, _diachi.text);
                   },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

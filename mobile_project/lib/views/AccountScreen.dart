@@ -56,9 +56,13 @@ class _AccountScreenState extends State<AccountScreen> {
                         const SizedBox(height: 10),
                         InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, '/changeProfile');
+                            Navigator.pushReplacementNamed(
+                                context, '/changeProfile');
                           },
-                          child: const Text("Thay đổi thông tin cá nhân"),
+                          child: const Text(
+                            "Thay đổi thông tin cá nhân",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         )
                       ],
                     ),
