@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 
+
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -13,6 +14,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //bottomNavigationBar: BottomNavigator(),
       appBar: AppBar(
         title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

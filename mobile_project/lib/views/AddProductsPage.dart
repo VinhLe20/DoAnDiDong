@@ -149,6 +149,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
                 prefixIcon: Icon(Icons.class_),
               ),
             ),
+            
             SizedBox(
               height: 16,
             ),
@@ -192,7 +193,8 @@ class _AddProductsPageState extends State<AddProductsPage> {
         TenSP: _name.text,
         GiaSP: _price.text,
         MoTa: _describe.text,
-        SoLuong: _quantity.text);
+        SoLuong: _quantity.text,
+        TrangThai: true);
     addProduct(product);
   }
 }

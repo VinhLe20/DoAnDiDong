@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       //   '/detailProduct': (context) => const DetialProduct(),
       //   '/cart': (context) => const CartScreen()
       // },
-      home: HomeScreen(),
+      home: ProductEditPage(),
     );
   }
 }
