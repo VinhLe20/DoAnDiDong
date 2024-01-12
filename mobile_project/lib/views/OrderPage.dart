@@ -8,6 +8,7 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  int SoLuong = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +50,23 @@ class _OrderPageState extends State<OrderPage> {
                       Row(
                         children: [
                           IconButton(
-                              onPressed: () {}, icon: Icon(Icons.remove)),
-                          Text("2"),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                              onPressed: () {
+                                setState(() {
+                                  SoLuong++;
+                                });
+                              },
+                              icon: Icon(Icons.remove)),
+                          Text("$SoLuong"),
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  SoLuong--;
+                                  if (SoLuong < 0) {
+                                    SoLuong = 0;
+                                  }
+                                });
+                              },
+                              icon: Icon(Icons.add))
                         ],
                       ),
                     ],
@@ -136,7 +151,7 @@ class _OrderPageState extends State<OrderPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                 const Expanded(
+                  const Expanded(
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

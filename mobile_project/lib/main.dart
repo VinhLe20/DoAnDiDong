@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mobile_project/views/AccountScreen.dart';
 import 'package:mobile_project/views/CartScreen.dart';
+import 'package:mobile_project/views/CategoryDetail.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/Profile.dart';
+import 'package:mobile_project/views/donhangcuatoi.dart';
 import 'models/firebase_options.dart';
 
 void main() async {
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => const CategoryDetail(),
         '/detailProduct': (context) => const DetialProduct(),
         '/cart': (context) => const CartScreen(),
         '/changeProfile': (context) => const Profile()

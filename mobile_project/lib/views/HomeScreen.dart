@@ -23,9 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width / 1.2,
-              padding: EdgeInsets.fromLTRB(0, 0, 230, 0),
+           //   height: 50,
+              width: MediaQuery.of(context).size.width / 1.5,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -132,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "đã bán 20",
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 8),
                                 )
                               ])
                         ],
@@ -182,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "đã bán 20",
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 8),
                                 )
                               ])
                         ],
@@ -236,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "đã bán 20",
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 8),
                                 )
                               ])
                         ],
@@ -286,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "đã bán 20",
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 8),
                                 )
                               ])
                         ],
