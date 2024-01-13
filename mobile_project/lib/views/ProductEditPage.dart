@@ -190,34 +190,41 @@ class _ProductEditPageState extends State<ProductEditPage> {
       ),
     );
   }
-  Future<void> updateProduct(Product product) async{
-    try{
+
+  Future<void> updateProduct(Product product) async {
+    try {
       await FirebaseFirestore.instance
           .collection('product')
           .doc(product.TenSP)
           .update(product.tomap());
-    }catch(e){
-       print('Error adding profile to Firestore: $e');
+    } catch (e) {
+      print('Error adding profile to Firestore: $e');
     }
   }
-   void upProduct(
-      ) {
+
+  void upProduct() {
     Product product = Product(
         TenSP: _name.text,
         GiaSP: _price.text,
         MoTa: _describe.text,
         SoLuong: _quantity.text,
-        TrangThai: true);
+        Trangthai: true,
+        Tenshop: '',
+        Giamgia: '',
+        Sdt: '');
     updateProduct(product);
   }
-  void delProduct(
-      ) {
+
+  void delProduct() {
     Product product = Product(
         TenSP: _name.text,
         GiaSP: "",
         MoTa: "",
         SoLuong: "",
-        TrangThai: false);
+        Trangthai: false,
+        Tenshop: '',
+        Giamgia: '',
+        Sdt: '');
     updateProduct(product);
   }
 }

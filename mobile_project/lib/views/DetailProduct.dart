@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 
-class DetialProduct extends StatefulWidget {
-  DetialProduct({super.key, required this.pro});
+class DetailProduct extends StatefulWidget {
+  DetailProduct({super.key, required this.pro});
   Product pro;
   @override
   State<DetailProduct> createState() => _DetailProductState();
