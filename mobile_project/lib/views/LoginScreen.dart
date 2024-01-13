@@ -96,7 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           onChanged: (value) {
                             phone.text = value;
                           },
-                        //  controller: phone,
                           keyboardType: TextInputType.phone,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
@@ -114,7 +113,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 45,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
                         onPressed: () async {
@@ -127,18 +125,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               codeSent:
                                   (String verificationId, int? resendToken) {
                                 LoginScreen.verify = verificationId;
-                            
+
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                             OTPScreen(phone: phone.text)));
+                                            OTPScreen(phone: phone.text)));
                               },
                               codeAutoRetrievalTimeout:
                                   (String verificationId) {});
                         },
                         child: Text(
                           "Tiếp Tục",
+                          style: TextStyle(color: Colors.white),
                         )),
                   )
                 ],
@@ -147,5 +146,4 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ));
   }
-
 }

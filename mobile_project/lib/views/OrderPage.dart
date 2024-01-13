@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/models/Order.dart';
 
 class OrderPage extends StatefulWidget {
   final Product product;
@@ -11,6 +13,24 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  Future<void> createOrder(Order2 order) async {
+    try {
+      Map<String, dynamic> orderMap = {
+        'productName': order.productName,
+        'quantity': order.quantity,
+        'userPhone': order.userPhone,
+        'userAddress': order.userAddress,
+        'totalAmount': order.totalAmount,
+        'status': order.status,
+      };
+      await FirebaseFirestore.instance.collection('orders').add(orderMap);
+      print('Đơn hàng đã được tạo thành công!');
+      Navigator.pop(context);
+    } catch (e) {
+      print('Lỗi khi tạo đơn hàng: $e');
+    }
+  }
+
   int SoLuong = 0;
   @override
   Widget build(BuildContext context) {
@@ -178,14 +198,23 @@ class _OrderPageState extends State<OrderPage> {
                         height: 8,
                       ),
                       Text(
-                        "giá",
-                        // "${(SoLuong *int.parse(widget.product.GiaSP) )}VND",
+                        "${(SoLuong * int.parse(widget.product.GiaSP.toString()))}VND",
                         style: TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     ],
                   )),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Order2 order2 = Order2(
+                          '${widget.product.TenSP.toString()}',
+                          SoLuong,
+                          userPhone,
+                          userAddress,
+                          (SoLuong *
+                              int.parse(widget.product.GiaSP.toString())),
+                          'Chờ Xác Nhận');
+                      createOrder(order2);
+                    },
                     child: Text(
                       "Mua Hàng",
                       style: TextStyle(fontSize: 20, color: Colors.white),

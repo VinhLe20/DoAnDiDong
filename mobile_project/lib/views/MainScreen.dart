@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/views/AccountScreen.dart';
 import 'package:mobile_project/views/CategoryScreen.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
+import 'package:mobile_project/views/LoginScreen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
