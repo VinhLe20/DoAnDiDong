@@ -1,19 +1,50 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/models/Order.dart';
 
 class OrderPage extends StatefulWidget {
-  const OrderPage({super.key});
+  final Product product;
+  const OrderPage({super.key, required this.product});
 
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
 
 class _OrderPageState extends State<OrderPage> {
+  Future<void> createOrder(Order2 order) async {
+    try {
+      Map<String, dynamic> orderMap = {
+        'productName': order.productName,
+        'quantity': order.quantity,
+        'userPhone': order.userPhone,
+        'userAddress': order.userAddress,
+        'totalAmount': order.totalAmount,
+        'status': order.status,
+      };
+      await FirebaseFirestore.instance.collection('orders').add(orderMap);
+      print('Đơn hàng đã được tạo thành công!');
+      Navigator.pop(context);
+    } catch (e) {
+      print('Lỗi khi tạo đơn hàng: $e');
+    }
+  }
+
+  int SoLuong = 0;
   @override
   Widget build(BuildContext context) {
+    String userPhone = UserProfile.userPhone;
+    String userAddress = UserProfile.userAddress;
     return Scaffold(
       appBar: AppBar(
         title: Text("Đặt Hàng"),
-        leading: Icon(Icons.arrow_back_outlined),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_outlined),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -35,25 +66,44 @@ class _OrderPageState extends State<OrderPage> {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Điện Thoại Iphone 15 Pro Max 1TB",
-                        style: TextStyle(fontSize: 15),
+                      Text(
+                        '${widget.product.TenSP.toString()}',
+                        style: TextStyle(fontSize: 18),
                       ),
                       const SizedBox(
                         height: 50,
                       ),
-                      const Text(
-                        "đ 46.990.000",
-                        style: TextStyle(color: Colors.red, fontSize: 15),
+                      Text(
+                        "đ ${widget.product.GiaSP.toString()}",
+                        style: TextStyle(color: Colors.red, fontSize: 18),
                       ),
                       Row(
                         children: [
                           IconButton(
-                              onPressed: () {}, icon: Icon(Icons.remove)),
-                          Text("2"),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                            onPressed: () {
+                              setState(() {
+                                SoLuong--;
+                                if (SoLuong < 0) {
+                                  SoLuong = 0;
+                                }
+                              });
+                            },
+                            icon: Icon(Icons.remove),
+                          ),
+                          Text(
+                            "$SoLuong",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                SoLuong++;
+                              });
+                            },
+                            icon: Icon(Icons.add),
+                          ),
                         ],
-                      ),
+                      )
                     ],
                   ))
                 ],
@@ -85,7 +135,7 @@ class _OrderPageState extends State<OrderPage> {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+              Row(
                 children: [
                   Expanded(
                       child: Text(
@@ -95,7 +145,7 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                   Expanded(
                       child: Text(
-                    "09xxxxxxx",
+                    "${userPhone}",
                     textAlign: TextAlign.right,
                     style: TextStyle(fontSize: 20),
                   )),
@@ -109,7 +159,7 @@ class _OrderPageState extends State<OrderPage> {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+              Row(
                 children: [
                   Expanded(
                       child: Text(
@@ -119,7 +169,7 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                   Expanded(
                       child: Text(
-                    "Cần Giuộc,Long An,Việt Nam",
+                    "${userAddress}",
                     textAlign: TextAlign.right,
                     style: TextStyle(fontSize: 20),
                   )),
@@ -136,7 +186,7 @@ class _OrderPageState extends State<OrderPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                 const Expanded(
+                  Expanded(
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -147,14 +197,24 @@ class _OrderPageState extends State<OrderPage> {
                       SizedBox(
                         height: 8,
                       ),
-                      const Text(
-                        "đ 46.990.000",
+                      Text(
+                        "${(SoLuong * int.parse(widget.product.GiaSP.toString()))}VND",
                         style: TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     ],
                   )),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Order2 order2 = Order2(
+                          '${widget.product.TenSP.toString()}',
+                          SoLuong,
+                          userPhone,
+                          userAddress,
+                          (SoLuong *
+                              int.parse(widget.product.GiaSP.toString())),
+                          'Chờ Xác Nhận');
+                      createOrder(order2);
+                    },
                     child: Text(
                       "Mua Hàng",
                       style: TextStyle(fontSize: 20, color: Colors.white),

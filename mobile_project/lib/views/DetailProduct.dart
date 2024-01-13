@@ -50,7 +50,7 @@ class _DetialProductState extends State<DetialProduct> {
                 ),
                 const SizedBox(height: 8.0),
                 Text(
-                  widget.pro.GiaSP,
+                  "${widget.pro.GiaSP}",
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.red,
@@ -89,7 +89,7 @@ class _DetialProductState extends State<DetialProduct> {
                 ),
                 Container(
                     decoration: BoxDecoration(color: Colors.grey),
-                    child: Padding(
+                    child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +97,8 @@ class _DetialProductState extends State<DetialProduct> {
                           Text('Mô tả sản phẩm',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15.0)),
-                          Text(widget.pro.MoTa)
+                          Text(
+                              """Áo hoodie thỏ in kín Not Rabbit form rộng tay bồng mẫu hot 2023 HARIQUEEN\nChất liệu: Nỉ cotto\nKích cỡ: Sản phẩm nam nữ Unisex Freesize từ 40-65kg\nCó thể giăt tay hoặc giặt máy theo ý muốn mà không lo ảnh hưởng đến chất lượng sản phẩm.""")
                         ],
                       ),
                     )),

@@ -116,7 +116,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 45,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
                         onPressed: () async {
@@ -142,6 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           "Tiếp Tục",
+                          style: TextStyle(color: Colors.white),
                         )),
                   )
                 ],

@@ -6,6 +6,7 @@ import 'package:mobile_project/models/User.dart';
 import 'package:mobile_project/views/AddProductsPage.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
+import 'package:mobile_project/views/Profile.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPScreen extends StatefulWidget {

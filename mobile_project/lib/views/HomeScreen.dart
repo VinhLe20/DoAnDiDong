@@ -46,86 +46,85 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width / 1.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        showSearch(
-                            context: context, delegate: CustomSearchDelegate());
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.shopping_cart),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.chat_sharp),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    height: 300,
-                    enlargeCenterPage: true,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      showSearch(
+                          context: context, delegate: CustomSearchDelegate());
+                    },
                   ),
-                  items: imagelist.map((imagePath) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: const BoxDecoration(
-                            color: Colors.amber,
-                          ),
-                          child: Image.asset(
-                            imagePath,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      },
+                ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.chat_sharp),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          Container(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: 300,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+              ),
+              items: imagelist.map((imagePath) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: const BoxDecoration(
+                        color: Colors.amber,
+                      ),
+                      child: Image.asset(
+                        imagePath,
+                        fit: BoxFit.cover,
+                      ),
                     );
-                  }).toList(),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              FutureBuilder<List<Product>>(
-                  future: futureProducts,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Đã xảy ra lỗi: ${snapshot.error}');
-                    } else {
-                      List<Product> products = snapshot.data ?? [];
-
-                      return GridView.builder(
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          InkWell(
+            child: FutureBuilder<List<Product>>(
+                future: futureProducts,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                  } else {
+                    List<Product> products = snapshot.data ?? [];
+                    return Expanded(
+                      child: GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -134,18 +133,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           itemCount: products.length,
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          // physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => DetialProduct(
-                                            pro: products[index])));
+                                        builder: (context) => OrderPage(
+                                              product: products[index],
+                                            )));
                               },
                               child: Card(
-                                elevation: 7,
                                 child: ListTile(
                                   subtitle: Column(
                                     crossAxisAlignment:
@@ -172,50 +171,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Text(
                                         ' ${products[index].GiaSP.toString()} VND',
                                         style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
-                                          decoration:
-                                              TextDecoration.lineThrough,
-                                          decorationColor: Colors.red,
-                                          decorationThickness: 2.0,
-                                        ),
+                                            color: Colors.red,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500),
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            ' ${products[index].Giamgia.toString()} VND',
-                                            style: TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          Text(
-                                            'Đã bán ${products[index].SoLuong.toString()}',
-                                            style: TextStyle(
-                                              //   color: Colors.red,
-                                              fontSize: 10,
-                                              //   fontWeight: FontWeight.w500
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      )
                                     ],
                                   ),
                                 ),
                               ),
                             );
-                          });
-                    }
-                  }),
-            ],
-          ),
-        ));
+                          }),
+                    );
+                  }
+                }),
+          )
+        ],
+      ),
+    );
   }
 }
 
