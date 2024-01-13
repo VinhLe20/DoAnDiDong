@@ -22,6 +22,7 @@ Future<List<Product>> getProducts() async {
 
 List<Product> products = [];
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //bottomNavigationBar: BottomNavigator(),
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,

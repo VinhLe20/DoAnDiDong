@@ -7,6 +7,7 @@ import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/ImagePicker.dart';
 import 'package:mobile_project/views/AccountScreen.dart';
 
+
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -42,6 +43,7 @@ class _ProfileState extends State<Profile> {
     _ten.text = acc.name;
     _diachi.text = acc.adress;
     return Scaffold(
+      //bottomNavigationBar: BottomNavigator(),
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

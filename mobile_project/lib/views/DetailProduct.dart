@@ -6,10 +6,10 @@ class DetialProduct extends StatefulWidget {
   DetialProduct({super.key, required this.pro});
   Product pro;
   @override
-  State<DetialProduct> createState() => _DetialProductState();
+  State<DetailProduct> createState() => _DetailProductState();
 }
 
-class _DetialProductState extends State<DetialProduct> {
+class _DetailProductState extends State<DetailProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

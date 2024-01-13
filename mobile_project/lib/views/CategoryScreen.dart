@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
 
@@ -11,6 +12,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //bottomNavigationBar: BottomNavigator(),
       appBar: AppBar(
         title: const Text("Danh mục sản phẩm"),
         actions: const [
