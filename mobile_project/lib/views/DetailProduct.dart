@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/views/CartScreen.dart';
 
 class DetialProduct extends StatefulWidget {
   DetialProduct({super.key, required this.pro});
@@ -82,6 +83,7 @@ class _DetialProductState extends State<DetialProduct> {
                     )
                   ],
                 ),
+                //   Text(widget.pro.)
                 const SizedBox(
                   height: 20.0,
                 ),
@@ -263,7 +265,12 @@ class _DetialProductState extends State<DetialProduct> {
                           children: [
                             const Icon(Icons.shopping_basket),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CartScreen()));
+                                },
                                 child: const Text('Thêm giỏ hàng'))
                           ],
                         ),

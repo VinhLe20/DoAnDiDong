@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/views/SalesRegistration.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -148,7 +149,12 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             const SizedBox(height: 20),
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => SalesRegistration())));
+              },
               child: SizedBox(
                 height: 50,
                 child: Row(

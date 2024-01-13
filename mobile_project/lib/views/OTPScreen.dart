@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_project/models/User.dart';
+import 'package:mobile_project/views/AddProductsPage.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:pinput/pinput.dart';
@@ -81,7 +82,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               smsCode: code);
                       await _auth.signInWithCredential(credential);
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => const AddProductsPage()));
                     } catch (e) {
                       print("Wrong Otp");
                     }
@@ -118,7 +119,8 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   void SaveUser() {
-    User2 user2 = User2(Ten: '', Diachi: '', phone: widget.phone,shop: false,Image: '');
+    User2 user2 =
+        User2(Ten: '', Diachi: '', phone: widget.phone, shop: false, Image: '');
     //print(phone);
     addUser(user2);
   }

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_project/models/User.dart';
+import 'package:mobile_project/views/AddProductsPage.dart';
+import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/OTPScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -96,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onChanged: (value) {
                             phone.text = value;
                           },
-                        //  controller: phone,
+                          //  controller: phone,
                           keyboardType: TextInputType.phone,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
@@ -127,12 +129,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               codeSent:
                                   (String verificationId, int? resendToken) {
                                 LoginScreen.verify = verificationId;
-                            
+
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                             OTPScreen(phone: phone.text)));
+                                      builder: (context) =>
+                                          OTPScreen(phone: phone.text),
+                                    ));
                               },
                               codeAutoRetrievalTimeout:
                                   (String verificationId) {});
@@ -147,5 +150,4 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ));
   }
-
 }

@@ -147,7 +147,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Card(
                                 elevation: 7,
                                 child: ListTile(
-                                  //  title: Text(products[index].name),
                                   subtitle: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -156,12 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          //  Container(
-                                          //  height: 100,
-                                          //   width: 100,
-                                          //    padding: EdgeInsets.all(10),
-                                          // margin: EdgeInsets.all(10),
-                                          //child:
                                           Image.asset(
                                             "assets/h2.jpg",
                                             height: 120,

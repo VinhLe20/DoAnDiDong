@@ -1,17 +1,17 @@
-class Product {
+class CartProduct {
   String TenSP;
-  String GiaSP;
   String Tenshop;
-  String Giamgia;
-  String MoTa;
+  int GiaSP;
+  int Giamgia;
+  //String MoTa;
   String? Sdt;
-  String SoLuong;
+  int SoLuong;
   bool Trangthai;
-  Product(
+  CartProduct(
       {required this.TenSP,
       required this.GiaSP,
       required this.Tenshop,
-      required this.MoTa,
+      //   required this.MoTa,
       required this.SoLuong,
       required this.Giamgia,
       required this.Sdt,
@@ -20,24 +20,24 @@ class Product {
     return {
       "tensp": TenSP,
       "giasp": GiaSP,
-      "MoTa": MoTa,
+      "tenshop": Tenshop,
+      //  "MoTa": MoTa,
       "SoLuong": SoLuong,
       "TrangThai": Trangthai,
       "GiamGia": Giamgia,
-      "Sdt": Sdt,
-      "Tenshop": Tenshop
+      "Sdt": Sdt
     };
   }
 
-  factory Product.fromMap(Map<String, dynamic> map) {
-    return Product(
+  factory CartProduct.fromMap(Map<String, dynamic> map) {
+    return CartProduct(
         TenSP: map['tensp'] ?? '',
+        Tenshop: map['tenshop'] ?? '',
         GiaSP: map['giasp'] ?? '',
-        MoTa: map['MoTa'] ?? '',
+        // MoTa: map['MoTa'] ?? '',
         Trangthai: map['TrangThai'] ?? '',
         SoLuong: map['SoLuong'] ?? '',
         Giamgia: map['GiamGia'] ?? '',
-        Sdt: map['Sdt'] ?? ' ',
-        Tenshop: map['Tenshop'] ?? ' ');
+        Sdt: map['Sdt'] ?? ' ');
   }
 }
