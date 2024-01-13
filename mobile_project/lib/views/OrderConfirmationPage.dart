@@ -12,7 +12,6 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_rounded),
         title: Text("Các Đơn Cần Xác Nhận"),
       ),
       body: SingleChildScrollView(

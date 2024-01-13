@@ -3,6 +3,7 @@ import 'package:mobile_project/views/AccountScreen.dart';
 import 'package:mobile_project/views/CategoryScreen.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
+import 'package:mobile_project/views/NotificationsScreen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
     HomeScreen(),
     CategoryScreen(),
-    AccountScreen(),
+    NotificationsScreen(),
     AccountScreen()
   ];
   @override

@@ -40,7 +40,6 @@ class _SalesRegistrationState extends State<SalesRegistration> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Thông Tin Shop"),
-        leading: Icon(Icons.arrow_back_outlined),
       ),
       body: SingleChildScrollView(
           child: Padding(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
+import 'package:mobile_project/views/ShopManager.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -153,7 +154,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((context) => SalesRegistration())));
+                        builder: ((context) =>
+                            !acc.shop ? SalesRegistration() : ShopsManager())));
               },
               child: SizedBox(
                 height: 50,
