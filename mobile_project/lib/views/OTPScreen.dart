@@ -8,8 +8,8 @@ import 'package:mobile_project/views/Profile.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPScreen extends StatefulWidget {
-  OTPScreen({super.key, required this.phone});
-  String phone;
+  OTPScreen({Key?key}):super(key: key);
+
   @override
   State<OTPScreen> createState() => _OTPScreenState();
 }
@@ -74,7 +74,6 @@ class _OTPScreenState extends State<OTPScreen> {
                           borderRadius: BorderRadius.circular(10))),
                   onPressed: () async {
                     try {
-                      SaveUser();
                       PhoneAuthCredential credential =
                           PhoneAuthProvider.credential(
                               verificationId: LoginScreen.verify,
@@ -106,21 +105,5 @@ class _OTPScreenState extends State<OTPScreen> {
     );
   }
 
-  Future<void> addUser(User2 user) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.phone)
-          .set(user.tomap());
-    } catch (e) {
-      print("loi ");
-    }
-  }
 
-  void SaveUser() {
-    User2 user2 =
-        User2(Ten: '', Diachi: '', phone: widget.phone, shop: false, Image: '');
-    //print(phone);
-    addUser(user2);
-  }
 }

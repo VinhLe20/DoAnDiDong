@@ -6,7 +6,7 @@ import 'package:mobile_project/views/OTPScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String verify = "";
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController phone = TextEditingController();
+  var phone = '';
   final TextEditingController diachi = TextEditingController();
   final TextEditingController ten = TextEditingController();
   final TextEditingController shop = TextEditingController();
@@ -28,14 +28,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlue[200],
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {},
-          ),
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {},
         ),
-        body: Container(
+      ),
+      body: Container(
           margin: EdgeInsets.only(left: 25, right: 25),
           alignment: Alignment.center,
           child: SingleChildScrollView(
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Expanded(
                             child: TextField(
                           onChanged: (value) {
-                            phone.text = value;
+                            phone = value;
                           },
                           keyboardType: TextInputType.phone,
                           decoration: const InputDecoration(
@@ -118,32 +118,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () async {
                           await FirebaseAuth.instance.verifyPhoneNumber(
                               phoneNumber:
-                                  '${phoneNumberController.text + phone.text}',
+                                  '${phoneNumberController.text + phone}',
                               verificationCompleted:
                                   (PhoneAuthCredential credential) {},
                               verificationFailed: (FirebaseAuthException e) {},
                               codeSent:
                                   (String verificationId, int? resendToken) {
                                 LoginScreen.verify = verificationId;
-
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            OTPScreen(phone: phone.text)));
+                                        builder: (context) => OTPScreen()));
                               },
                               codeAutoRetrievalTimeout:
                                   (String verificationId) {});
                         },
-                        child: Text(
-                          "Tiếp Tục",
-                          style: TextStyle(color: Colors.white),
-                        )),
+                        child: const Text("Tiếp Tục")),
                   )
                 ],
               ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
