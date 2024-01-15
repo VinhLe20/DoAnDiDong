@@ -1,42 +1,53 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_project/models/Cart.dart';
+import 'package:mobile_project/models/CartProduct.dart';
+import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/views/DetailProduct.dart';
+
+Future<List<CartProduct>> getCartProducts() async {
+  List<CartProduct> cartProducts = [];
+  QuerySnapshot querySnapshot =
+      await FirebaseFirestore.instance.collection('CartProduct').get();
+
+  querySnapshot.docs.forEach((doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    CartProduct cartProduct = CartProduct.fromMap(data);
+    if (cartProduct.Trangthai == true) {
+      cartProducts.add(cartProduct);
+    }
+  });
+
+  return cartProducts;
+}
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key});
- 
+  CartScreen({Key? key});
+
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
+// CartProduct? cartpro;
 class _CartScreenState extends State<CartScreen> {
-  bool? isChecked = false;
-  List<Cart> carts = List.filled(0, Cart(TenSP: "", GiaSP: "", Sdt: "", Trangthai: false),growable: true);
-  void _loadData() {
-    Cart.getData("0937569365").then((value) {
-      setState(() {
-        carts = Cart.carts;
-      });
-    });
-  }
- void all(bool status){
-  carts.forEach((element) {
-    element.Trangthai = status;
-  });
-}
+  late Future<List<CartProduct>> futureCartProducts;
   @override
   void initState() {
     super.initState();
-    _loadData();
+
+    futureCartProducts = getCartProducts();
   }
+
+  bool? isChecked = false;
+  // late Future<List<CartProduct>> futureProducts;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:
-            IconButton(onPressed: () {
+        leading: IconButton(
+            onPressed: () {
               Navigator.pop(context);
-            }, icon: const Icon(Icons.arrow_back)),
+            },
+            icon: const Icon(Icons.arrow_back)),
         title: const Text("Giỏ hàng"),
         actions: const [
           Padding(
@@ -59,13 +70,15 @@ class _CartScreenState extends State<CartScreen> {
                       onChanged: (bool? value) {
                         setState(() {
                           isChecked = value;
-                          all(value!);                               
+                          // all(value!);
                         });
                       },
                     ),
                     const Padding(
                       padding: EdgeInsets.only(left: 10.0),
                       child: Text("Tất cả sản phẩm"),
+
+                      ///   Text()
                     )
                   ],
                 ),
@@ -74,84 +87,145 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: carts.length ,
-              itemBuilder: (context, index) {
-                return Column( 
-                  children: [
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: carts[index].Trangthai,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                carts[index].Trangthai = value!;
-                              });
-                            },
-                          ),
-                          const Icon(Icons.store),
-                          const Text("Tên cửa hàng")
-                        ],
-                      ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Checkbox(
-                                  value: carts[index].Trangthai,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                   carts[index].Trangthai = value!;
-                                });
-                              },
-                            ),
-                            Container(
-                              width: 100,
-                              height: 100,
-                              child: const Placeholder(),
-                            ),
-                             Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(carts[index].TenSP),
-                                  SizedBox(
-                                    height: 50.0,
-                                  ),
-                                  Text("${carts[index].GiaSP}"),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+              child: InkWell(
+                  child: FutureBuilder<List<CartProduct>>(
+                      future: futureCartProducts,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                        } else {
+                          List<CartProduct> cartproduct = snapshot.data ?? [];
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: cartproduct.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                  subtitle: Column(
                                     children: [
-                                      Row(
-                                        children: [
-                                          Icon(Icons.remove),
-                                          Text("0"),
-                                          Icon(Icons.add),
-                                        ],
+                                      const Divider(),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          children: [
+                                            Checkbox(
+                                              value: isChecked,
+                                              onChanged: (bool? value) {
+                                                setState(() {
+                                                  isChecked = value;
+                                                });
+                                              },
+                                            ),
+                                            const Icon(Icons.store),
+                                            const Text("Ten cua hang")
+                                          ],
+                                        ),
                                       ),
+                                      Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Row(
+                                            children: [
+                                              Checkbox(
+                                                value: isChecked,
+                                                onChanged: (bool? value) {
+                                                  setState(() {
+                                                    isChecked = value;
+                                                  });
+                                                },
+                                              ),
+                                              Container(
+                                                width: 100,
+                                                height: 100,
+                                                child: const Placeholder(),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              // Padding(
+                                              // padding: EdgeInsets.all(10.0),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      cartproduct[index].TenSP),
+                                                  SizedBox(
+                                                    height: 50.0,
+                                                  ),
+                                                  Text(
+                                                      '${cartproduct[index].GiaSP}'),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          IconButton(
+                                                            icon: Icon(
+                                                                Icons.remove),
+                                                            onPressed: () {
+                                                              updatesoluong(
+                                                                  cartproduct[
+                                                                          index]
+                                                                      .TenSP,
+                                                                  cartproduct[
+                                                                          index]
+                                                                      .SoLuong = cartproduct[
+                                                                              index]
+                                                                          .SoLuong -
+                                                                      1);
+                                                            },
+                                                          ),
+                                                          Text(
+                                                              '${cartproduct[index].SoLuong}'),
+                                                          IconButton(
+                                                            icon:
+                                                                Icon(Icons.add),
+                                                            onPressed: () {
+                                                              updatesoluong(
+                                                                  cartproduct[
+                                                                          index]
+                                                                      .TenSP,
+                                                                  cartproduct[
+                                                                          index]
+                                                                      .SoLuong = cartproduct[
+                                                                              index]
+                                                                          .SoLuong +
+                                                                      1);
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              //  ),
+                                              const Spacer(),
+                                              TextButton(
+                                                // padding:
+                                                ///   const EdgeInsets.all(10.0),
+                                                onPressed: () {
+                                                  xoaCartProduct(
+                                                      cartproduct[index].TenSP,
+                                                      false);
+                                                },
+                                                child: Text("Xóa"),
+                                              ),
+                                            ],
+                                          ))
                                     ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            const Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: const Text("Xóa"),
-                            ),
-                          ],
-                        ))
-                  ],
-                );
-              },
-            ),
-          ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      }))),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
@@ -175,4 +249,54 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
+}
+
+Future<void> xoaCartProduct(String Tensp, bool trangthai) async {
+  Map<String, dynamic> dataToUpdate;
+  CollectionReference cartproduct =
+      FirebaseFirestore.instance.collection('CartProduct');
+  QuerySnapshot querySnapshot = await cartproduct.get();
+  querySnapshot.docs.forEach((doc) async {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    {
+      if (Tensp == data["tensp"]) {
+        CollectionReference collection =
+            FirebaseFirestore.instance.collection('CartProduct');
+        DocumentReference document = collection.doc(doc.id);
+        if (trangthai == true)
+          dataToUpdate = {'TrangThai': trangthai};
+        else {
+          dataToUpdate = {'TrangThai': trangthai};
+        }
+        try {
+          await document.update(dataToUpdate);
+        } catch (e) {}
+      }
+    }
+  });
+}
+
+Future<void> updatesoluong(String Tensp, int Soluong) async {
+  Map<String, dynamic> dataToUpdate;
+  CollectionReference cartproduct =
+      FirebaseFirestore.instance.collection('CartProduct');
+  QuerySnapshot querySnapshot = await cartproduct.get();
+  querySnapshot.docs.forEach((doc) async {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    {
+      if (Tensp == data["tensp"]) {
+        CollectionReference collection =
+            FirebaseFirestore.instance.collection('CartProduct');
+        DocumentReference document = collection.doc(doc.id);
+        if (Soluong >= 0)
+          dataToUpdate = {'SoLuong': Soluong};
+        else {
+          dataToUpdate = {};
+        }
+        try {
+          await document.update(dataToUpdate);
+        } catch (e) {}
+      }
+    }
+  });
 }

@@ -44,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     futureProducts = getProducts();
   }
-  String userPhone = UserProfile.userPhone; 
+
+  String userPhone = UserProfile.userPhone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
