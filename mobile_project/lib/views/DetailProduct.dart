@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/CartScreen.dart';
+import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/OrderPage.dart';
 
 class DetailProduct extends StatefulWidget {
@@ -61,12 +63,20 @@ class _DetailProductState extends State<DetailProduct> {
             child: MaterialButton(
               color: Colors.lightBlue,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OrderPage(product: widget.pro),
-                  ),
-                );
+                if (!Account.isUserLoggedIn()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                } else
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderPage(product: widget.pro),
+                    ),
+                  );
               },
               child: Container(
                 alignment: Alignment.center,

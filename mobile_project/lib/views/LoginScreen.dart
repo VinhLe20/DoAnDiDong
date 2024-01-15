@@ -34,7 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.lightBlue[200],
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ),
         body: Container(

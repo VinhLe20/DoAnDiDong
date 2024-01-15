@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserProfile {
   static String userName = "";
@@ -27,6 +28,11 @@ class Account {
         UserProfile.userAddress = acc.adress;
       }
     }
+  }
+
+  static bool isUserLoggedIn() {
+    User? user = FirebaseAuth.instance.currentUser;
+    return user != null;
   }
 
   Future<void> updateAccount(
