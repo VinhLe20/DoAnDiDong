@@ -4,13 +4,31 @@ import 'package:mobile_project/models/Cart.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key});
-
+ 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
   bool? isChecked = false;
+  List<Cart> carts = List.filled(0, Cart(TenSP: "", GiaSP: "", Sdt: "", Trangthai: false),growable: true);
+  void _loadData() {
+    Cart.getData("0937569365").then((value) {
+      setState(() {
+        carts = Cart.carts;
+      });
+    });
+  }
+ void all(bool status){
+  carts.forEach((element) {
+    element.Trangthai = status;
+  });
+}
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +59,7 @@ class _CartScreenState extends State<CartScreen> {
                       onChanged: (bool? value) {
                         setState(() {
                           isChecked = value;
+                          all(value!);                               
                         });
                       },
                     ),
@@ -56,9 +75,9 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 1,
+              itemCount: carts.length ,
               itemBuilder: (context, index) {
-                return Column(
+                return Column( 
                   children: [
                     const Divider(),
                     Padding(
@@ -66,10 +85,10 @@ class _CartScreenState extends State<CartScreen> {
                       child: Row(
                         children: [
                           Checkbox(
-                            value: isChecked,
+                            value: carts[index].Trangthai,
                             onChanged: (bool? value) {
                               setState(() {
-                                isChecked = value;
+                                carts[index].Trangthai = value!;
                               });
                             },
                           ),
@@ -83,10 +102,10 @@ class _CartScreenState extends State<CartScreen> {
                         child: Row(
                           children: [
                             Checkbox(
-                              value: isChecked,
+                                  value: carts[index].Trangthai,
                               onChanged: (bool? value) {
                                 setState(() {
-                                  isChecked = value;
+                                   carts[index].Trangthai = value!;
                                 });
                               },
                             ),
@@ -95,16 +114,16 @@ class _CartScreenState extends State<CartScreen> {
                               height: 100,
                               child: const Placeholder(),
                             ),
-                            const Padding(
+                             Padding(
                               padding: EdgeInsets.all(10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Ten sp"),
+                                  Text(carts[index].TenSP),
                                   SizedBox(
                                     height: 50.0,
                                   ),
-                                  Text("đơn giá"),
+                                  Text("${carts[index].GiaSP}"),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
