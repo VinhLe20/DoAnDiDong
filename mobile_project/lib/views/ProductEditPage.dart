@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/product.dart';
 
 class ProductEditPage extends StatefulWidget {
   const ProductEditPage({super.key});
@@ -8,6 +10,10 @@ class ProductEditPage extends StatefulWidget {
 }
 
 class _ProductEditPageState extends State<ProductEditPage> {
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _price = TextEditingController();
+  final TextEditingController _describe = TextEditingController();
+  final TextEditingController _quantity = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +55,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
               height: 8,
             ),
             TextField(
+              controller: _name,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -75,6 +82,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
               height: 8,
             ),
             TextField(
+              controller: _price,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -101,6 +109,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
               height: 8,
             ),
             TextField(
+              controller: _describe,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -127,6 +136,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
               height: 8,
             ),
             TextField(
+              controller: _quantity,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -143,7 +153,9 @@ class _ProductEditPageState extends State<ProductEditPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    delProduct();
+                  },
                   child: Text(
                     "Xóa",
                     style: TextStyle(fontSize: 20, color: Colors.white),
@@ -158,7 +170,9 @@ class _ProductEditPageState extends State<ProductEditPage> {
                   width: 65,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    upProduct();
+                  },
                   child: Text(
                     "Lưu",
                     style: TextStyle(fontSize: 20, color: Colors.white),
@@ -175,5 +189,42 @@ class _ProductEditPageState extends State<ProductEditPage> {
         ),
       ),
     );
+  }
+
+  Future<void> updateProduct(Product product) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('product')
+          .doc(product.TenSP)
+          .update(product.tomap());
+    } catch (e) {
+      print('Error adding profile to Firestore: $e');
+    }
+  }
+
+  void upProduct() {
+    Product product = Product(
+        TenSP: _name.text,
+        GiaSP: _price.text,
+        MoTa: _describe.text,
+        SoLuong: _quantity.text,
+        Trangthai: true,
+        Tenshop: '',
+        Giamgia: '',
+        Sdt: '');
+    updateProduct(product);
+  }
+
+  void delProduct() {
+    Product product = Product(
+        TenSP: _name.text,
+        GiaSP: "",
+        MoTa: "",
+        SoLuong: "",
+        Trangthai: false,
+        Tenshop: '',
+        Giamgia: '',
+        Sdt: '');
+    updateProduct(product);
   }
 }

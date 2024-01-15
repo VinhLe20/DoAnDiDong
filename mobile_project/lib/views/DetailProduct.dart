@@ -1,17 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/views/CartScreen.dart';
+import 'package:mobile_project/views/OrderPage.dart';
 
-class DetialProduct extends StatefulWidget {
-  DetialProduct({super.key, required this.pro});
+class DetailProduct extends StatefulWidget {
+  DetailProduct({super.key, required this.pro});
   Product pro;
   @override
-  State<DetialProduct> createState() => _DetialProductState();
+  State<DetailProduct> createState() => _DetailProductState();
 }
 
-class _DetialProductState extends State<DetialProduct> {
+class _DetailProductState extends State<DetailProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: MaterialButton(
+              color: Colors.blueGrey,
+              onPressed: () {},
+              child: Container(
+                alignment: Alignment.center,
+                height: 70,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.chat),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Text('Chat'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: MaterialButton(
+              color: Colors.blueAccent,
+              onPressed: () {},
+              child: Container(
+                alignment: Alignment.center,
+                height: 70,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.shopping_basket),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Text('Thêm giỏ hàng'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: MaterialButton(
+              color: Colors.lightBlue,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrderPage(product: widget.pro),
+                  ),
+                );
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 70,
+                child: const Text('Mua ngay'),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Padding(
@@ -30,7 +95,9 @@ class _DetialProductState extends State<DetialProduct> {
                     Positioned(
                         top: 8.0,
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           icon: const Icon(
                             Icons.arrow_back_ios,
                             color: Colors.blueAccent,
@@ -82,6 +149,7 @@ class _DetialProductState extends State<DetialProduct> {
                     )
                   ],
                 ),
+                //   Text(widget.pro.)
                 const SizedBox(
                   height: 20.0,
                 ),
@@ -240,49 +308,6 @@ class _DetialProductState extends State<DetialProduct> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 200,
-                        color: Colors.blueGrey, // Màu nền của column
-                        child: Column(
-                          children: [
-                            const Icon(Icons.chat),
-                            TextButton(
-                                onPressed: () {}, child: const Text('Chat'))
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 200,
-                        color: Colors.blueAccent, // Màu nền của column
-                        child: Column(
-                          children: [
-                            const Icon(Icons.shopping_basket),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text('Thêm giỏ hàng'))
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 200,
-                        color: Colors.lightBlue, // Màu nền của column
-                        child: const Column(
-                          children: [
-                            Text('Mua ngay'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
           ),

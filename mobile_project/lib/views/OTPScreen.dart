@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_project/models/User.dart';
+import 'package:mobile_project/views/AddProductsPage.dart';
+import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPScreen extends StatefulWidget {
-  OTPScreen({Key?key}):super(key: key);
+  OTPScreen({Key? key}) : super(key: key);
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -44,7 +46,7 @@ class _OTPScreenState extends State<OTPScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    'Để xác minh số điện thoại là của bạn, nhập mã gồm 6 chữ số vừa được gửi đến 09xxxxxxxx',
+                    'Để xác minh số điện thoại là của bạn, nhập mã gồm 6 chữ số vừa được gửi !',
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black),
                   ),
@@ -80,7 +82,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               smsCode: code);
                       await _auth.signInWithCredential(credential);
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Profile()));
+                          builder: (context) => const AddProductsPage()));
                     } catch (e) {
                       print("Wrong Otp");
                     }
@@ -104,6 +106,4 @@ class _OTPScreenState extends State<OTPScreen> {
       ),
     );
   }
-
-
 }

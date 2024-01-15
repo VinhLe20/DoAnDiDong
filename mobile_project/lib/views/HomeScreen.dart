@@ -61,7 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(Icons.search),
                     onPressed: () {
                       showSearch(
-                          context: context, delegate: CustomSearchDelegate());
+                        context: context,
+                        delegate: CustomSearchDelegate(),
+                      );
                     },
                   ),
                 ],
@@ -78,43 +80,45 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: 300,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            Container(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: 200,
+                  enlargeCenterPage: true,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                ),
+                items: imagelist.map((imagePath) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: const BoxDecoration(
+                          color: Colors.amber,
+                        ),
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
               ),
-              items: imagelist.map((imagePath) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: const BoxDecoration(
-                        color: Colors.amber,
-                      ),
-                      child: Image.asset(
-                        imagePath,
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          InkWell(
-            child: FutureBuilder<List<Product>>(
+            SizedBox(
+              height: 20,
+            ),
+            InkWell(
+              child: FutureBuilder<List<Product>>(
                 future: futureProducts,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -123,63 +127,69 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Text('Đã xảy ra lỗi: ${snapshot.error}');
                   } else {
                     List<Product> products = snapshot.data ?? [];
-                    return Expanded(
-                      child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 8.0,
-                            mainAxisSpacing: 8.0,
-                          ),
-                          itemCount: products.length,
-                          shrinkWrap: true,
-                          // physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => OrderPage(
-                                              product: products[index],
-                                            )));
-                              }, 
-                              child: Card(
-                                child: ListTile(
-                                  //  title: Text(products[index].name),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/h2.jpg",
-                                        height: 130,
-                                        width: 130,
-                                      ),
-                                      Text(
-                                        ' ${products[index].TenSP.toString()}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                      Text(
-                                        ' ${products[index].GiaSP.toString()} VND',
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
-                                  ),
+                    return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
+                      ),
+                      itemCount: products.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailProduct(
+                                  pro: products[index],
                                 ),
                               ),
                             );
-                          }),
+                          },
+                          child: Card(
+                            child: ListTile(
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "assets/h2.jpg",
+                                        height: 120,
+                                        width: 120,
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    ' ${products[index].TenSP.toString()}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${products[index].GiaSP.toString()} VND',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     );
                   }
-                }),
-          )
-        ],
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

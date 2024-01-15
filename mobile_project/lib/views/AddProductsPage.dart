@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +15,26 @@ class _AddProductsPageState extends State<AddProductsPage> {
   final TextEditingController _price = TextEditingController();
   final TextEditingController _describe = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
+  //  String phoneNumber = UserData.phoneNumber;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCurrentUser();
+  }
+
+  Future<void> _fetchCurrentUser() async {
+    User? currentUser = _auth.currentUser;
+
+    if (currentUser != null) {
+      setState(() {
+        _user = currentUser;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,11 +208,13 @@ class _AddProductsPageState extends State<AddProductsPage> {
 
   void saveProduct() {
     Product product = Product(
+        Tenshop: '',
         TenSP: _name.text,
         GiaSP: _price.text,
         Giamgia: _price.text,
         MoTa: _describe.text,
         SoLuong: _quantity.text,
+        Sdt: _user?.phoneNumber,
         Trangthai: true);
     addProduct(product);
   }
