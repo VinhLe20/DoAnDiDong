@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/ImagePicker.dart';
 import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/views/HomeScreen.dart';
 
 class ProductEditPage extends StatefulWidget {
-  const ProductEditPage({super.key});
-
+  ProductEditPage({super.key,required this.product});
+  Product product;
   @override
   State<ProductEditPage> createState() => _ProductEditPageState();
 }
@@ -14,6 +18,8 @@ class _ProductEditPageState extends State<ProductEditPage> {
   final TextEditingController _price = TextEditingController();
   final TextEditingController _describe = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
+  imagePicker image = imagePicker();
+  bool onTap = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +34,18 @@ class _ProductEditPageState extends State<ProductEditPage> {
             Align(
               alignment: Alignment.topCenter,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                        await image.pickImage();
+                        setState(() {
+                          onTap = true;
+                        });
+                      },
                 child: Container(
-                  child: Image.asset("assets/ip15.jpg"),
+                  child: onTap
+                              ? Image.file(File(imagePicker.path),
+                                  fit: BoxFit.cover)
+                              : Image.network(widget.product.Image,
+                                  fit: BoxFit.cover),
                 ),
                 style: ElevatedButton.styleFrom(
                     fixedSize: Size(300, 200),
@@ -171,7 +186,18 @@ class _ProductEditPageState extends State<ProductEditPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    upProduct();
+                    image.uploadImageToFirebase();
+                      Product update = Product(
+      Image: imagePicker.imageNetwork,
+        TenSP: _name.text,
+        GiaSP: _price.text,
+        MoTa: _describe.text,
+        SoLuong: _quantity.text,
+        Trangthai: true,
+        Tenshop: '',
+        Giamgia: '',
+        Sdt: '');
+                    upProduct(update);
                   },
                   child: Text(
                     "Lưu",
@@ -202,21 +228,14 @@ class _ProductEditPageState extends State<ProductEditPage> {
     }
   }
 
-  void upProduct() {
-    Product product = Product(
-        TenSP: _name.text,
-        GiaSP: _price.text,
-        MoTa: _describe.text,
-        SoLuong: _quantity.text,
-        Trangthai: true,
-        Tenshop: '',
-        Giamgia: '',
-        Sdt: '');
+  void upProduct(Product product) {
+  
     updateProduct(product);
   }
 
   void delProduct() {
     Product product = Product(
+      Image: "",
         TenSP: _name.text,
         GiaSP: "",
         MoTa: "",

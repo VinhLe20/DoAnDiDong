@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 class Product {
+  String Image;
   String TenSP;
   String GiaSP;
   String Tenshop;
@@ -17,7 +18,7 @@ class Product {
       required this.SoLuong,
       required this.Giamgia,
       required this.Sdt,
-      required this.Trangthai});
+      required this.Trangthai,required this.Image});
   Map<String, dynamic> tomap() {
     return {
       "tensp": TenSP,
@@ -27,7 +28,8 @@ class Product {
       "TrangThai": Trangthai,
       "GiamGia": Giamgia,
       "Sdt": Sdt,
-      "Tenshop": Tenshop
+      "Tenshop": Tenshop,
+      "Image":Image
     };
   }
 
@@ -35,6 +37,7 @@ class Product {
     return Product(
         TenSP: map['tensp'] ?? '',
         GiaSP: map['giasp'] ?? '',
+        Image: map['Image'] ?? '',
         MoTa: map['MoTa'] ?? '',
         Trangthai: map['TrangThai'] ?? '',
         SoLuong: map['SoLuong'] ?? '',

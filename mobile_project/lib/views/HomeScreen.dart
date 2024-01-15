@@ -87,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -134,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else {
                     List<Product> products = snapshot.data ?? [];
                     return GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 8.0,

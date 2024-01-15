@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/ImagePicker.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -18,7 +21,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
   //  String phoneNumber = UserData.phoneNumber;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
-
+  imagePicker image = imagePicker();
   @override
   void initState() {
     super.initState();
@@ -49,9 +52,15 @@ class _AddProductsPageState extends State<AddProductsPage> {
             Align(
               alignment: Alignment.topCenter,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await image.pickImage();
+                  setState(() {
+                    
+                  });
+                },
                 child: Container(
-                  child: Image.asset("assets/ip15.jpg"),
+                  child: Image.file(File(imagePicker.path),
+                                                fit: BoxFit.cover),
                 ),
                 style: ElevatedButton.styleFrom(
                     fixedSize: Size(300, 200),
@@ -174,8 +183,21 @@ class _AddProductsPageState extends State<AddProductsPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    saveProduct();
+                  onPressed: () async {
+                            await image.uploadImageToFirebase();
+                 String netword = imagePicker.imageNetwork;
+                 print(netword);
+                    Product product = Product(
+                  Tenshop: '',
+                  Image: netword,
+                  TenSP: _name.text,
+                  GiaSP: _price.text,
+                  Giamgia: _price.text,
+                  MoTa: _describe.text,
+                  SoLuong: _quantity.text,
+                  Sdt: _user?.phoneNumber,
+                  Trangthai: true);
+                    saveProduct(product);
                   },
                   child: Text(
                     "Lưu",
@@ -206,16 +228,8 @@ class _AddProductsPageState extends State<AddProductsPage> {
     }
   }
 
-  void saveProduct() {
-    Product product = Product(
-        Tenshop: '',
-        TenSP: _name.text,
-        GiaSP: _price.text,
-        Giamgia: _price.text,
-        MoTa: _describe.text,
-        SoLuong: _quantity.text,
-        Sdt: _user?.phoneNumber,
-        Trangthai: true);
+  void saveProduct(Product product) {
+   
     addProduct(product);
   }
 }

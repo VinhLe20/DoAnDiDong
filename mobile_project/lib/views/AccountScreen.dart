@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
 import 'package:mobile_project/views/ShopManager.dart';
+import 'package:mobile_project/views/donhangcuatoi.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -47,8 +49,16 @@ class _AccountScreenState extends State<AccountScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Row(
                 children: [
-                  SizedBox(
-                      width: 100, height: 100, child: Image.network(acc.image)),
+                  Container(
+                    width: 90.0,
+                    height: 90.0,
+                    child: ClipOval(
+                      child: Image.network(
+                        acc.image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Column(
@@ -58,8 +68,12 @@ class _AccountScreenState extends State<AccountScreen> {
                         const SizedBox(height: 10),
                         InkWell(
                           onTap: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/changeProfile');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Profile(),
+                              ),
+                            );
                           },
                           child: const Text(
                             "Thay đổi thông tin cá nhân",
@@ -83,7 +97,16 @@ class _AccountScreenState extends State<AccountScreen> {
                     style: TextStyle(fontSize: 20),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => donhangcuatoi(
+                            initialIndex: 2,
+                          ),
+                        ),
+                      );
+                    },
                     child: const Row(
                       children: [
                         Text("Xem lịch sử mua hàng"),
@@ -101,7 +124,16 @@ class _AccountScreenState extends State<AccountScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => donhangcuatoi(
+                            initialIndex: 0,
+                          ),
+                        ),
+                      );
+                    },
                     child: const SizedBox(
                       width: 90,
                       child: Column(
@@ -116,7 +148,16 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => donhangcuatoi(
+                            initialIndex: 1,
+                          ),
+                        ),
+                      );
+                    },
                     child: const SizedBox(
                       width: 90,
                       child: Column(
@@ -131,7 +172,16 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => donhangcuatoi(
+                            initialIndex: 3,
+                          ),
+                        ),
+                      );
+                    },
                     child: const SizedBox(
                       width: 90,
                       child: Column(
