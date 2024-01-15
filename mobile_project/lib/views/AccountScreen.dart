@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/Profile.dart';
@@ -251,22 +252,28 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             MaterialButton(
               onPressed: () {},
-              child: const SizedBox(
+              child: SizedBox(
                 height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.logout),
-                        Padding(
-                          padding: EdgeInsets.only(left: 10.0),
-                          child: Text("Đăng xuất"),
-                        )
-                      ],
-                    ),
-                    Icon(Icons.arrow_forward_ios)
-                  ],
+                child: MaterialButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Account.isUserLoggedIn = false;
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.logout),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Text("Đăng xuất"),
+                          )
+                        ],
+                      ),
+                      Icon(Icons.arrow_forward_ios)
+                    ],
+                  ),
                 ),
               ),
             )

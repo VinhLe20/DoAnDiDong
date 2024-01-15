@@ -16,6 +16,7 @@ class _OrderPageState extends State<OrderPage> {
   Future<void> createOrder(Order2 order) async {
     try {
       Map<String, dynamic> orderMap = {
+        'image': order.image,
         'productName': order.productName,
         'quantity': order.quantity,
         'userPhone': order.userPhone,
@@ -212,7 +213,8 @@ class _OrderPageState extends State<OrderPage> {
                           userAddress,
                           (SoLuong *
                               int.parse(widget.product.GiaSP.toString())),
-                          'Chờ Xác Nhận');
+                          'Chờ Xác Nhận',
+                          widget.product.Image);
                       createOrder(order2);
                     },
                     child: Text(

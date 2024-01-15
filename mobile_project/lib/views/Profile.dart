@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +23,9 @@ class _ProfileState extends State<Profile> {
   imagePicker image = imagePicker();
   bool onTap = false;
   static Account acc = Account("", "", "", false, "");
+  User? user = FirebaseAuth.instance.currentUser;
   void _loadData() {
-    Account.getData("0937569365").then((value) {
+    Account.getData(user?.displayName).then((value) {
       setState(() {
         acc = Account.acc;
       });

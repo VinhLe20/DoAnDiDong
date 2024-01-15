@@ -15,7 +15,7 @@ class Account {
   bool shop;
   Account(this.name, this.phone, this.adress, this.shop, this.image);
   static Account acc = Account("", "", "", false, "");
-  static Future<void> getData(String phone) async {
+  static Future<void> getData(String? phone) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     QuerySnapshot querySnapshot = await users.get();
     for (var doc in querySnapshot.docs) {
@@ -30,10 +30,7 @@ class Account {
     }
   }
 
-  static bool isUserLoggedIn() {
-    User? user = FirebaseAuth.instance.currentUser;
-    return user != null;
-  }
+  static bool isUserLoggedIn = false;
 
   Future<void> updateAccount(
       String phone, String image, String name, String adress) async {
@@ -56,25 +53,18 @@ class Account {
       }
     });
   }
-  // Future<void> updateAccount(
-  //     String phone, String image, String name, String adress) async {
-  //   Map<String, dynamic> dataToUpdate;
-  //   CollectionReference users = FirebaseFirestore.instance.collection('users');
-  //   QuerySnapshot querySnapshot = await users.get();
-  //   querySnapshot.docs.forEach((doc) async {
-  //     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-  //     if (phone == data["Phone"]) {
-  //       CollectionReference collection =
-  //           FirebaseFirestore.instance.collection('users');
-  //       DocumentReference document = collection.doc(doc.id);
-  //       if (image.isNotEmpty)
-  //         dataToUpdate = {'Image': image, 'Adress': adress, 'Name': name};
-  //       else
-  //         dataToUpdate = {'Adress': adress, 'Name': name};
-  //       try {
-  //         await document.update(dataToUpdate);
-  //       } catch (e) {}
-  //     }
-  //   });
-  // }
+
+  static Future<void> addAccount(String id) async {
+    Map<String, dynamic> dataToUpdate;
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    dataToUpdate = {
+      "Name": id,
+      "Image": "",
+      "Phone": "",
+      "Shop": false,
+      "Adress": ""
+    };
+    await users.doc(id).set(dataToUpdate);
+    print(dataToUpdate);
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Order.dart';
 import 'package:mobile_project/views/MainSCreen.dart';
 
 class donhangcuatoi extends StatefulWidget {
@@ -9,6 +10,23 @@ class donhangcuatoi extends StatefulWidget {
 }
 
 class _donhangcuatoiState extends State<donhangcuatoi> {
+  static List<Order2> oders =
+      List.filled(0, Order2("", 0, "", "", 0, "", ""), growable: true);
+  void _loadData() {
+    Order2.getData("0937569365").then((value) {
+      setState(() {
+        oders = Order2.oders;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Order2.oders.clear();
+    _loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -49,80 +67,17 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
         ),
         body: TabBarView(
           children: [
-            SingleChildScrollView(
-                child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Column(children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(height: 50, width: 50, child: Icon(Icons.store)),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text("Nguyễn Đình Anh"),
-                    SizedBox(
-                      width: 50,
-                    ),
-                    Text(
-                      "Chờ Xác Nhận",
-                      style: TextStyle(fontSize: 20, color: Colors.red),
-                      textAlign: TextAlign.right,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 150,
-                      height: 150,
-                      child: Image.asset("assets/ip15.jpg"),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Điện Thoại Iphone 15 Pro Max 1TB",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        const Text(
-                          "đ 46.990.000",
-                          style: TextStyle(color: Colors.red, fontSize: 15),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Expanded(child: Text("Số Lượng : 1")),
-                            Expanded(
-                              child: TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Xác Nhận",
-                                    style: TextStyle(color: Colors.red),
-                                  )),
-                            )
-                          ],
-                        ),
-                      ],
-                    ))
-                  ],
-                ),
-              ]),
-            )),
+            ListView.builder(
+              itemCount: oders.length, // The number of items in the list
+              itemBuilder: (BuildContext context, int index) {
+                return ChoXacNhan(
+                    oders[index].image,
+                    oders[index].productName,
+                    oders[index].totalAmount,
+                    oders[index].quantity,
+                    oders[index].status);
+              },
+            ),
             Center(child: Text('Tab 2 Content')),
             Center(child: Text('Tab 3 Content')),
             Center(child: Text('Tab 4 Content')),
@@ -131,4 +86,71 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
       ),
     );
   }
+}
+
+ChoXacNhan(String image, String name, int total, int quantity, String status) {
+  return Column(children: [
+    Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(height: 50, width: 50, child: Icon(Icons.store)),
+        SizedBox(
+          width: 5,
+        ),
+        Text("Nguyễn Đình Anh"),
+        SizedBox(
+          width: 50,
+        ),
+        Text(
+          "Chờ Xác Nhận",
+          style: TextStyle(fontSize: 20, color: Colors.red),
+          textAlign: TextAlign.right,
+        )
+      ],
+    ),
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 150,
+          height: 150,
+          child: Image.network(image, fit: BoxFit.cover),
+        ),
+        SizedBox(
+          width: 8,
+        ),
+        Expanded(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              style: TextStyle(fontSize: 15),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "đ $total",
+              style: TextStyle(color: Colors.red, fontSize: 15),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(child: Text("Số Lượng : $quantity")),
+                Expanded(
+                  child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Hủy đơn hàng",
+                        style: TextStyle(color: Colors.red),
+                      )),
+                )
+              ],
+            ),
+          ],
+        ))
+      ],
+    )
+  ]);
 }

@@ -32,13 +32,13 @@ class _MainScreenState extends State<MainScreen> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (index) {
-          // if (index == 3 && !Account.isUserLoggedIn()) {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => LoginScreen()),
-          //   );
-          //   return;
-          // }
+          if (index == 3 && !Account.isUserLoggedIn) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+            );
+            return;
+          }
           setState(() {
             _currentIndex = index;
           });

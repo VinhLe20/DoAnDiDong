@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mobile_project/models/Account.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -164,7 +165,8 @@ class _RegisterState extends State<Register> {
                           if (passwordController.text.length >= 6) {
                             registerWithEmailAndPassword(
                                 emailController.text, passwordController.text);
-                            Navigator.pop(context);
+                            Account.addAccount(emailController.text);
+                            // Navigator.pop(context);
                           } else {
                             _showSnackBar("Mất khẩu phải 6 kí tự trở lên");
                           }

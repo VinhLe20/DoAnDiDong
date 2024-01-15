@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
+import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/views/MainSCreen.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/Register.dart';
 
@@ -20,9 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
         email: email,
         password: password,
       );
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Profile()),
-      );
+      Account.isUserLoggedIn = true;
     } catch (e) {
       print("Error during login: $e");
     }
@@ -142,6 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: Colors.lightBlue[200]),
                       onPressed: () {
                         signInWithEmailAndPassword(email, password);
+                        Navigator.pushReplacementNamed(context, '/');
                       },
                       child: Text(
                         "Đăng Nhập",
