@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/CartProduct.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/OrderPage.dart';
+import 'package:mobile_project/views/SalesRegistration.dart';
 
 class DetailProduct extends StatefulWidget {
   DetailProduct({super.key, required this.pro});
@@ -10,9 +13,18 @@ class DetailProduct extends StatefulWidget {
   State<DetailProduct> createState() => _DetailProductState();
 }
 
+var Tensp = '';
+var Giasp;
+var soluong;
+
 class _DetailProductState extends State<DetailProduct> {
+  SalesRegistration? saler;
+
   @override
   Widget build(BuildContext context) {
+    Tensp = widget.pro.TenSP;
+    Giasp = int.parse(widget.pro.GiaSP);
+    // soluong = ;
     return Scaffold(
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,7 +52,15 @@ class _DetailProductState extends State<DetailProduct> {
           Expanded(
             child: MaterialButton(
               color: Colors.blueAccent,
-              onPressed: () {},
+              onPressed: () {
+                saveSaler();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CartScreen(
+                              pro: widget.pro,
+                            )));
+              },
               child: Container(
                 alignment: Alignment.center,
                 height: 70,
@@ -315,4 +335,30 @@ class _DetailProductState extends State<DetailProduct> {
       ),
     );
   }
+}
+
+Future<void> addSaler(CartProduct cartProduct) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('CartProduct')
+        .doc(cartProduct.TenSP)
+        .set(cartProduct.tomap());
+  } catch (e) {
+    print('Error adding profile to Firestore: $e');
+  }
+}
+
+void saveSaler(
+    //String tenshop, String cccd, String phone, String diachi, String Email
+    ) {
+  CartProduct cartProduct = CartProduct(
+      //Tenshop: ,
+      Trangthai: true,
+      Sdt: '',
+      SoLuong: soluong,
+      TenSP: Tensp,
+      GiaSP: Giasp,
+      Giamgia: 0,
+      Tenshop: '');
+  addSaler(cartProduct);
 }

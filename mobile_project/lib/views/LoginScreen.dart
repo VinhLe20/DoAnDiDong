@@ -15,139 +15,120 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController phone = TextEditingController();
-  final TextEditingController diachi = TextEditingController();
-  final TextEditingController ten = TextEditingController();
-  final TextEditingController shop = TextEditingController();
-  final TextEditingController image = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+  var phone = '';
   @override
   void initState() {
-    phoneNumberController.text = "+84";
+    countryController.text = "+84";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlue[200],
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {},
-          ),
-        ),
         body: Container(
-          margin: EdgeInsets.only(left: 25, right: 25),
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      margin: EdgeInsets.only(left: 25, right: 25),
+      alignment: Alignment.center,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 250,
+                width: 450,
+                child: Image.asset("assets/Logo.jpg"),
+              ),
+              const Row(
                 children: [
-                  Container(
-                    height: 250,
-                    width: 450,
-                    child: Image.asset("assets/Logo.jpg"),
-                  ),
-                  const Row(
-                    children: [
-                      Text(
-                        "Xin Chào,",
-                        style: TextStyle(fontSize: 30),
-                      )
-                    ],
-                  ),
-                  const Row(
-                    children: [Text("Đăng nhập tài khoản hoặc tạo tài khoản")],
-                  ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: 40,
-                          child: TextField(
-                            controller: phoneNumberController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        const Text(
-                          "|",
-                          style: TextStyle(fontSize: 33, color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: TextField(
-                          onChanged: (value) {
-                            phone.text = value;
-                          },
-                          //  controller: phone,
-                          keyboardType: TextInputType.phone,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Phone",
-                          ),
-                        ))
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 45,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                        onPressed: () async {
-                          await FirebaseAuth.instance.verifyPhoneNumber(
-                              phoneNumber:
-                                  '${phoneNumberController.text + phone.text}',
-                              verificationCompleted:
-                                  (PhoneAuthCredential credential) {},
-                              verificationFailed: (FirebaseAuthException e) {},
-                              codeSent:
-                                  (String verificationId, int? resendToken) {
-                                LoginScreen.verify = verificationId;
-
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          OTPScreen(phone: phone.text),
-                                    ));
-                              },
-                              codeAutoRetrievalTimeout:
-                                  (String verificationId) {});
-                        },
-                        child: Text(
-                          "Tiếp Tục",
-                          style: TextStyle(color: Colors.white),
-                        )),
+                  Text(
+                    "Xin Chào,",
+                    style: TextStyle(fontSize: 30),
                   )
                 ],
               ),
-            ),
+              const Row(
+                children: [Text("Đăng nhập tài khoản hoặc tạo tài khoản")],
+              ),
+              const SizedBox(
+                height: 16.0,
+              ),
+              Container(
+                height: 55,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SizedBox(
+                      width: 40,
+                      child: TextField(
+                        controller: countryController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    const Text(
+                      "|",
+                      style: TextStyle(fontSize: 33, color: Colors.grey),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                        child: TextField(
+                      onChanged: (value) {
+                        phone = value;
+                      },
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                      ),
+                    ))
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 45,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () async {
+                      await FirebaseAuth.instance.verifyPhoneNumber(
+                          phoneNumber: '${countryController.text + phone}',
+                          verificationCompleted:
+                              (PhoneAuthCredential credential) {},
+                          verificationFailed: (FirebaseAuthException e) {},
+                          codeSent: (String verificationId, int? resendToken) {
+                            LoginScreen.verify = verificationId;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OTPScreen(phone: phone),
+                                ));
+                          },
+                          codeAutoRetrievalTimeout: (String verificationId) {});
+                    },
+                    child: const Text("Send the code")),
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 }

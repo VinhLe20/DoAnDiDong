@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -135,6 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       itemCount: products.length,
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
