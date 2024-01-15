@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Cart.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key});
@@ -9,13 +11,14 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   bool? isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading:
-            IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
+            IconButton(onPressed: () {
+              Navigator.pop(context);
+            }, icon: const Icon(Icons.arrow_back)),
         title: const Text("Giỏ hàng"),
         actions: const [
           Padding(
@@ -71,7 +74,7 @@ class _CartScreenState extends State<CartScreen> {
                             },
                           ),
                           const Icon(Icons.store),
-                          const Text("Ten cua hang")
+                          const Text("Tên cửa hàng")
                         ],
                       ),
                     ),

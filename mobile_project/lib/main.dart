@@ -32,16 +32,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-// <<<<<<< HEAD
-//       // initialRoute: '/',
-//       // routes: {
-//       //   '/': (context) => const HomeScreen(),
-//       //   '/detailProduct': (context) => const DetialProduct(),
-//       //   '/cart': (context) => const CartScreen(),
-//       //   '/changeProfile': (context) => const Profile()
-//       // },
-//       home: HomeScreen(),
-// =======
       initialRoute: '/',
       routes: {
         '/': (context) => const MainScreen(),

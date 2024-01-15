@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/models/Cart.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/OrderPage.dart';
@@ -11,6 +14,24 @@ class DetailProduct extends StatefulWidget {
 }
 
 class _DetailProductState extends State<DetailProduct> {
+  String userPhone = UserProfile.userPhone;
+  Future<void> createCart(Cart cart) async {
+    try {
+      Map<String, dynamic> orderMap = {
+        'productName': cart.TenSP,
+        //'shopName': cart.Tenshop,
+        'userPhone': cart.Sdt,
+        'price': cart.GiaSP,
+        //'discount': cart.Giamgia,
+        'status': cart.Trangthai
+      };
+      await FirebaseFirestore.instance.collection('carts').add(orderMap);
+      print('Đã thêm vào giỏ hàng thành công!');
+      Navigator.pop(context);
+    } catch (e) {
+      print('Thêm vào giỏ hàng thất bại: $e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +45,11 @@ class _DetailProductState extends State<DetailProduct> {
               child: Container(
                 alignment: Alignment.center,
                 height: 70,
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.chat),
-                    const Padding(
+                    Icon(Icons.chat),
+                    Padding(
                       padding: EdgeInsets.only(top: 5.0),
                       child: Text('Chat'),
                     ),
@@ -40,15 +61,23 @@ class _DetailProductState extends State<DetailProduct> {
           Expanded(
             child: MaterialButton(
               color: Colors.blueAccent,
-              onPressed: () {},
+              onPressed: () {
+                Cart cart = Cart(
+                          TenSP: widget.pro.TenSP,
+                          GiaSP: widget.pro.GiaSP,
+                          Trangthai: true,
+                          Sdt: userPhone
+                      );
+                      createCart(cart);
+              },
               child: Container(
                 alignment: Alignment.center,
                 height: 70,
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.shopping_basket),
-                    const Padding(
+                    Icon(Icons.shopping_basket),
+                    Padding(
                       padding: EdgeInsets.only(top: 5.0),
                       child: Text('Thêm giỏ hàng'),
                     ),

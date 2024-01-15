@@ -43,7 +43,6 @@ class _ProfileState extends State<Profile> {
     _ten.text = acc.name;
     _diachi.text = acc.adress;
     return Scaffold(
-      //bottomNavigationBar: BottomNavigator(),
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
