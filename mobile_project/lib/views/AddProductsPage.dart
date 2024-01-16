@@ -19,6 +19,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
   final TextEditingController _describe = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
   final TextEditingController _Tenshop = TextEditingController();
+  final TextEditingController _Loaisp = TextEditingController();
   var _phone = '0927968410';
   //  String phoneNumber = UserData.phoneNumber;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -175,6 +176,20 @@ class _AddProductsPageState extends State<AddProductsPage> {
                 prefixIcon: Icon(Icons.class_),
               ),
             ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextField(
+              controller: _Loaisp,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                prefixIcon: Icon(Icons.category),
+              ),
+            ),
             SizedBox(
               height: 16,
             ),
@@ -246,6 +261,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
         Giamgia: _price.text,
         MoTa: _describe.text,
         SoLuong: _quantity.text,
+        loaiSp: _Loaisp.text,
         Image: "",
         Sdt: '0927968410',
         Trangthai: true);

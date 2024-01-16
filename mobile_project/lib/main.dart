@@ -4,6 +4,7 @@ import 'package:mobile_project/views/AccountScreen.dart';
 import 'package:mobile_project/views/AddProductsPage.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/CategoryDetail.dart';
+import 'package:mobile_project/views/CategoryScreen.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';

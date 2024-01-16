@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const ForgetScreen()));
                         },
-                        child: Text("Bạn đã quên mật khẩu ?"))
+                        child: const Text("Bạn đã quên mật khẩu ?"))
                   ],
                 )
               ],

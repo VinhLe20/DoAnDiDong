@@ -39,6 +39,7 @@ class _OrderPageState extends State<OrderPage> {
     String userAddress = UserProfile.userAddress;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
         title: Text("Đặt Hàng"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_outlined),

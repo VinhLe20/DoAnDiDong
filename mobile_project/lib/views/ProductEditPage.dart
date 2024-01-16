@@ -7,7 +7,7 @@ import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 
 class ProductEditPage extends StatefulWidget {
-  ProductEditPage({super.key,required this.product});
+  ProductEditPage({super.key, required this.product});
   Product product;
   @override
   State<ProductEditPage> createState() => _ProductEditPageState();
@@ -18,6 +18,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
   final TextEditingController _price = TextEditingController();
   final TextEditingController _describe = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
+  final TextEditingController _Loaisp = TextEditingController();
   imagePicker image = imagePicker();
   bool onTap = false;
   @override
@@ -35,17 +36,15 @@ class _ProductEditPageState extends State<ProductEditPage> {
               alignment: Alignment.topCenter,
               child: ElevatedButton(
                 onPressed: () async {
-                        await image.pickImage();
-                        setState(() {
-                          onTap = true;
-                        });
-                      },
+                  await image.pickImage();
+                  setState(() {
+                    onTap = true;
+                  });
+                },
                 child: Container(
                   child: onTap
-                              ? Image.file(File(imagePicker.path),
-                                  fit: BoxFit.cover)
-                              : Image.network(widget.product.Image,
-                                  fit: BoxFit.cover),
+                      ? Image.file(File(imagePicker.path), fit: BoxFit.cover)
+                      : Image.network(widget.product.Image, fit: BoxFit.cover),
                 ),
                 style: ElevatedButton.styleFrom(
                     fixedSize: Size(300, 200),
@@ -161,6 +160,20 @@ class _ProductEditPageState extends State<ProductEditPage> {
                 prefixIcon: Icon(Icons.class_),
               ),
             ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextField(
+              controller: _Loaisp,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                prefixIcon: Icon(Icons.category),
+              ),
+            ),
             SizedBox(
               height: 16,
             ),
@@ -187,16 +200,17 @@ class _ProductEditPageState extends State<ProductEditPage> {
                 ElevatedButton(
                   onPressed: () {
                     image.uploadImageToFirebase();
-                      Product update = Product(
-      Image: imagePicker.imageNetwork,
-        TenSP: _name.text,
-        GiaSP: _price.text,
-        MoTa: _describe.text,
-        SoLuong: _quantity.text,
-        Trangthai: true,
-        Tenshop: '',
-        Giamgia: '',
-        Sdt: '');
+                    Product update = Product(
+                        Image: imagePicker.imageNetwork,
+                        TenSP: _name.text,
+                        GiaSP: _price.text,
+                        MoTa: _describe.text,
+                        SoLuong: _quantity.text,
+                        Trangthai: true,
+                        loaiSp: _Loaisp.text,
+                        Tenshop: '',
+                        Giamgia: '',
+                        Sdt: '');
                     upProduct(update);
                   },
                   child: Text(
@@ -229,13 +243,12 @@ class _ProductEditPageState extends State<ProductEditPage> {
   }
 
   void upProduct(Product product) {
-  
     updateProduct(product);
   }
 
   void delProduct() {
     Product product = Product(
-      Image: "",
+        Image: "",
         TenSP: _name.text,
         GiaSP: "",
         MoTa: "",
@@ -243,6 +256,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
         Trangthai: false,
         Tenshop: '',
         Giamgia: '',
+        loaiSp: '',
         Sdt: '');
     updateProduct(product);
   }

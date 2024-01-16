@@ -8,6 +8,7 @@ class Product {
   String? Sdt;
   String SoLuong;
   bool Trangthai;
+  String loaiSp;
   Product(
       {required this.TenSP,
       required this.GiaSP,
@@ -16,7 +17,9 @@ class Product {
       required this.SoLuong,
       required this.Giamgia,
       required this.Sdt,
-      required this.Trangthai,required this.Image});
+      required this.Trangthai,
+      required this.Image,
+      required this.loaiSp});
   Map<String, dynamic> tomap() {
     return {
       "tensp": TenSP,
@@ -27,7 +30,8 @@ class Product {
       "GiamGia": Giamgia,
       "Sdt": Sdt,
       "Tenshop": Tenshop,
-      "Image":Image
+      "Image": Image,
+      "loáip": loaiSp
     };
   }
 
@@ -41,6 +45,7 @@ class Product {
         SoLuong: map['SoLuong'] ?? '',
         Giamgia: map['GiamGia'] ?? '',
         Sdt: map['Sdt'] ?? ' ',
-        Tenshop: map['Tenshop'] ?? ' ');
+        Tenshop: map['Tenshop'] ?? ' ',
+        loaiSp: map['Tenshop'] ?? ' ');
   }
 }
