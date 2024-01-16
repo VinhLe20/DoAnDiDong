@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/CartProduct.dart';
 import 'package:mobile_project/models/product.dart';
-import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/OrderPage.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
@@ -112,16 +111,17 @@ class _DetailProductState extends State<DetailProduct> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
-                } else
+                } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => OrderPage(product: widget.pro),
                     ),
                   );
+                }
               },
               child: Container(
                 alignment: Alignment.center,
@@ -135,7 +135,7 @@ class _DetailProductState extends State<DetailProduct> {
       body: SingleChildScrollView(
         child: Container(
           child: Padding(
-            padding: EdgeInsets.only(bottom: 12.0),
+            padding: const EdgeInsets.only(bottom: 12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -168,16 +168,16 @@ class _DetailProductState extends State<DetailProduct> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${widget.pro.TenSP}",
-                        style: TextStyle(
+                        widget.pro.TenSP,
+                        style: const TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        "${widget.pro.GiaSP}",
-                        style: TextStyle(
+                        widget.pro.GiaSP,
+                        style: const TextStyle(
                           fontSize: 18.0,
                           color: Colors.red,
                         ),
@@ -213,14 +213,14 @@ class _DetailProductState extends State<DetailProduct> {
                       const SizedBox(
                         height: 20.0,
                       ),
-                      Container(
-                          decoration: BoxDecoration(color: Colors.grey),
+                      Container(width: MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(color: Colors.grey),
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Mô tả sản phẩm',
+                                const Text('Mô tả sản phẩm',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0)),

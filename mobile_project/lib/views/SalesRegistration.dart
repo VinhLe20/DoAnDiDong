@@ -11,7 +11,7 @@ class SalesRegistration extends StatefulWidget {
 }
 
 class _SalesRegistrationState extends State<SalesRegistration> {
-  User? _user = FirebaseAuth.instance.currentUser;
+  final User? _user = FirebaseAuth.instance.currentUser;
   Future<void> addSaler(Saler saler) async {
     try {
       await FirebaseFirestore.instance
@@ -43,16 +43,16 @@ class _SalesRegistrationState extends State<SalesRegistration> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context, true);
           },
         ),
-        title: Text("Thông Tin Shop"),
+        title: const Text("Thông Tin Shop"),
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -78,7 +78,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.shopping_cart),
+                prefixIcon: const Icon(Icons.shopping_cart),
               ),
             ),
             const SizedBox(
@@ -106,7 +106,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.card_giftcard_outlined),
+                prefixIcon: const Icon(Icons.card_giftcard_outlined),
               ),
             ),
             const SizedBox(
@@ -134,7 +134,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.email_outlined),
+                prefixIcon: const Icon(Icons.email_outlined),
               ),
             ),
             const SizedBox(
@@ -162,7 +162,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.phone),
+                prefixIcon: const Icon(Icons.phone),
               ),
             ),
             const SizedBox(
@@ -190,7 +190,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.location_on),
+                prefixIcon: const Icon(Icons.location_on),
               ),
             ),
             const SizedBox(
@@ -236,14 +236,14 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                   updateAccount();
                 }
               },
-              child: Text(
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(20.0),
+                  minimumSize: const Size(400.0, 50.0),
+                  backgroundColor: Colors.blue),
+              child: const Text(
                 "Lưu",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(20.0),
-                  minimumSize: Size(400.0, 50.0),
-                  backgroundColor: Colors.blue),
             )
           ],
         ),

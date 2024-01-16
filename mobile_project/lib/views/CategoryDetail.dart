@@ -3,9 +3,7 @@ import 'package:mobile_project/views/ListProduct.dart';
 
 class CategoryDetail extends StatefulWidget {
   final String categoryName;
-  const CategoryDetail({
-    super.key,required this.categoryName
-  });
+  const CategoryDetail({super.key, required this.categoryName});
 
   @override
   State<CategoryDetail> createState() => _CategoryDetailState();
@@ -26,7 +24,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
         title: Text(widget.categoryName),
       ),
       body: Padding(
-          padding: EdgeInsets.all(8), child: ProductList(loaiSp: widget.categoryName)),
+          padding: EdgeInsets.all(8),
+          child: ProductList(loaiSp: widget.categoryName)),
     );
   }
 }

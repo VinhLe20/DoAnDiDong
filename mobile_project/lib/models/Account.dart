@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class UserProfile {
   static String userName = "";
@@ -41,13 +40,13 @@ class Account {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     QuerySnapshot querySnapshot = await users.get();
     querySnapshot.docs.forEach((doc) async {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       if (email == doc.id) {
         DocumentReference document = users.doc(doc.id);
-        if (image.isNotEmpty)
+        if (image.isNotEmpty) {
           dataToUpdate = {'Image': image, 'Adress': adress, 'Name': name};
-        else
+        } else {
           dataToUpdate = {'Adress': adress, 'Name': name};
+        }
         try {
           await document.update(dataToUpdate);
         } catch (e) {}

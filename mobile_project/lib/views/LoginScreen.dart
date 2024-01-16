@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_project/models/Account.dart';
@@ -23,6 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
       Account.isUserLoggedIn = true;
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
       print("Error during login: $e");
     }
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   height: 250,
                   width: 450,
                   child: Image.asset("assets/Logo.jpg"),
@@ -63,13 +64,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Row(
                   children: [
-                    Text("Đăng nhập tài khoản "),
+                    const Text("Đăng nhập tài khoản "),
                     TextButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const Register()));
                         },
-                        child: Text("Tạo Tài Khoản Mới"))
+                        child: const Text("Tạo Tài Khoản Mới"))
                   ],
                 ),
                 const SizedBox(
@@ -137,16 +138,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 40),
                           backgroundColor: Colors.lightBlue[200]),
                       onPressed: () {
                         signInWithEmailAndPassword(email, password);
-                        Account.isUserLoggedIn = true;
-                        Navigator.pop(context);
-                        Navigator.pushReplacementNamed(context, '/');
                       },
-                      child: Text(
+                      child: const Text(
                         "Đăng Nhập",
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),

@@ -1,13 +1,8 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/ImagePicker.dart';
-import 'package:mobile_project/views/AccountScreen.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -17,9 +12,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  TextEditingController _ten = TextEditingController();
-  TextEditingController _diachi = TextEditingController();
-  TextEditingController _phone = TextEditingController();
+  final TextEditingController _ten = TextEditingController();
+  final TextEditingController _diachi = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
   imagePicker image = imagePicker();
   bool onTap = false;
   static Account acc = Account("", "", "", "", false, "");
@@ -36,7 +31,7 @@ class _ProfileState extends State<Profile> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
       ),
     );
   }
@@ -56,7 +51,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context, true);
           },
@@ -72,10 +67,11 @@ class _ProfileState extends State<Profile> {
           image.uploadImageToFirebase();
           netword = imagePicker.imageNetwork;
           try {
-            if (onTap)
+            if (onTap) {
               acc.updateAccount(user?.email, netword, _ten.text, _diachi.text);
-            else
+            } else {
               acc.updateAccount(user?.email, "", _ten.text, _diachi.text);
+            }
             _showSnackBar("Thay đổi thông tin thành công");
           } catch (e) {}
         },
@@ -125,7 +121,7 @@ class _ProfileState extends State<Profile> {
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: 130,
                                       width: 130,
                                       child: ClipOval(
@@ -137,9 +133,9 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                   ]),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
-                                child: const Text("Chỉnh sửa hình ảnh"),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 15.0),
+                                child: Text("Chỉnh sửa hình ảnh"),
                               ),
                             ]),
                       ),
@@ -230,8 +226,8 @@ class _ProfileState extends State<Profile> {
                     const SizedBox(
                       height: 170,
                     ),
-                    Row(children: [
-                      const SizedBox(
+                    const Row(children: [
+                      SizedBox(
                         width: 280,
                       ),
                     ])

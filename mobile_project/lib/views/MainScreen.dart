@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/AccountScreen.dart';
@@ -17,11 +16,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  List<Widget> _pages = [
-    HomeScreen(),
-    CategoryScreen(),
-    NotificationsScreen(),
-    AccountScreen(),
+  final List<Widget> _pages = [
+    const HomeScreen(),
+    const CategoryScreen(),
+    const NotificationsScreen(),
+    const AccountScreen(),
   ];
 
   @override
@@ -35,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
           if (index == 3 && !Account.isUserLoggedIn) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
             );
             return;
           }
@@ -43,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Trang chủ',

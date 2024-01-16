@@ -32,7 +32,7 @@ class _RegisterState extends State<Register> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
       ),
     );
   }
@@ -55,7 +55,7 @@ class _RegisterState extends State<Register> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   height: 250,
                   width: 450,
                   child: Image.asset("assets/Logo.jpg"),
@@ -194,7 +194,7 @@ class _RegisterState extends State<Register> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 40),
                           backgroundColor: Colors.lightBlue[200]),
                       onPressed: () {
@@ -213,7 +213,7 @@ class _RegisterState extends State<Register> {
                           _showSnackBar("Mất khẩu không khớp");
                         }
                       },
-                      child: Text(
+                      child: const Text(
                         "Đăng Ký",
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),

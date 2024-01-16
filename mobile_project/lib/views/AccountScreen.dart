@@ -30,6 +30,7 @@ class _AccountScreenState extends State<AccountScreen> {
   void initState() {
     super.initState();
     _loadData();
+   
   }
 
   @override
@@ -53,7 +54,7 @@ class _AccountScreenState extends State<AccountScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 90.0,
                     height: 90.0,
                     child: ClipOval(
@@ -75,7 +76,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             final result = await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Profile(),
+                                builder: (context) => const Profile(),
                               ),
                             );
                             if (result) {
@@ -212,7 +213,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     context,
                     MaterialPageRoute(
                         builder: ((context) =>
-                            !acc.shop ? SalesRegistration() : ShopsManager())));
+                            !acc.shop ? const SalesRegistration() : const ShopsManager())));
                 if (result) {
                   setState(() {
                     _loadData();
@@ -241,26 +242,26 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             MaterialButton(
-              onPressed: () {},
-              child: SizedBox(
-                height: 50,
-                child: MaterialButton(
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
+              onPressed: () async{
+await FirebaseAuth.instance.signOut();
                     Account.isUserLoggedIn = false;
                     final result = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
+                          builder: (context) => const LoginScreen(),
                         ));
                     if (result) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MainScreen(),
+                            builder: (context) => const MainScreen(),
                           ));
                     }
-                  },
+              },
+              child: const SizedBox(
+                height: 50,
+                child: SizedBox(
+                  height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
