@@ -40,7 +40,6 @@ class Account {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     QuerySnapshot querySnapshot = await users.get();
     querySnapshot.docs.forEach((doc) async {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       if (email == doc.id) {
         DocumentReference document = users.doc(doc.id);
         if (image.isNotEmpty) {
@@ -55,16 +54,17 @@ class Account {
     });
   }
 
-  static Future<void> addAccount(String id) async {
+  static Future<void> addAccount(
+      String id, String phone, String address) async {
     Map<String, dynamic> dataToUpdate;
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     dataToUpdate = {
       "Name": id,
       "Image": "",
       "Email": id,
-      "Phone": "",
+      "Phone": phone,
       "Shop": false,
-      "Adress": ""
+      "Adress": address
     };
     await users.doc(id).set(dataToUpdate);
     print(dataToUpdate);

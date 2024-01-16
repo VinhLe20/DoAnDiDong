@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/views/ForgetScreen.dart';
+import 'package:mobile_project/views/MainSCreen.dart';
+import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/Register.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,6 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
       Account.isUserLoggedIn = true;
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
       print("Error during login: $e");
     }
@@ -137,14 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               vertical: 15, horizontal: 40),
                           backgroundColor: Colors.lightBlue[200]),
                       onPressed: () {
-                        try{
                         signInWithEmailAndPassword(email, password);
-                        Account.isUserLoggedIn = true;
-                        Navigator.pop(context);
-                        Navigator.pushReplacementNamed(context, '/');}
-                        catch(e){
-                          
-                        }
                       },
                       child: const Text(
                         "Đăng Nhập",
@@ -153,6 +151,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     )
                   ],
                 ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ForgetScreen()));
+                        },
+                        child: Text("Bạn đã quên mật khẩu ?"))
+                  ],
+                )
               ],
             ),
           ),

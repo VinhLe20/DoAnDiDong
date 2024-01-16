@@ -19,7 +19,7 @@ class _OrderPageState extends State<OrderPage> {
         'image': order.image,
         'productName': order.productName,
         'quantity': order.quantity,
-        'userPhone': order.userPhone,
+        'email': order.email,
         'userAddress': order.userAddress,
         'totalAmount': order.totalAmount,
         'status': order.status,
@@ -214,7 +214,8 @@ class _OrderPageState extends State<OrderPage> {
                           (SoLuong *
                               int.parse(widget.product.GiaSP.toString())),
                           'Chờ Xác Nhận',
-                          widget.product.Image);
+                          widget.product.Image,
+                          "");
                       createOrder(order2);
                     },
                     style: ElevatedButton.styleFrom(

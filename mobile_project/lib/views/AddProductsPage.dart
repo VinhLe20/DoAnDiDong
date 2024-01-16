@@ -8,8 +8,8 @@ import 'package:mobile_project/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddProductsPage extends StatefulWidget {
-   AddProductsPage({super.key,required this.nameShop});
-String nameShop;
+  AddProductsPage({super.key, required this.nameShop});
+  String nameShop;
   @override
   State<AddProductsPage> createState() => _AddProductsPageState();
 }
@@ -19,20 +19,21 @@ class _AddProductsPageState extends State<AddProductsPage> {
   final TextEditingController _price = TextEditingController();
   final TextEditingController _describe = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
-      String netword ="";
+  String netword = "";
   Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: "", Tenshop: "");
   //  String phoneNumber = UserData.phoneNumber;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? email = FirebaseAuth.instance.currentUser;
   User? _user;
   imagePicker image = imagePicker();
-   void _loadData() {
-   Saler.getData(email?.email).then((value) {
-    setState(() {
+  void _loadData() {
+    Saler.getData(email?.email).then((value) {
+      setState(() {
         shop = Saler.saler;
-    });
+      });
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -52,13 +53,14 @@ class _AddProductsPageState extends State<AddProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          Navigator.pop(context,true);
-        
-                            },icon: const Icon(Icons.arrow_back),),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         title: const Text("Thêm Sản Phẩm"),
       ),
       body: SingleChildScrollView(
@@ -197,10 +199,9 @@ class _AddProductsPageState extends State<AddProductsPage> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    
-                   await image.uploadImageToFirebase();
-                  netword = imagePicker.imageNetwork;
-                  saveProduct();
+                    await image.uploadImageToFirebase();
+                    netword = imagePicker.imageNetwork;
+                    saveProduct();
                     //   updateProduct(_user?.phoneNumber, _Tenshop.text);
                     // updateProduct(_phone, _Tenshop.text);
                   },
