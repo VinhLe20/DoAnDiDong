@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Order.dart';
-import 'package:mobile_project/views/MainSCreen.dart';
 
 class donhangcuatoi extends StatefulWidget {
   donhangcuatoi({super.key, required this.initialIndex});
@@ -38,14 +37,14 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.arrow_back)),
-          title: Text(
+              icon: const Icon(Icons.arrow_back)),
+          title: const Text(
             "Đơn hàng của tôi",
             style: TextStyle(
               fontSize: 25,
             ),
           ),
-          bottom: TabBar(
+          bottom: const TabBar(
               labelPadding: EdgeInsets.symmetric(horizontal: 15.0),
               labelColor: Colors.red, // Màu của tab được chọn
               unselectedLabelColor: Colors.black,
@@ -78,9 +77,9 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
                     oders[index].status);
               },
             ),
-            Center(child: Text('Tab 2 Content')),
-            Center(child: Text('Tab 3 Content')),
-            Center(child: Text('Tab 4 Content')),
+            const Center(child: Text('Tab 2 Content')),
+            const Center(child: Text('Tab 3 Content')),
+            const Center(child: Text('Tab 4 Content')),
           ],
         ),
       ),
@@ -90,10 +89,10 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
 
 ChoXacNhan(String image, String name, int total, int quantity, String status) {
   return Column(children: [
-    Row(
+    const Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(height: 50, width: 50, child: Icon(Icons.store)),
+        SizedBox(height: 50, width: 50, child: Icon(Icons.store)),
         SizedBox(
           width: 5,
         ),
@@ -111,12 +110,12 @@ ChoXacNhan(String image, String name, int total, int quantity, String status) {
     Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: 150,
           height: 150,
           child: Image.network(image, fit: BoxFit.cover),
         ),
-        SizedBox(
+        const SizedBox(
           width: 8,
         ),
         Expanded(
@@ -125,14 +124,14 @@ ChoXacNhan(String image, String name, int total, int quantity, String status) {
           children: [
             Text(
               name,
-              style: TextStyle(fontSize: 15),
+              style: const TextStyle(fontSize: 15),
             ),
             const SizedBox(
               height: 40,
             ),
             Text(
               "đ $total",
-              style: TextStyle(color: Colors.red, fontSize: 15),
+              style: const TextStyle(color: Colors.red, fontSize: 15),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -141,7 +140,7 @@ ChoXacNhan(String image, String name, int total, int quantity, String status) {
                 Expanded(
                   child: TextButton(
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         "Hủy đơn hàng",
                         style: TextStyle(color: Colors.red),
                       )),

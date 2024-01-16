@@ -39,9 +39,9 @@ class _OrderPageState extends State<OrderPage> {
     String userAddress = UserProfile.userAddress;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Đặt Hàng"),
+        title: const Text("Đặt Hàng"),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_outlined),
+          icon: const Icon(Icons.arrow_back_outlined),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -49,18 +49,18 @@ class _OrderPageState extends State<OrderPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 150,
                     height: 150,
                     child: Image.asset("assets/ip15.jpg"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Expanded(
@@ -68,15 +68,15 @@ class _OrderPageState extends State<OrderPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${widget.product.TenSP.toString()}',
-                        style: TextStyle(fontSize: 18),
+                        widget.product.TenSP.toString(),
+                        style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(
                         height: 50,
                       ),
                       Text(
                         "đ ${widget.product.GiaSP.toString()}",
-                        style: TextStyle(color: Colors.red, fontSize: 18),
+                        style: const TextStyle(color: Colors.red, fontSize: 18),
                       ),
                       Row(
                         children: [
@@ -89,11 +89,11 @@ class _OrderPageState extends State<OrderPage> {
                                 }
                               });
                             },
-                            icon: Icon(Icons.remove),
+                            icon: const Icon(Icons.remove),
                           ),
                           Text(
                             "$SoLuong",
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                           IconButton(
                             onPressed: () {
@@ -101,7 +101,7 @@ class _OrderPageState extends State<OrderPage> {
                                 SoLuong++;
                               });
                             },
-                            icon: Icon(Icons.add),
+                            icon: const Icon(Icons.add),
                           ),
                         ],
                       )
@@ -109,7 +109,7 @@ class _OrderPageState extends State<OrderPage> {
                   ))
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 60,
               ),
               const Row(
@@ -138,7 +138,7 @@ class _OrderPageState extends State<OrderPage> {
               ),
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                       child: Text(
                     "Điện Thoại",
                     textAlign: TextAlign.left,
@@ -146,9 +146,9 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                   Expanded(
                       child: Text(
-                    "${userPhone}",
+                    userPhone,
                     textAlign: TextAlign.right,
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                   )),
                 ],
               ),
@@ -162,7 +162,7 @@ class _OrderPageState extends State<OrderPage> {
               ),
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                       child: Text(
                     "Địa Chỉ",
                     textAlign: TextAlign.left,
@@ -170,9 +170,9 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                   Expanded(
                       child: Text(
-                    "${userAddress}",
+                    userAddress,
                     textAlign: TextAlign.right,
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                   )),
                 ],
               ),
@@ -181,7 +181,7 @@ class _OrderPageState extends State<OrderPage> {
                 thickness: 2,
                 height: 20,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
               Row(
@@ -191,23 +191,23 @@ class _OrderPageState extends State<OrderPage> {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Tổng Cộng ",
                         style: TextStyle(fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
                         "${(SoLuong * int.parse(widget.product.GiaSP.toString()))}VND",
-                        style: TextStyle(color: Colors.red, fontSize: 20),
+                        style: const TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     ],
                   )),
                   ElevatedButton(
                     onPressed: () {
                       Order2 order2 = Order2(
-                          '${widget.product.TenSP.toString()}',
+                          widget.product.TenSP.toString(),
                           SoLuong,
                           userPhone,
                           userAddress,
@@ -217,15 +217,15 @@ class _OrderPageState extends State<OrderPage> {
                           widget.product.Image);
                       createOrder(order2);
                     },
-                    child: Text(
-                      "Mua Hàng",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
                     style: ElevatedButton.styleFrom(
-                        fixedSize: Size(180, 60),
+                        fixedSize: const Size(180, 60),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0.0)),
                         backgroundColor: Colors.blue),
+                    child: const Text(
+                      "Mua Hàng",
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
                   )
                 ],
               )

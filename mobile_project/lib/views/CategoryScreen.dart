@@ -44,7 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       width: 70,
                       height: 70,
                     ),
-                    Text("Thể thao & du lịch", textAlign: TextAlign.center)
+                    const Text("Thể thao & du lịch", textAlign: TextAlign.center)
                   ],
                 ),
               ),
@@ -62,7 +62,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       width: 70,
                       height: 70,
                     ),
-                    Text("Ô tô- xe máy", textAlign: TextAlign.center),
+                    const Text("Ô tô- xe máy", textAlign: TextAlign.center),
                   ],
                 ),
               ),
@@ -80,7 +80,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       width: 70,
                       height: 70,
                     ),
-                    Text("Bách hóa online", textAlign: TextAlign.center)
+                    const Text("Bách hóa online", textAlign: TextAlign.center)
                   ],
                 ),
               )
@@ -105,7 +105,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         width: 70,
                         height: 70,
                       ),
-                      Text("Nhà cửa", textAlign: TextAlign.center)
+                      const Text("Nhà cửa", textAlign: TextAlign.center)
                     ],
                   ),
                 ),
@@ -122,7 +122,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         width: 70,
                         height: 70,
                       ),
-                      Text("Giày dép", textAlign: TextAlign.center)
+                      const Text("Giày dép", textAlign: TextAlign.center)
                     ],
                   ),
                 ),
@@ -140,7 +140,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         width: 70,
                         height: 70,
                       ),
-                      Text("Máy tính & Laptop", textAlign: TextAlign.center)
+                      const Text("Máy tính & Laptop", textAlign: TextAlign.center)
                     ],
                   ),
                 )
@@ -166,7 +166,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         width: 70,
                         height: 70,
                       ),
-                      Text("Đồng hồ", textAlign: TextAlign.center)
+                      const Text("Đồng hồ", textAlign: TextAlign.center)
                     ],
                   ),
                 ),
@@ -184,7 +184,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         width: 70,
                         height: 70,
                       ),
-                      Text("Thời trang nam", textAlign: TextAlign.center)
+                      const Text("Thời trang nam", textAlign: TextAlign.center)
                     ],
                   ),
                 ),
@@ -202,7 +202,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         width: 70,
                         height: 70,
                       ),
-                      Text("Thời trang nữ", textAlign: TextAlign.center)
+                      const Text("Thời trang nữ", textAlign: TextAlign.center)
                     ],
                   ),
                 ),

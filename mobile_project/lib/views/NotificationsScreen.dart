@@ -20,7 +20,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               Text("Thông báo"),
             ]),
       ),
-      body: Text(''),
+      body: const Text(''),
       //bottomNavigationBar: BottomNavigator(),
     );
   }

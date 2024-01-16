@@ -12,12 +12,12 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_rounded),
-        title: Text("Điện Tử Công Nghệ"),
+        leading: const Icon(Icons.arrow_back_rounded),
+        title: const Text("Điện Tử Công Nghệ"),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             children: [
               Container(
@@ -26,33 +26,33 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 150,
                           height: 150,
                           child: Image.asset("assets/ip15.jpg"),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8,
                         ),
-                        Expanded(
+                        const Expanded(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Điện Thoại Iphone 15 Pro Max 1TB",
                               style: TextStyle(fontSize: 15),
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 35,
                             ),
-                            const Text(
+                            Text(
                               "đ 50.990.000",
                               style: TextStyle(
                                   color: Colors.red,
                                   fontSize: 15,
                                   decoration: TextDecoration.lineThrough),
                             ),
-                            const Text(
+                            Text(
                               "đ 46.990.000",
                               style: TextStyle(color: Colors.red, fontSize: 15),
                             ),

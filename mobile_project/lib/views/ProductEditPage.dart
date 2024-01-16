@@ -4,11 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/ImagePicker.dart';
 import 'package:mobile_project/models/product.dart';
-import 'package:mobile_project/views/HomeScreen.dart';
 
 class ProductEditPage extends StatefulWidget {
-  ProductEditPage({super.key,required this.product});
+  ProductEditPage({super.key,required this.product ,required this.nameShop});
   Product product;
+  String nameShop;
   @override
   State<ProductEditPage> createState() => _ProductEditPageState();
 }
@@ -22,14 +22,19 @@ class _ProductEditPageState extends State<ProductEditPage> {
   bool onTap = false;
   @override
   Widget build(BuildContext context) {
+    _name.text = widget.product.TenSP;    _price.text = widget.product.GiaSP;
+    _describe.text = widget.product.MoTa;
+
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_rounded),
-        title: Text("Chỉnh Sửa Sản Phẩm"),
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context,true);
+        }, icon:  const Icon(Icons.arrow_back_rounded)),
+        title: const Text("Chỉnh Sửa Sản Phẩm"),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Align(
               alignment: Alignment.topCenter,
@@ -40,6 +45,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
                           onTap = true;
                         });
                       },
+                style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(300, 200),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0))),
                 child: Container(
                   child: onTap
                               ? Image.file(File(imagePicker.path),
@@ -47,10 +56,6 @@ class _ProductEditPageState extends State<ProductEditPage> {
                               : Image.network(widget.product.Image,
                                   fit: BoxFit.cover),
                 ),
-                style: ElevatedButton.styleFrom(
-                    fixedSize: Size(300, 200),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0.0))),
               ),
             ),
             const SizedBox(
@@ -77,7 +82,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.shopping_cart_rounded),
+                prefixIcon: const Icon(Icons.shopping_cart_rounded),
               ),
             ),
             const SizedBox(
@@ -104,7 +109,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.price_change),
+                prefixIcon: const Icon(Icons.price_change),
               ),
             ),
             const SizedBox(
@@ -131,7 +136,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.description),
+                prefixIcon: const Icon(Icons.description),
               ),
             ),
             const SizedBox(
@@ -158,10 +163,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     borderRadius: BorderRadius.circular(10.0)),
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                prefixIcon: Icon(Icons.class_),
+                prefixIcon: const Icon(Icons.class_),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Row(
@@ -169,19 +174,19 @@ class _ProductEditPageState extends State<ProductEditPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    delProduct();
+                    // delProduct();
                   },
-                  child: Text(
-                    "Xóa",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
                   style: ElevatedButton.styleFrom(
-                      fixedSize: Size(150, 60),
+                      fixedSize: const Size(150, 60),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0.0)),
                       backgroundColor: Colors.blue),
+                  child: const Text(
+                    "Xóa",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 65,
                 ),
                 ElevatedButton(
@@ -194,20 +199,20 @@ class _ProductEditPageState extends State<ProductEditPage> {
         MoTa: _describe.text,
         SoLuong: _quantity.text,
         Trangthai: true,
-        Tenshop: '',
+        Tenshop: widget.nameShop,
         Giamgia: '',
         Sdt: '');
-                    upProduct(update);
+                    upProduct(update,widget.product.TenSP);
                   },
-                  child: Text(
-                    "Lưu",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
                   style: ElevatedButton.styleFrom(
-                      fixedSize: Size(150, 60),
+                      fixedSize: const Size(150, 60),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0.0)),
                       backgroundColor: Colors.blue),
+                  child: const Text(
+                    "Lưu",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
                 ),
               ],
             )
@@ -217,33 +222,44 @@ class _ProductEditPageState extends State<ProductEditPage> {
     );
   }
 
-  Future<void> updateProduct(Product product) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('product')
-          .doc(product.TenSP)
-          .update(product.tomap());
-    } catch (e) {
-      print('Error adding profile to Firestore: $e');
-    }
+  Future<void> updateProduct(
+      Product pro,String Name) async {
+    Map<String, dynamic> dataToUpdate;
+    CollectionReference users = FirebaseFirestore.instance.collection('product');
+    QuerySnapshot querySnapshot = await users.get();
+    querySnapshot.docs.forEach((doc) async {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (data["tensp"] == Name && data["Tenshop"] == pro.Tenshop) {
+        DocumentReference document = users.doc(doc.id);
+        if (pro.Image.isNotEmpty) {
+          dataToUpdate = {'Image': pro.Image, 'tensp': pro.TenSP, 'giasp': pro.GiaSP,'MoTa':pro.MoTa};
+        } else {
+          dataToUpdate = { 'tensp': pro.TenSP, 'giasp': pro.GiaSP,'MoTa':pro.MoTa};
+        }
+        try {
+          await document.update(dataToUpdate);
+        } catch (e) {}
+      }
+    });
   }
 
-  void upProduct(Product product) {
+  void upProduct(Product product,String name) {
   
-    updateProduct(product);
+    updateProduct(product,name);
   }
 
-  void delProduct() {
-    Product product = Product(
-      Image: "",
-        TenSP: _name.text,
-        GiaSP: "",
-        MoTa: "",
-        SoLuong: "",
-        Trangthai: false,
-        Tenshop: '',
-        Giamgia: '',
-        Sdt: '');
-    updateProduct(product);
-  }
+  // void delProduct() {
+  //   Product product = Product(
+  //     Image: "",
+  //       TenSP: _name.text,
+  //       GiaSP: "",
+  //       MoTa: "",
+  //       SoLuong: "",
+  //       Trangthai: false,
+  //       Tenshop: '',
+  //       Giamgia: '',
+  //       Sdt: '');
+  //       String name;
+  //   updateProduct(product,name);
+  // }
 }

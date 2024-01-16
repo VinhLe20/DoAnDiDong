@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Product {
   String Image;
   String TenSP;
@@ -42,5 +44,28 @@ class Product {
         Giamgia: map['GiamGia'] ?? '',
         Sdt: map['Sdt'] ?? ' ',
         Tenshop: map['Tenshop'] ?? ' ');
+  }
+
+  static List<Product> products = List.filled(0, Product(TenSP: "", GiaSP: "", Tenshop: "", MoTa: "", SoLuong: "", Giamgia: "", Sdt: "", Trangthai: true, Image: ""),growable: true);
+  
+  static Future<void> getData(String tenshop) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('product');
+    QuerySnapshot querySnapshot = await users.get();
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (data["Tenshop"] == tenshop) {
+        Product product = Product(
+          TenSP: data["tensp"], 
+          GiaSP: data["giasp"], 
+          Tenshop: data["Tenshop"], 
+          MoTa: data["MoTa"], 
+          SoLuong: data["SoLuong"], 
+          Giamgia: data["GiamGia"], 
+          Sdt: data["Sdt"], 
+          Trangthai: data["TrangThai"],
+          Image: data["Image"]);
+        products.add(product);
+      }
+    }
   }
 }

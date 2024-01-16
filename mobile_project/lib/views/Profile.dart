@@ -1,13 +1,8 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/ImagePicker.dart';
-import 'package:mobile_project/views/AccountScreen.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -17,19 +12,28 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  TextEditingController _ten = TextEditingController();
-  TextEditingController _diachi = TextEditingController();
-  TextEditingController _phone = TextEditingController();
+  final TextEditingController _ten = TextEditingController();
+  final TextEditingController _diachi = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
   imagePicker image = imagePicker();
   bool onTap = false;
-  static Account acc = Account("", "", "", false, "");
+  static Account acc = Account("", "", "", "", false, "");
   User? user = FirebaseAuth.instance.currentUser;
   void _loadData() {
-    Account.getData(user?.displayName).then((value) {
+    Account.getData(user?.email).then((value) {
       setState(() {
         acc = Account.acc;
       });
     });
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
@@ -47,9 +51,9 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           },
         ),
         title: const Row(
@@ -62,10 +66,14 @@ class _ProfileState extends State<Profile> {
         onPressed: () {
           image.uploadImageToFirebase();
           netword = imagePicker.imageNetwork;
-          if (onTap)
-            acc.updateAccount("0937569365", netword, _ten.text, _diachi.text);
-          else
-            acc.updateAccount("0937569365", "", _ten.text, _diachi.text);
+          try {
+            if (onTap) {
+              acc.updateAccount(user?.email, netword, _ten.text, _diachi.text);
+            } else {
+              acc.updateAccount(user?.email, "", _ten.text, _diachi.text);
+            }
+            _showSnackBar("Thay đổi thông tin thành công");
+          } catch (e) {}
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -113,7 +121,7 @@ class _ProfileState extends State<Profile> {
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: 130,
                                       width: 130,
                                       child: ClipOval(
@@ -125,9 +133,9 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                   ]),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
-                                child: const Text("Chỉnh sửa hình ảnh"),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 15.0),
+                                child: Text("Chỉnh sửa hình ảnh"),
                               ),
                             ]),
                       ),
@@ -218,8 +226,8 @@ class _ProfileState extends State<Profile> {
                     const SizedBox(
                       height: 170,
                     ),
-                    Row(children: [
-                      const SizedBox(
+                    const Row(children: [
+                      SizedBox(
                         width: 280,
                       ),
                     ])
