@@ -13,6 +13,8 @@ class _RegisterState extends State<Register> {
   bool isObscure = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   Future<void> registerWithEmailAndPassword(
       String email, String password) async {
@@ -67,7 +69,7 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
                 const Row(
-                  children: [Text("Tạo tài khoản với email !")],
+                  children: [Text("Tạo tài khoản để mua sắm nào  !")],
                 ),
                 const SizedBox(
                   height: 8.0,
@@ -146,6 +148,42 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
                 const SizedBox(
+                  height: 8.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: TextField(
+                      controller: phoneController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        hintText: "Phone",
+                      ),
+                    ))
+                  ],
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: TextField(
+                      controller: addressController,
+                      keyboardType: TextInputType.streetAddress,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        hintText: "Address",
+                      ),
+                    ))
+                  ],
+                ),
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -165,7 +203,8 @@ class _RegisterState extends State<Register> {
                           if (passwordController.text.length >= 6) {
                             registerWithEmailAndPassword(
                                 emailController.text, passwordController.text);
-                            Account.addAccount(emailController.text);
+                            Account.addAccount(emailController.text,
+                                phoneController.text, addressController.text);
                             // Navigator.pop(context);
                           } else {
                             _showSnackBar("Mất khẩu phải 6 kí tự trở lên");

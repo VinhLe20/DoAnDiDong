@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/views/ForgetScreen.dart';
 import 'package:mobile_project/views/MainSCreen.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/Register.dart';
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, true);
             },
           ),
         ),
@@ -141,6 +142,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: Colors.lightBlue[200]),
                       onPressed: () {
                         signInWithEmailAndPassword(email, password);
+                        Account.isUserLoggedIn = true;
+                        Navigator.pop(context);
                         Navigator.pushReplacementNamed(context, '/');
                       },
                       child: Text(
@@ -150,6 +153,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     )
                   ],
                 ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ForgetScreen()));
+                        },
+                        child: Text("Bạn đã quên mật khẩu ?"))
+                  ],
+                )
               ],
             ),
           ),

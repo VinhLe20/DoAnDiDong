@@ -22,14 +22,23 @@ class _ProfileState extends State<Profile> {
   TextEditingController _phone = TextEditingController();
   imagePicker image = imagePicker();
   bool onTap = false;
-  static Account acc = Account("", "", "", false, "");
+  static Account acc = Account("", "", "", "", false, "");
   User? user = FirebaseAuth.instance.currentUser;
   void _loadData() {
-    Account.getData(user?.displayName).then((value) {
+    Account.getData(user?.email).then((value) {
       setState(() {
         acc = Account.acc;
       });
     });
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
@@ -49,7 +58,7 @@ class _ProfileState extends State<Profile> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           },
         ),
         title: const Row(
@@ -62,10 +71,13 @@ class _ProfileState extends State<Profile> {
         onPressed: () {
           image.uploadImageToFirebase();
           netword = imagePicker.imageNetwork;
-          if (onTap)
-            acc.updateAccount("0937569365", netword, _ten.text, _diachi.text);
-          else
-            acc.updateAccount("0937569365", "", _ten.text, _diachi.text);
+          try {
+            if (onTap)
+              acc.updateAccount(user?.email, netword, _ten.text, _diachi.text);
+            else
+              acc.updateAccount(user?.email, "", _ten.text, _diachi.text);
+            _showSnackBar("Thay đổi thông tin thành công");
+          } catch (e) {}
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

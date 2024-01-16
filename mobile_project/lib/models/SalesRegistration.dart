@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Saler {
   String Phone;
-  String? Phonefirebase;
   String Tenshop;
   String CCCD;
   String Email;
@@ -12,7 +11,6 @@ class Saler {
       required this.CCCD,
       required this.Diachi,
       required this.Email,
-      required this.Phonefirebase,
       required this.Tenshop});
   Map<String, dynamic> tomap() {
     return {
@@ -21,7 +19,6 @@ class Saler {
       "Email": Email,
       "Diachi": Diachi,
       "CCCD": CCCD,
-      "Phonefirebase": Phonefirebase
     };
   }
 }

@@ -11,23 +11,26 @@ class SalesRegistration extends StatefulWidget {
 }
 
 class _SalesRegistrationState extends State<SalesRegistration> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? _user;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchCurrentUser();
+  User? _user = FirebaseAuth.instance.currentUser;
+  Future<void> addSaler(Saler saler) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('saler')
+          .doc(_user?.email)
+          .set(saler.tomap());
+    } catch (e) {
+      print('Error adding profile to Firestore: $e');
+    }
   }
 
-  Future<void> _fetchCurrentUser() async {
-    User? currentUser = _auth.currentUser;
-
-    if (currentUser != null) {
-      setState(() {
-        _user = currentUser;
-      });
-    }
+  void saveSaler() {
+    Saler saler = Saler(
+        Tenshop: _Tenshop.text,
+        CCCD: _CCCD.text,
+        Phone: _Phone.text,
+        Email: _Email.text,
+        Diachi: _Diachi.text);
+    addSaler(saler);
   }
 
   final TextEditingController _Tenshop = TextEditingController();
@@ -39,6 +42,12 @@ class _SalesRegistrationState extends State<SalesRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+        ),
         title: Text("Thông Tin Shop"),
       ),
       body: SingleChildScrollView(
@@ -54,13 +63,6 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                     "Tên Shop",
                     style: TextStyle(fontSize: 20),
                     textAlign: TextAlign.left,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    "7/10",
-                    style: TextStyle(fontSize: 15),
-                    textAlign: TextAlign.right,
                   ),
                 ),
               ],
@@ -231,8 +233,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                       });
                 } else {
                   saveSaler();
-                  updateAccount(_Phone.text, true);
-                  updateProduct(_Phone.text, _Tenshop.text);
+                  updateAccount();
                 }
               },
               child: Text(
@@ -250,72 +251,13 @@ class _SalesRegistrationState extends State<SalesRegistration> {
     );
   }
 
-  Future<void> updateAccount(String phone, bool shop) async {
+  Future<void> updateAccount() async {
     Map<String, dynamic> dataToUpdate;
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-    QuerySnapshot querySnapshot = await users.get();
-    querySnapshot.docs.forEach((doc) async {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      if (phone == data["Phone"]) {
-        CollectionReference collection =
-            FirebaseFirestore.instance.collection('users');
-        DocumentReference document = collection.doc(doc.id);
-        if (shop == false)
-          dataToUpdate = {'Shop': shop};
-        else {
-          dataToUpdate = {'Shop': shop};
-        }
-        try {
-          await document.update(dataToUpdate);
-        } catch (e) {}
-      }
-    });
-  }
-
-  Future<void> updateProduct(String phone, String tenshop) async {
-    Map<String, dynamic> dataToUpdate;
-    CollectionReference product =
-        FirebaseFirestore.instance.collection('product');
-    QuerySnapshot querySnapshot = await product.get();
-    querySnapshot.docs.forEach((doc) async {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      if (phone == data["Std"]) {
-        CollectionReference collection =
-            FirebaseFirestore.instance.collection('product');
-        DocumentReference document = collection.doc(doc.id);
-        if (!tenshop.isNotEmpty)
-          dataToUpdate = {'Tenshop': tenshop};
-        else {
-          dataToUpdate = {'Tenshop': tenshop};
-        }
-        try {
-          await document.update(dataToUpdate);
-        } catch (e) {}
-      }
-    });
-  }
-
-  Future<void> addSaler(Saler saler) async {
+    DocumentReference document = users.doc(_user?.email);
+    dataToUpdate = {'Shop': true};
     try {
-      await FirebaseFirestore.instance
-          .collection('saler')
-          .doc(saler.Phone)
-          .set(saler.tomap());
-    } catch (e) {
-      print('Error adding profile to Firestore: $e');
-    }
-  }
-
-  void saveSaler(
-      //String tenshop, String cccd, String phone, String diachi, String Email
-      ) {
-    Saler saler = Saler(
-        Tenshop: _Tenshop.text,
-        CCCD: _CCCD.text,
-        Phone: _Phone.text,
-        Email: _Email.text,
-        Phonefirebase: _user?.phoneNumber,
-        Diachi: _Diachi.text);
-    addSaler(saler);
+      await document.update(dataToUpdate);
+    } catch (e) {}
   }
 }

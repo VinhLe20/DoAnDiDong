@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/views/LoginScreen.dart';
+import 'package:mobile_project/views/MainScreen.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
 import 'package:mobile_project/views/ShopManager.dart';
@@ -14,9 +16,10 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  static Account acc = Account("", "", "", false, "");
+  static Account acc = Account("", "", "", "", false, "");
+  User? user = FirebaseAuth.instance.currentUser;
   void _loadData() {
-    Account.getData("0937569365").then((value) {
+    Account.getData(user?.email).then((value) {
       setState(() {
         acc = Account.acc;
       });
@@ -68,13 +71,16 @@ class _AccountScreenState extends State<AccountScreen> {
                         Text(acc.name),
                         const SizedBox(height: 10),
                         InkWell(
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async {
+                            final result = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Profile(),
                               ),
                             );
+                            if (result) {
+                              _loadData();
+                            }
                           },
                           child: const Text(
                             "Thay đổi thông tin cá nhân",
@@ -201,12 +207,17 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             const SizedBox(height: 20),
             MaterialButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: ((context) =>
                             !acc.shop ? SalesRegistration() : ShopsManager())));
+                if (result) {
+                  setState(() {
+                    _loadData();
+                  });
+                }
               },
               child: SizedBox(
                 height: 50,
@@ -231,33 +242,24 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             MaterialButton(
               onPressed: () {},
-              child: const SizedBox(
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.logout),
-                        Padding(
-                          padding: EdgeInsets.only(left: 10.0),
-                          child: Text("Đăng nhập"),
-                        )
-                      ],
-                    ),
-                    Icon(Icons.arrow_forward_ios)
-                  ],
-                ),
-              ),
-            ),
-            MaterialButton(
-              onPressed: () {},
               child: SizedBox(
                 height: 50,
                 child: MaterialButton(
                   onPressed: () async {
                     await FirebaseAuth.instance.signOut();
                     Account.isUserLoggedIn = false;
+                    final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ));
+                    if (result) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainScreen(),
+                          ));
+                    }
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

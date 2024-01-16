@@ -247,8 +247,6 @@ class _AddProductsPageState extends State<AddProductsPage> {
         MoTa: _describe.text,
         SoLuong: _quantity.text,
         Image: "",
-
-        /// Sdt: _user?.phoneNumber,
         Sdt: '0927968410',
         Trangthai: true);
     addProduct(product);
