@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
@@ -44,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     futureProducts = getProducts();
   }
 
+  String userPhone = UserProfile.userPhone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

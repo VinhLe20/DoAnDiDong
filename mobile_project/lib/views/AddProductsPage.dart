@@ -18,6 +18,8 @@ class _AddProductsPageState extends State<AddProductsPage> {
   final TextEditingController _price = TextEditingController();
   final TextEditingController _describe = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
+  final TextEditingController _Tenshop = TextEditingController();
+  var _phone = '0927968410';
   //  String phoneNumber = UserData.phoneNumber;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
@@ -54,13 +56,10 @@ class _AddProductsPageState extends State<AddProductsPage> {
               child: ElevatedButton(
                 onPressed: () async {
                   await image.pickImage();
-                  setState(() {
-                    
-                  });
+                  setState(() {});
                 },
                 child: Container(
-                  child: Image.file(File(imagePicker.path),
-                                                fit: BoxFit.cover),
+                  child: Image.file(File(imagePicker.path), fit: BoxFit.cover),
                 ),
                 style: ElevatedButton.styleFrom(
                     fixedSize: Size(300, 200),
@@ -183,21 +182,10 @@ class _AddProductsPageState extends State<AddProductsPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () async {
-                            await image.uploadImageToFirebase();
-                 String netword = imagePicker.imageNetwork;
-                 print(netword);
-                    Product product = Product(
-                  Tenshop: '',
-                  Image: netword,
-                  TenSP: _name.text,
-                  GiaSP: _price.text,
-                  Giamgia: _price.text,
-                  MoTa: _describe.text,
-                  SoLuong: _quantity.text,
-                  Sdt: _user?.phoneNumber,
-                  Trangthai: true);
-                    saveProduct(product);
+                  onPressed: () {
+                    saveProduct();
+                    //   updateProduct(_user?.phoneNumber, _Tenshop.text);
+                    // updateProduct(_phone, _Tenshop.text);
                   },
                   child: Text(
                     "Lưu",
@@ -217,6 +205,28 @@ class _AddProductsPageState extends State<AddProductsPage> {
     );
   }
 
+  Future<void> updateProduct(String? phone, String tenshop) async {
+    Map<String, dynamic> dataToUpdate;
+    CollectionReference saler = FirebaseFirestore.instance.collection('saler');
+    QuerySnapshot querySnapshot = await saler.get();
+    querySnapshot.docs.forEach((doc) async {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (phone == data["phone"]) {
+        CollectionReference collection =
+            FirebaseFirestore.instance.collection('product');
+        DocumentReference document = collection.doc(doc.id);
+        if (!tenshop.isNotEmpty)
+          dataToUpdate = {'Tenshop': tenshop};
+        else {
+          dataToUpdate = {'Tenshop': tenshop};
+        }
+        try {
+          await document.update(dataToUpdate);
+        } catch (e) {}
+      }
+    });
+  }
+
   Future<void> addProduct(Product product) async {
     try {
       await FirebaseFirestore.instance
@@ -228,8 +238,17 @@ class _AddProductsPageState extends State<AddProductsPage> {
     }
   }
 
-  void saveProduct(Product product) {
-   
+  void saveProduct() {
+    Product product = Product(
+        Tenshop: _Tenshop.text,
+        TenSP: _name.text,
+        GiaSP: _price.text,
+        Giamgia: _price.text,
+        MoTa: _describe.text,
+        SoLuong: _quantity.text,
+        Image: "",
+        Sdt: '0927968410',
+        Trangthai: true);
     addProduct(product);
   }
 }

@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, true);
             },
           ),
         ),
@@ -141,6 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: Colors.lightBlue[200]),
                       onPressed: () {
                         signInWithEmailAndPassword(email, password);
+                        Account.isUserLoggedIn = true;
+                        Navigator.pop(context);
                         Navigator.pushReplacementNamed(context, '/');
                       },
                       child: Text(
