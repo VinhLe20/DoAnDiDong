@@ -91,7 +91,7 @@ Item(Product pro){
       floatingActionButton: IconButton(
                             icon: const Icon(
                               Icons.add,
-                              color: Color.fromARGB(255, 226, 13, 13), // Màu biểu tượng
+                              color: Color.fromARGB(255, 226, 13, 13),
                             ),
                             onPressed: () async{
                              final result = await Navigator.push(
@@ -101,13 +101,13 @@ Item(Product pro){
                             if(result ){
                               setState(() {
                                  Product.products.clear();
-    _loadData(widget.nameShop);
+                                _loadData(widget.nameShop);
                               });
                             }
                             },),
       body: 
         ListView.builder(
-              itemCount: products.length, // The number of items in the list
+              itemCount: products.length,
               itemBuilder: (BuildContext context, int index) {
                 return Item(products[index]);
               },
