@@ -25,7 +25,6 @@ List<Product> products = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -76,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CartScreen()),
+                  MaterialPageRoute(builder: (context) => CartScreen()),
                 );
               },
             ),
@@ -135,7 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<Product> products = snapshot.data ?? [];
                     return GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 8.0,
                         mainAxisSpacing: 8.0,

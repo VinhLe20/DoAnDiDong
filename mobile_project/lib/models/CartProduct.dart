@@ -4,9 +4,11 @@ class CartProduct {
   int GiaSP;
   int Giamgia;
   //String MoTa;
-  String? Sdt;
+  String? email;
   int SoLuong;
   bool Trangthai;
+  String img;
+  bool xoa;
   CartProduct(
       {required this.TenSP,
       required this.GiaSP,
@@ -14,7 +16,9 @@ class CartProduct {
       //   required this.MoTa,
       required this.SoLuong,
       required this.Giamgia,
-      required this.Sdt,
+      required this.email,
+      required this.img,
+      required this.xoa,
       required this.Trangthai});
   Map<String, dynamic> tomap() {
     return {
@@ -25,7 +29,9 @@ class CartProduct {
       "SoLuong": SoLuong,
       "TrangThai": Trangthai,
       "GiamGia": Giamgia,
-      "Sdt": Sdt
+      "email": email,
+      "xoa": xoa,
+      "img": img
     };
   }
 
@@ -37,7 +43,9 @@ class CartProduct {
         // MoTa: map['MoTa'] ?? '',
         Trangthai: map['TrangThai'] ?? '',
         SoLuong: map['SoLuong'] ?? '',
+        xoa: map['xoa'] ?? '',
         Giamgia: map['GiamGia'] ?? '',
-        Sdt: map['Sdt'] ?? ' ');
+        email: map['email'] ?? ' ',
+        img: map['img'] ?? ' ');
   }
 }

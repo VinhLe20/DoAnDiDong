@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/CartProduct.dart';
@@ -6,6 +7,8 @@ import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/OrderPage.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
+
+import '../models/SalesRegistration.dart';
 
 class DetailProduct extends StatefulWidget {
   DetailProduct({super.key, required this.pro});
@@ -16,7 +19,9 @@ class DetailProduct extends StatefulWidget {
 
 var Tensp = '';
 var Giasp;
-var soluong = 10;
+var soluong = 0;
+User? user = FirebaseAuth.instance.currentUser;
+Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: "", Tenshop: "");
 
 class _DetailProductState extends State<DetailProduct> {
   SalesRegistration? saler;
@@ -38,6 +43,46 @@ class _DetailProductState extends State<DetailProduct> {
 //       print('Thêm vào giỏ hàng thất bại: $e');
 //     }
 //   }
+  //User? user = FirebaseAuth.instance.currentUser;
+  void _loadData() {
+    Saler.getData(user?.email).then((value) {
+      setState(() {
+        shop = Saler.saler;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //   _fetchCurrentUser();
+    _loadData();
+  }
+
+  Future<void> addSaler(CartProduct cartProduct) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('CartProduct')
+          .doc(Tensp)
+          .set(cartProduct.tomap());
+    } catch (e) {
+      print('Error adding profile to Firestore: $e');
+    }
+  }
+
+  void saveSaler() {
+    CartProduct cartProduct = CartProduct(
+        Trangthai: false,
+        email: user?.email,
+        xoa: true,
+        SoLuong: soluong + 1,
+        TenSP: Tensp,
+        GiaSP: Giasp,
+        Giamgia: Giasp,
+        Tenshop: widget.pro.Tenshop,
+        img: widget.pro.Image);
+    addSaler(cartProduct);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +258,8 @@ class _DetailProductState extends State<DetailProduct> {
                       const SizedBox(
                         height: 20.0,
                       ),
-                      Container(width: MediaQuery.of(context).size.width,
+                      Container(
+                          width: MediaQuery.of(context).size.width,
                           decoration: const BoxDecoration(color: Colors.grey),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -378,30 +424,4 @@ class _DetailProductState extends State<DetailProduct> {
       ),
     );
   }
-}
-
-Future<void> addSaler(CartProduct cartProduct) async {
-  try {
-    await FirebaseFirestore.instance
-        .collection('CartProduct')
-        .doc(cartProduct.TenSP)
-        .set(cartProduct.tomap());
-  } catch (e) {
-    print('Error adding profile to Firestore: $e');
-  }
-}
-
-void saveSaler(
-    //String tenshop, String cccd, String phone, String diachi, String Email
-    ) {
-  CartProduct cartProduct = CartProduct(
-      //Tenshop: ,
-      Trangthai: true,
-      Sdt: '',
-      SoLuong: soluong,
-      TenSP: Tensp,
-      GiaSP: Giasp,
-      Giamgia: 0,
-      Tenshop: '');
-  addSaler(cartProduct);
 }
