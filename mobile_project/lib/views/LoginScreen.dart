@@ -26,7 +26,17 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
       print("Error during login: $e");
+      _showSnackBar("Sai email hoặc mật khẩu vui lòng nhập lại !");
     }
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
   @override

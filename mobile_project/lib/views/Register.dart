@@ -205,7 +205,7 @@ class _RegisterState extends State<Register> {
                                 emailController.text, passwordController.text);
                             Account.addAccount(emailController.text,
                                 phoneController.text, addressController.text);
-                            // Navigator.pop(context);
+                            Navigator.pop(context);
                           } else {
                             _showSnackBar("Mất khẩu phải 6 kí tự trở lên");
                           }

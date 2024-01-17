@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
@@ -32,11 +33,32 @@ class _OrderPageState extends State<OrderPage> {
     }
   }
 
+  static Account acc = Account("", "", "", "", false, "");
+  User? user = FirebaseAuth.instance.currentUser;
+  void _loadData() {
+    Account.getData(user?.email).then((value) {
+      setState(() {
+        acc = Account.acc;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
   int SoLuong = 0;
   @override
   Widget build(BuildContext context) {
     String userPhone = UserProfile.userPhone;
     String userAddress = UserProfile.userAddress;
+    String gia = widget.product.Giamgia;
+    if (gia == "0") {
+      gia = widget.product.GiaSP;
+    }
+    print(widget.product.GiaSP);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[200],
@@ -73,11 +95,14 @@ class _OrderPageState extends State<OrderPage> {
                         style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       Text(
-                        "đ ${widget.product.GiaSP.toString()}",
+                        "đ ${gia.toString()}",
                         style: const TextStyle(color: Colors.red, fontSize: 18),
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                       Row(
                         children: [
@@ -200,7 +225,7 @@ class _OrderPageState extends State<OrderPage> {
                         height: 8,
                       ),
                       Text(
-                        "${(SoLuong * int.parse(widget.product.GiaSP.toString()))}VND",
+                        "${(SoLuong * int.parse(gia.toString()))}VND",
                         style: const TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     ],
