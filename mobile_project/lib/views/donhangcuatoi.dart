@@ -144,9 +144,19 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
                 style: const TextStyle(color: Colors.red, fontSize: 15),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(child: Text("Số Lượng : $quantity")),
+                  Expanded(
+                    child: TextButton(
+                        onPressed: () async {
+                          await Order2.DaNhan(user?.email, name, nameShop);
+                        },
+                        child: const Text(
+                          "Đã nhận hàng",
+                          style: TextStyle(color: Colors.red),
+                        )),
+                  )
                 ],
               ),
             ],
@@ -214,6 +224,14 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(child: Text("Số lượng: $quantity")),
+                  Expanded(
+                    child: TextButton(
+                        onPressed: () async {},
+                        child: const Text(
+                          "Bình luận",
+                          style: TextStyle(color: Colors.red),
+                        )),
+                  )
                 ],
               ),
             ],
@@ -353,7 +371,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
               },
             ),
             StreamBuilder<List<Order2>>(
-              stream: Order2.streamData(user?.email, "Đang giao"),
+              stream: Order2.streamData(user?.email, "Đang giao hàng"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();

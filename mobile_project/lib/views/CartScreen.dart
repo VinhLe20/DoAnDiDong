@@ -22,6 +22,7 @@ class CartScreen extends StatefulWidget {
 
 // CartProduct? cartpro;
 class _CartScreenState extends State<CartScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
   Stream<List<CartProduct>> streamData(String? email) {
     CollectionReference orders =
         FirebaseFirestore.instance.collection('CartProduct');

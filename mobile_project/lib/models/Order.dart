@@ -81,6 +81,23 @@ class Order2 {
     }
   }
 
+  static Future<void> DaNhan(
+      String? email, String namesp, String nameshop) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('orders');
+    QuerySnapshot querySnapshot = await users.get();
+    Map<String, dynamic> dataToUpdate = {"status": "Đã giao"};
+
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (email == data['email'] &&
+          data["nameShop"] == nameshop &&
+          data["productName"] == namesp) {
+        DocumentReference document = users.doc(doc.id);
+        document.update(dataToUpdate);
+      }
+    }
+  }
+
   static Future<void> Xacnhan(String namesp, String nameshop) async {
     CollectionReference users = FirebaseFirestore.instance.collection('orders');
     QuerySnapshot querySnapshot = await users.get();

@@ -36,7 +36,6 @@ class _OrderPageState extends State<OrderPage> {
   }
 
   static Account acc = Account("", "", "", "", false, "");
-  User? user = FirebaseAuth.instance.currentUser;
   void _loadData() {
     Account.getData(user?.email).then((value) {
       setState(() {
