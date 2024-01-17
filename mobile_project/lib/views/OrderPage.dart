@@ -19,7 +19,7 @@ class _OrderPageState extends State<OrderPage> {
         'image': order.image,
         'productName': order.productName,
         'quantity': order.quantity,
-        'userPhone': order.userPhone,
+        'email': order.email,
         'userAddress': order.userAddress,
         'totalAmount': order.totalAmount,
         'status': order.status,
@@ -39,7 +39,8 @@ class _OrderPageState extends State<OrderPage> {
     String userAddress = UserProfile.userAddress;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Đặt Hàng"),
+        backgroundColor: Colors.lightBlue[200],
+        title: Text("Đặt Hàng"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_outlined),
           onPressed: () {
@@ -214,7 +215,8 @@ class _OrderPageState extends State<OrderPage> {
                           (SoLuong *
                               int.parse(widget.product.GiaSP.toString())),
                           'Chờ Xác Nhận',
-                          widget.product.Image);
+                          widget.product.Image,
+                          "");
                       createOrder(order2);
                     },
                     style: ElevatedButton.styleFrom(

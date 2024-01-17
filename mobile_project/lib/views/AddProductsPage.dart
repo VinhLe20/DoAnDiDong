@@ -8,8 +8,8 @@ import 'package:mobile_project/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddProductsPage extends StatefulWidget {
-   AddProductsPage({super.key,required this.nameShop});
-String nameShop;
+  AddProductsPage({super.key, required this.nameShop});
+  String nameShop;
   @override
   State<AddProductsPage> createState() => _AddProductsPageState();
 }
@@ -19,19 +19,31 @@ class _AddProductsPageState extends State<AddProductsPage> {
   final TextEditingController _price = TextEditingController();
   final TextEditingController _describe = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
-      String netword ="";
+  final TextEditingController _Tenshop = TextEditingController();
+ 
+  var _phone = '0927968410';
+  String selectedValue = 'Thể thao & du lịch';
+  String netword = "";
   Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: "", Tenshop: "");
   //  String phoneNumber = UserData.phoneNumber;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? email = FirebaseAuth.instance.currentUser;
   User? _user;
   imagePicker image = imagePicker();
-   void _loadData() {
-   Saler.getData(email?.email).then((value) {
-    setState(() {
+  void _loadData() {
+    Saler.getData(email?.email).then((value) {
+      setState(() {
         shop = Saler.saler;
+      });
     });
-    });
+  }
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
   @override
   void initState() {
@@ -39,7 +51,45 @@ class _AddProductsPageState extends State<AddProductsPage> {
     _fetchCurrentUser();
     _loadData();
   }
-
+  droop(){
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 62.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0), // Set your desired border radius here
+        border: Border.all(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      child: DropdownButton<String>(
+        value: selectedValue,
+        onChanged: (String? newValue) {
+          setState(() {
+            selectedValue = newValue!;
+          });
+        },
+        items: <String>[
+          'Thể thao & du lịch', 
+          'Ô tô - xe máy', 
+          'Bách hóa online', 
+          'Nhà cửa',
+          'Giày dép',
+          'Máy tính & Đồ công nghệ',
+          'Đồng hồ',
+          'Thời trang nam',
+          'Thời trang nữ'
+          ]
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
+    );
+  }
   Future<void> _fetchCurrentUser() async {
     User? currentUser = _auth.currentUser;
 
@@ -52,13 +102,14 @@ class _AddProductsPageState extends State<AddProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          Navigator.pop(context,true);
-        
-                            },icon: const Icon(Icons.arrow_back),),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         title: const Text("Thêm Sản Phẩm"),
       ),
       body: SingleChildScrollView(
@@ -169,7 +220,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
               children: [
                 Expanded(
                   child: Text(
-                    "Số lượng",
+                    "Số Lượng",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
@@ -190,6 +241,36 @@ class _AddProductsPageState extends State<AddProductsPage> {
               ),
             ),
             const SizedBox(
+              height: 8.0,
+             
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Loại Sản Phẩm",
+                    style: TextStyle(fontSize: 20),
+                    
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            droop(),
+            // TextField(
+            //   controller: _Loaisp,
+            //   keyboardType: TextInputType.number,
+            //   decoration: InputDecoration(
+            //     border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(10.0)),
+            //     focusedBorder: const OutlineInputBorder(
+            //         borderSide: BorderSide(color: Colors.black)),
+            //     prefixIcon: Icon(Icons.category),
+            //   ),
+            // ),
+            const SizedBox(
               height: 16,
             ),
             Row(
@@ -197,11 +278,10 @@ class _AddProductsPageState extends State<AddProductsPage> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    
-                   await image.uploadImageToFirebase();
-                  netword = imagePicker.imageNetwork;
-                  saveProduct();
-                    //   updateProduct(_user?.phoneNumber, _Tenshop.text);
+                    await image.uploadImageToFirebase();
+                    netword = imagePicker.imageNetwork;
+                    saveProduct();
+                             //   updateProduct(_user?.phoneNumber, _Tenshop.text);
                     // updateProduct(_phone, _Tenshop.text);
                   },
                   style: ElevatedButton.styleFrom(
@@ -251,8 +331,10 @@ class _AddProductsPageState extends State<AddProductsPage> {
           .collection('product')
           .doc(fileName)
           .set(product.tomap());
+            _showSnackBar("Thêm thành công");    
     } catch (e) {
       print('Error adding profile to Firestore: $e');
+        _showSnackBar("Thêm thất bại");    
     }
   }
 
@@ -264,9 +346,11 @@ class _AddProductsPageState extends State<AddProductsPage> {
         Giamgia: _price.text,
         MoTa: _describe.text,
         SoLuong: _quantity.text,
+        loai: selectedValue ,
         Image: netword,
         Sdt: shop.Phone,
         Trangthai: true);
     addProduct(product);
   }
 }
+
