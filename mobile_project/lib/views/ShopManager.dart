@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/SalesRegistration.dart';
 import 'package:mobile_project/views/OrderConfirmationPage.dart';
 import 'package:mobile_project/views/ProductManagerScreen.dart';
 
@@ -10,11 +12,26 @@ class ShopsManager extends StatefulWidget {
 }
 
 class _ShopsManagerState extends State<ShopsManager> {
+  User? user = FirebaseAuth.instance.currentUser;
+    static Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: '', Tenshop: "");
+  void _loadNameShop() {
+   Saler.getData(user?.email).then((value) {
+    setState(() {
+        shop = Saler.saler;
+    });
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    _loadNameShop();
+   
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shop'),
+        title: const Text('Shop'),
       ),
       body: Column(
         children: [
@@ -23,15 +40,15 @@ class _ShopsManagerState extends State<ShopsManager> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProductMangerScreen()));
+                      builder: (context) => ProductMangerScreen(nameShop: shop.Tenshop)));
             },
             child: Container(
               height: 50,
               color: Colors.grey.shade400,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Quản lý sản phẩm',
+                  Text('Quản lý sản phẩm',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -41,7 +58,7 @@ class _ShopsManagerState extends State<ShopsManager> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 16.0,
           ),
           MaterialButton(
@@ -49,15 +66,15 @@ class _ShopsManagerState extends State<ShopsManager> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => OrderConfirmationPage()));
+                      builder: (context) => const OrderConfirmationPage()));
             },
             child: Container(
               height: 50,
               color: Colors.grey.shade400,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Các đơn cần xác nhận',
+                  Text('Các đơn cần xác nhận',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

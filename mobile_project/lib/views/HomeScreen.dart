@@ -1,21 +1,22 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
+import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
-import 'package:mobile_project/views/OrderPage.dart';
 
 Future<List<Product>> getProducts() async {
   QuerySnapshot querySnapshot =
       await FirebaseFirestore.instance.collection('product').get();
 
-  querySnapshot.docs.forEach((doc) {
+  for (var doc in querySnapshot.docs) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     Product product = Product.fromMap(data);
     if (product.Trangthai == true) {
       products.add(product);
     }
-  });
+  }
 
   return products;
 }
@@ -43,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     futureProducts = getProducts();
   }
 
+  String userPhone = UserProfile.userPhone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,14 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 50,
               width: MediaQuery.of(context).size.width / 1.5,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.search),
                     onPressed: () {
                       showSearch(
                         context: context,
@@ -71,7 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.shopping_cart),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CartScreen()),
+                );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.chat_sharp),
@@ -81,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        // physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -114,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 }).toList(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             InkWell(
@@ -122,20 +128,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 future: futureProducts,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Đã xảy ra lỗi: ${snapshot.error}');
                   } else {
                     List<Product> products = snapshot.data ?? [];
                     return GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 8.0,
                         mainAxisSpacing: 8.0,
                       ),
                       itemCount: products.length,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
@@ -165,14 +171,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Text(
                                     ' ${products[index].TenSP.toString()}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 17,
                                     ),
                                   ),
                                   Text(
                                     ' ${products[index].GiaSP.toString()} VND',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.red,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500,

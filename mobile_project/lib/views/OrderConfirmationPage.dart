@@ -12,13 +12,13 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Các Đơn Cần Xác Nhận"),
+        title: const Text("Các Đơn Cần Xác Nhận"),
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
@@ -27,39 +27,39 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
               Container(
                 height: 50,
                 width: 50,
+                decoration: const BoxDecoration(shape: BoxShape.circle),
                 child: ClipOval(
                     child: Image.asset(
                   "assets/Logo.jpg",
                   fit: BoxFit.cover,
                 )),
-                decoration: BoxDecoration(shape: BoxShape.circle),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
-              Text("Nguyễn Đình Anh"),
-              SizedBox(
+              const Text("Nguyễn Đình Anh"),
+              const SizedBox(
                 width: 50,
               ),
-              Text(
+              const Text(
                 "Chờ Xác Nhận",
                 style: TextStyle(fontSize: 20, color: Colors.red),
                 textAlign: TextAlign.right,
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: 150,
                 height: 150,
                 child: Image.asset("assets/ip15.jpg"),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Expanded(
@@ -80,11 +80,11 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Expanded(child: Text("Số Lượng : 1")),
+                      const Expanded(child: Text("Số Lượng : 1")),
                       Expanded(
                         child: TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               "Xác Nhận",
                               style: TextStyle(color: Colors.red),
                             )),

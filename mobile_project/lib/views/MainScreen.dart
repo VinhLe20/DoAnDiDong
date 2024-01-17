@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/AccountScreen.dart';
 import 'package:mobile_project/views/CategoryScreen.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
@@ -16,11 +17,12 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    HomeScreen(),
-    CategoryScreen(),
-    NotificationsScreen(),
-    AccountScreen()
+    const HomeScreen(),
+    const CategoryScreen(),
+    const NotificationsScreen(),
+    const AccountScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,11 +31,18 @@ class _MainScreenState extends State<MainScreen> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (index) {
+          if (index == 3 && !Account.isUserLoggedIn) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+            );
+            return;
+          }
           setState(() {
             _currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Trang chủ',

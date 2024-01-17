@@ -1,12 +1,8 @@
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/ImagePicker.dart';
-import 'package:mobile_project/views/AccountScreen.dart';
-
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -16,18 +12,28 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  TextEditingController _ten = TextEditingController();
-  TextEditingController _diachi = TextEditingController();
-  TextEditingController _phone = TextEditingController();
+  final TextEditingController _ten = TextEditingController();
+  final TextEditingController _diachi = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
   imagePicker image = imagePicker();
   bool onTap = false;
-  static Account acc = Account("", "", "", false, "");
+  static Account acc = Account("", "", "", "", false, "");
+  User? user = FirebaseAuth.instance.currentUser;
   void _loadData() {
-    Account.getData("0937569365").then((value) {
+    Account.getData(user?.email).then((value) {
       setState(() {
         acc = Account.acc;
       });
     });
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
@@ -43,180 +49,190 @@ class _ProfileState extends State<Profile> {
     _ten.text = acc.name;
     _diachi.text = acc.adress;
     return Scaffold(
-      //bottomNavigationBar: BottomNavigator(),
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/');
+            Navigator.pop(context, true);
           },
         ),
         title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Tài khoản"),
             ]),
       ),
+      bottomNavigationBar: ElevatedButton(
+        onPressed: () {
+          image.uploadImageToFirebase();
+          netword = imagePicker.imageNetwork;
+          try {
+            if (onTap) {
+              acc.updateAccount(user?.email, netword, _ten.text, _diachi.text);
+            } else {
+              acc.updateAccount(user?.email, "", _ten.text, _diachi.text);
+            }
+            _showSnackBar("Thay đổi thông tin thành công");
+          } catch (e) {}
+        },
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  0.0), // Đặt độ cong của góc thành 0 để tạo nút vuông
+            ),
+          ),
+          minimumSize: MaterialStateProperty.all(const Size(90, 50)),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+        ),
+        child: const Text(
+          "Lưu",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text(
-                "Hồ sơ của tôi",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              MaterialButton(
-                onPressed: () async {
-                  await image.pickImage();
-                  setState(() {
-                    onTap = true;
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Hồ sơ của tôi",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    MaterialButton(
+                      onPressed: () async {
+                        await image.pickImage();
+                        setState(() {
+                          onTap = true;
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: onTap
-                                      ? Image.file(File(imagePicker.path))
-                                      : Image.network(acc.image)),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 130,
+                                      width: 130,
+                                      child: ClipOval(
+                                        child: onTap
+                                            ? Image.file(File(imagePicker.path),
+                                                fit: BoxFit.cover)
+                                            : Image.network(acc.image,
+                                                fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ]),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 15.0),
+                                child: Text("Chỉnh sửa hình ảnh"),
+                              ),
                             ]),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: const Text("Chỉnh sửa hình ảnh"),
-                        ),
-                      ]),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Divider(
-                // thickness: 2,
-                color: Colors.black,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: _ten,
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                    filled: true,
-                    labelText: "Tên Người dùng",
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelStyle: const TextStyle(color: Colors.black),
-                    fillColor: Colors.white.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0,
-                            color: Colors.white,
-                            style: BorderStyle.none)),
-                    prefixIcon: const Icon(
-                      Icons.person,
-                      color: Colors.black,
-                    )),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: _phone,
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                    filled: true,
-                    labelText: "Điện thoại",
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelStyle: const TextStyle(color: Colors.black),
-                    fillColor: Colors.white.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0,
-                            color: Colors.white,
-                            style: BorderStyle.none)),
-                    prefixIcon: const Icon(
-                      Icons.phone,
-                      color: Colors.black,
-                    )),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: _diachi,
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                    filled: true,
-                    labelText: "Địa chỉ",
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelStyle: const TextStyle(color: Colors.black),
-                    fillColor: Colors.white.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0,
-                            color: Colors.white,
-                            style: BorderStyle.none)),
-                    prefixIcon: const Icon(
-                      Icons.home,
-                      color: Colors.black,
-                    )),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              const Divider(
-                // thickness: 2,
-                color: Colors.black,
-              ),
-              const SizedBox(
-                height: 170,
-              ),
-              Row(children: [
-                const SizedBox(
-                  width: 280,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    image.uploadImageToFirebase();
-                    netword = imagePicker.imageNetwork;
-                    if (onTap)
-                      acc.updateAccount(
-                          "0937569365", netword, _ten.text, _diachi.text);
-                    else
-                      acc.updateAccount(
-                          "0937569365", "", _ten.text, _diachi.text);
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            0.0), // Đặt độ cong của góc thành 0 để tạo nút vuông
                       ),
                     ),
-                    minimumSize: MaterialStateProperty.all(const Size(90, 50)),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  child: const Text(
-                    "Lưu",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                ),
-              ])
-            ]),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Divider(
+                      // thickness: 2,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _ten,
+                      cursorColor: Colors.white,
+                      decoration: InputDecoration(
+                          filled: true,
+                          labelText: "Tên Người dùng",
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          labelStyle: const TextStyle(color: Colors.black),
+                          fillColor: Colors.white.withOpacity(0.3),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(
+                                  width: 0,
+                                  color: Colors.white,
+                                  style: BorderStyle.none)),
+                          prefixIcon: const Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          )),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _phone,
+                      cursorColor: Colors.white,
+                      decoration: InputDecoration(
+                          filled: true,
+                          labelText: "Điện thoại",
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          labelStyle: const TextStyle(color: Colors.black),
+                          fillColor: Colors.white.withOpacity(0.3),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(
+                                  width: 0,
+                                  color: Colors.white,
+                                  style: BorderStyle.none)),
+                          prefixIcon: const Icon(
+                            Icons.phone,
+                            color: Colors.black,
+                          )),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _diachi,
+                      cursorColor: Colors.white,
+                      decoration: InputDecoration(
+                          filled: true,
+                          labelText: "Địa chỉ",
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          labelStyle: const TextStyle(color: Colors.black),
+                          fillColor: Colors.white.withOpacity(0.3),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(
+                                  width: 0,
+                                  color: Colors.white,
+                                  style: BorderStyle.none)),
+                          prefixIcon: const Icon(
+                            Icons.home,
+                            color: Colors.black,
+                          )),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    const Divider(
+                      // thickness: 2,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      height: 170,
+                    ),
+                    const Row(children: [
+                      SizedBox(
+                        width: 280,
+                      ),
+                    ])
+                  ]),
+            ),
           ],
         ),
       ),
