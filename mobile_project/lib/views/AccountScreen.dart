@@ -30,7 +30,6 @@ class _AccountScreenState extends State<AccountScreen> {
   void initState() {
     super.initState();
     _loadData();
-   
   }
 
   @override
@@ -212,8 +211,9 @@ class _AccountScreenState extends State<AccountScreen> {
                 final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((context) =>
-                            !acc.shop ? const SalesRegistration() : const ShopsManager())));
+                        builder: ((context) => !acc.shop
+                            ? const SalesRegistration()
+                            : const ShopsManager())));
                 if (result) {
                   setState(() {
                     _loadData();
@@ -242,21 +242,17 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             MaterialButton(
-              onPressed: () async{
-await FirebaseAuth.instance.signOut();
-                    Account.isUserLoggedIn = false;
-                    final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ));
-                    if (result) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MainScreen(),
-                          ));
-                    }
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Account.isUserLoggedIn = false;
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ));
+                if (result) {
+                  Navigator.pushReplacementNamed(context, '/');
+                }
               },
               child: const SizedBox(
                 height: 50,

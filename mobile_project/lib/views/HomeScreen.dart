@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    products.clear();
     futureProducts = getProducts();
   }
 
@@ -135,7 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<Product> products = snapshot.data ?? [];
                     return GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 8.0,
                         mainAxisSpacing: 8.0,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
@@ -13,16 +14,18 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  User? user = FirebaseAuth.instance.currentUser;
   Future<void> createOrder(Order2 order) async {
     try {
       Map<String, dynamic> orderMap = {
         'image': order.image,
         'productName': order.productName,
         'quantity': order.quantity,
-        'email': order.email,
+        'email': user?.email,
         'userAddress': order.userAddress,
         'totalAmount': order.totalAmount,
-        'status': order.status,
+        'status': "Chờ xác nhận",
+        'nameShop': order.nameShop,
       };
       await FirebaseFirestore.instance.collection('orders').add(orderMap);
       print('Đơn hàng đã được tạo thành công!');
@@ -59,7 +62,10 @@ class _OrderPageState extends State<OrderPage> {
                   SizedBox(
                     width: 150,
                     height: 150,
-                    child: Image.asset("assets/ip15.jpg"),
+                    child: Image.network(
+                      widget.product.Image,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   const SizedBox(
                     width: 16,
@@ -214,9 +220,9 @@ class _OrderPageState extends State<OrderPage> {
                           userAddress,
                           (SoLuong *
                               int.parse(widget.product.GiaSP.toString())),
-                          'Chờ Xác Nhận',
+                          'Chờ xác nhận',
                           widget.product.Image,
-                          "");
+                          widget.product.Tenshop);
                       createOrder(order2);
                     },
                     style: ElevatedButton.styleFrom(
