@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/CartProduct.dart';
+import 'package:mobile_project/models/User.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
+import 'package:mobile_project/views/OrderPage.dart';
 
+import '../models/Order.dart';
 import '../models/SalesRegistration.dart';
 
 class CartScreen extends StatefulWidget {
@@ -43,9 +47,38 @@ class _CartScreenState extends State<CartScreen> {
         );
   }
 
+  Future<void> createOrder(Order2 order) async {
+    try {
+      Map<String, dynamic> orderMap = {
+        'image': order.image,
+        'productName': order.productName,
+        'quantity': order.quantity,
+        'email': user?.email,
+        'userAddress': order.userAddress,
+        'totalAmount': order.totalAmount,
+        'status': "Chờ xác nhận",
+        'nameShop': order.nameShop,
+      };
+      await FirebaseFirestore.instance.collection('orders').add(orderMap);
+      print('Đơn hàng đã được tạo thành công!');
+      Navigator.pop(context);
+    } catch (e) {
+      print('Lỗi khi tạo đơn hàng: $e');
+    }
+  }
+
+  var image;
+  var productname;
+  var soluong;
+  var tongtiendon;
+  var tenshop;
+
+  //UserProfile userProfile = UserProfile();
+  var tongtien = 0;
   bool? isChecked = false;
   @override
   Widget build(BuildContext context) {
+    User? email = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -93,17 +126,25 @@ class _CartScreenState extends State<CartScreen> {
           Expanded(
               child: InkWell(
             child: StreamBuilder<List<CartProduct>>(
-              stream: streamData(user?.email),
+              stream: streamData(email?.email),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
+                  //   updatetatcatrangthai(false);
                   List<CartProduct> cartproduct = snapshot.data ?? [];
                   return ListView.builder(
                     itemCount: cartproduct.length,
                     itemBuilder: (context, index) {
+                      soluong = cartproduct[index].SoLuong;
+                      productname = cartproduct[index].Tenshop;
+                      tongtiendon =
+                          cartproduct[index].SoLuong * cartproduct[index].GiaSP;
+                      tenshop = cartproduct[index].Tenshop;
+                      image = cartproduct[index].img;
+
                       return Card(
                         child: Column(
                           children: [
@@ -120,10 +161,22 @@ class _CartScreenState extends State<CartScreen> {
                                   children: [
                                     Checkbox(
                                       value: cartproduct[index].Trangthai,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          cartproduct[index].Trangthai = value!;
-                                        });
+                                      onChanged: (bool? value) async {
+                                        await updatetrangthai(
+                                            cartproduct[index].TenSP, value!);
+                                        if (value == false) {
+                                          setState(() {
+                                            tongtien -=
+                                                cartproduct[index].SoLuong *
+                                                    cartproduct[index].GiaSP;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            tongtien +=
+                                                cartproduct[index].SoLuong *
+                                                    cartproduct[index].GiaSP;
+                                          });
+                                        }
                                       },
                                     ),
                                     Container(
@@ -157,6 +210,12 @@ class _CartScreenState extends State<CartScreen> {
                                                 IconButton(
                                                   icon: Icon(Icons.remove),
                                                   onPressed: () {
+                                                    if (cartproduct[index]
+                                                                .SoLuong -
+                                                            1 ==
+                                                        0) {
+                                                      return;
+                                                    }
                                                     updatesoluong(
                                                         cartproduct[index]
                                                             .TenSP,
@@ -165,6 +224,17 @@ class _CartScreenState extends State<CartScreen> {
                                                             cartproduct[index]
                                                                     .SoLuong -
                                                                 1);
+                                                    if (cartproduct[index]
+                                                            .Trangthai &&
+                                                        cartproduct[index]
+                                                                .SoLuong >
+                                                            0) {
+                                                      setState(() {
+                                                        tongtien -=
+                                                            cartproduct[index]
+                                                                .GiaSP;
+                                                      });
+                                                    }
                                                   },
                                                 ),
                                                 Text(
@@ -180,6 +250,14 @@ class _CartScreenState extends State<CartScreen> {
                                                             cartproduct[index]
                                                                     .SoLuong +
                                                                 1);
+                                                    if (cartproduct[index]
+                                                        .Trangthai) {
+                                                      setState(() {
+                                                        tongtien +=
+                                                            cartproduct[index]
+                                                                .GiaSP;
+                                                      });
+                                                    }
                                                   },
                                                 ),
                                               ],
@@ -194,7 +272,7 @@ class _CartScreenState extends State<CartScreen> {
                                       // padding:
                                       ///   const EdgeInsets.all(10.0),
                                       onPressed: () {
-                                        xoaCartProduct(user?.email,
+                                        xoaCartProduct(email?.email,
                                             cartproduct[index].TenSP, false);
                                       },
                                       child: Text("Xóa"),
@@ -217,14 +295,25 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text("Tong cong"), Text("0")],
+                  children: [Text("Tong cong"), Text("$tongtien")],
                 ),
                 Container(
                   decoration: BoxDecoration(color: Colors.blue),
                   width: 110,
                   height: 50,
                   alignment: Alignment.center,
-                  child: Text("Mua hàng"),
+                  child: TextButton(
+                    child: Text("Mua hàng"),
+                    onPressed: () {
+                      Order2 order2 = Order2(Tensp, soluong, '', '',
+                          tongtiendon, 'Chờ xác nhận', image, tenshop);
+                      createOrder(order2);
+                      updatetatcaxoa(true, false);
+                      setState(() {
+                        tongtien = 0;
+                      });
+                    },
+                  ),
                 )
               ],
             ),
@@ -282,5 +371,84 @@ Future<void> updatesoluong(String Tensp, int Soluong) async {
         } catch (e) {}
       }
     }
+  });
+}
+
+Future<void> updatetrangthai(String Tensp, bool trangthai) async {
+  Map<String, dynamic> dataToUpdate;
+  CollectionReference cartproduct =
+      FirebaseFirestore.instance.collection('CartProduct');
+  QuerySnapshot querySnapshot = await cartproduct.get();
+  querySnapshot.docs.forEach((doc) async {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    {
+      if (Tensp == data["tensp"]) {
+        CollectionReference collection =
+            FirebaseFirestore.instance.collection('CartProduct');
+        DocumentReference document = collection.doc(doc.id);
+        if (trangthai == false)
+          dataToUpdate = {'TrangThai': trangthai};
+        else {
+          dataToUpdate = {'TrangThai': trangthai};
+        }
+        try {
+          await document.update(dataToUpdate);
+        } catch (e) {}
+      }
+    }
+  });
+}
+
+Future<void> updatetatcatrangthai(bool trangthai) async {
+  Map<String, dynamic> dataToUpdate;
+  CollectionReference cartproduct =
+      FirebaseFirestore.instance.collection('CartProduct');
+  QuerySnapshot querySnapshot = await cartproduct.get();
+  querySnapshot.docs.forEach((doc) async {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    {
+      CollectionReference collection =
+          FirebaseFirestore.instance.collection('CartProduct');
+      DocumentReference document = collection.doc(doc.id);
+      if (trangthai == true)
+        dataToUpdate = {
+          'TrangThai': trangthai,
+        };
+      else {
+        dataToUpdate = {
+          'TrangThai': trangthai,
+        };
+      }
+      try {
+        await document.update(dataToUpdate);
+      } catch (e) {}
+    }
+//    }
+  });
+}
+
+Future<void> updatetatcaxoa(bool trangthai, bool xoa) async {
+  Map<String, dynamic> dataToUpdate;
+  CollectionReference cartproduct =
+      FirebaseFirestore.instance.collection('CartProduct');
+  QuerySnapshot querySnapshot = await cartproduct.get();
+  querySnapshot.docs.forEach((doc) async {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    {
+      if (trangthai == data["TrangThai"]) {
+        CollectionReference collection =
+            FirebaseFirestore.instance.collection('CartProduct');
+        DocumentReference document = collection.doc(doc.id);
+        if (trangthai == true)
+          dataToUpdate = {'TrangThai': trangthai, 'xoa': xoa};
+        else {
+          dataToUpdate = {'TrangThai': trangthai, 'xoa': xoa};
+        }
+        try {
+          await document.update(dataToUpdate);
+        } catch (e) {}
+      }
+    }
+//    }
   });
 }

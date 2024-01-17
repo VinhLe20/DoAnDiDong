@@ -6,7 +6,7 @@ class CartProduct {
   //String MoTa;
   String? email;
   int SoLuong;
-  bool Trangthai;
+  bool Trangthai = false;
   String img;
   bool xoa;
   CartProduct(
@@ -41,7 +41,7 @@ class CartProduct {
         Tenshop: map['tenshop'] ?? '',
         GiaSP: map['giasp'] ?? '',
         // MoTa: map['MoTa'] ?? '',
-        Trangthai: map['TrangThai'] ?? '',
+        Trangthai: false,
         SoLuong: map['SoLuong'] ?? '',
         xoa: map['xoa'] ?? '',
         Giamgia: map['GiamGia'] ?? '',
