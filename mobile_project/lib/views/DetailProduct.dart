@@ -15,7 +15,7 @@ class DetailProduct extends StatefulWidget {
 
 var Tensp = '';
 var Giasp;
-var soluong;
+var soluong = 10;
 
 class _DetailProductState extends State<DetailProduct> {
   SalesRegistration? saler;
