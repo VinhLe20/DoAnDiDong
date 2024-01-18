@@ -20,11 +20,12 @@ class DetailProduct extends StatefulWidget {
 var Tensp = '';
 var Giasp;
 var soluong = 0;
-User? user = FirebaseAuth.instance.currentUser;
+
 Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: "", Tenshop: "");
 
 class _DetailProductState extends State<DetailProduct> {
   SalesRegistration? saler;
+  User? user = FirebaseAuth.instance.currentUser;
 //  String userPhone = UserProfile.userPhone;
 //   Future<void> createCart(Cart cart) async {
 //     try {
@@ -61,9 +62,10 @@ class _DetailProductState extends State<DetailProduct> {
 
   Future<void> addSaler(CartProduct cartProduct) async {
     try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
       await FirebaseFirestore.instance
           .collection('CartProduct')
-          .doc(Tensp)
+          .doc(fileName)
           .set(cartProduct.tomap());
     } catch (e) {
       print('Error adding profile to Firestore: $e');

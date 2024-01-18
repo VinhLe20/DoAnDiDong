@@ -10,7 +10,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   String category1 = 'Thể thao & du lịch';
-  String category2 = 'Ô tô- xe máy';
+  String category2 = 'Ô tô - xe máy';
   String category3 = 'Bách hóa online';
   String category4 = 'Nhà cửa';
   String category5 = 'Giày dép';

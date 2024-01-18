@@ -101,30 +101,31 @@ class _ProductMangerScreenState extends State<ProductMangerScreen> {
         title: const Text("Quản lý sản phẩm"),
       ),
       floatingActionButton: IconButton(
-        icon: const Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 226, 13, 13), // Màu biểu tượng
-        ),
-        onPressed: () async {
-          final result = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      AddProductsPage(nameShop: widget.nameShop)));
-          if (result) {
-            setState(() {
-              Product.products.clear();
-              _loadData(widget.nameShop);
-            });
-          }
-        },
-      ),
-      body: ListView.builder(
-        itemCount: products.length, // The number of items in the list
-        itemBuilder: (BuildContext context, int index) {
-          return Item(products[index]);
-        },
-      ),
-    );
+                            icon: const Icon(
+                              Icons.add,
+                              color: Color.fromARGB(255, 226, 13, 13),
+                            ),
+                            onPressed: () async{
+                             final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddProductsPage(nameShop: widget.nameShop)));
+                            if(result ){
+                              setState(() {
+                                 Product.products.clear();
+                                _loadData(widget.nameShop);
+                              });
+                            }
+                            },),
+      body: 
+        ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Item(products[index]);
+              },
+            ),
+      );
+    
+
   }
 }
