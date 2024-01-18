@@ -272,7 +272,18 @@ class _ProductEditPageState extends State<ProductEditPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // delProduct();
+                    Product update = Product(
+                        Image: "",
+                        TenSP: _name.text,
+                        GiaSP: _price.text,
+                        MoTa: _describe.text,
+                        SoLuong: _quantity.text,
+                        Trangthai: false,
+                        Tenshop: widget.product.Tenshop,
+                        Giamgia: _discount.text,
+                        Sdt: '',
+                        loai: selectedValue);
+                    delProduct(update, widget.product.TenSP);
                   },
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(150, 60),
@@ -347,7 +358,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
             'MoTa': pro.MoTa,
             'GiamGia': pro.Giamgia,
             'loaisp': pro.loai,
-            'SoLuong': pro.SoLuong
+            'SoLuong': pro.SoLuong,
           };
         }
         try {
@@ -361,19 +372,30 @@ class _ProductEditPageState extends State<ProductEditPage> {
     updateProduct(product, name);
   }
 
-  // void delProduct() {
-  //   Product product = Product(
-  //       Image: "",
-  //       TenSP: _name.text,
-  //       GiaSP: "",
-  //       MoTa: "",
-  //       SoLuong: "",
-  //       Trangthai: false,
-  //       Tenshop: '',
-  //       Giamgia: '',
-  //       Sdt: '',
-  //       loai: "");
-  //   updateProduct(product);
-  // }
+  void delProduct(Product product, String name) {
+    deleteProduct(product, name);
+  }
+
+
+  Future<void> deleteProduct(Product pro, String Name) async {
+    Map<String, dynamic> dataToUpdate;
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('product');
+    QuerySnapshot querySnapshot = await users.get();
+    querySnapshot.docs.forEach((doc) async {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (data["tensp"] == Name && data["Tenshop"] == pro.Tenshop) {
+        DocumentReference document = users.doc(doc.id);
+          dataToUpdate = {
+            
+            'TrangThai':false
+          };
+        try {
+          await document.update(dataToUpdate);
+        } catch (e) {}
+      }
+    });
+  }
+  
 }
 
