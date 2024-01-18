@@ -181,8 +181,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 17,
                                     ),
                                   ),
+                                   
                                   Text(
                                     ' ${products[index].GiaSP.toString()} VND',
+                                    style: const TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                      decoration: TextDecoration.lineThrough
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${products[index].Giamgia.toString()} VND',
                                     style: const TextStyle(
                                       color: Colors.red,
                                       fontSize: 13,
