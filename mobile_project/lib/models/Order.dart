@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Order2 {
-  late String image;
-  late String productName;
-  late int quantity;
-  late String email;
-  late String userAddress;
-  late String nameShop;
-  late int totalAmount;
-  late String status;
+  String image;
+  String productName;
+  int quantity;
+  String email;
+  String userAddress;
+  String nameShop;
+  int totalAmount;
+  String status;
 
   Order2(this.productName, this.quantity, this.email, this.userAddress,
       this.totalAmount, this.status, this.image, this.nameShop);
