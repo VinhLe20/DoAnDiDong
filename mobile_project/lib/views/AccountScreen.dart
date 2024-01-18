@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/MainScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
 import 'package:mobile_project/views/ShopManager.dart';
@@ -16,6 +17,12 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  String name = "";
+  String address = "";
+  String phone = "";
+  String email = "";
+  bool shop = false;
+
   static Account acc = Account("", "", "", "", false, "");
   User? user = FirebaseAuth.instance.currentUser;
   void _loadData() {
@@ -24,12 +31,34 @@ class _AccountScreenState extends State<AccountScreen> {
         acc = Account.acc;
       });
     });
+    saveUser();
   }
 
   @override
   void initState() {
     super.initState();
     _loadData();
+    loadUser();
+  }
+
+  void saveUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('name', acc.name);
+    prefs.setString('email', acc.email);
+    prefs.setString('phone', acc.phone);
+    prefs.setString('address', acc.adress);
+    prefs.setBool('shop', acc.shop);
+  }
+
+  void loadUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      name = prefs.getString('name') ?? "";
+      email = prefs.getString('email') ?? "";
+      phone = prefs.getString('phone') ?? "";
+      address = prefs.getString('address') ?? "";
+      shop = prefs.getBool('shop') ?? false;
+    });
   }
 
   @override
@@ -68,7 +97,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(acc.name),
+                        Text(name),
                         const SizedBox(height: 10),
                         InkWell(
                           onTap: () async {
