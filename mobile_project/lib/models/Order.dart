@@ -14,34 +14,13 @@ class Order2 {
       this.totalAmount, this.status, this.image, this.nameShop);
   static List<Order2> oders =
       List.filled(0, Order2("", 0, "", "", 0, "", "", ""), growable: true);
-  static List<Order2> odersHuy =
-      List.filled(0, Order2("", 0, "", "", 0, "", "", ""), growable: true);
-  static Future<void> getData(String? email) async {
-    CollectionReference users = FirebaseFirestore.instance.collection('orders');
-    QuerySnapshot querySnapshot = await users.get();
-    for (var doc in querySnapshot.docs) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      if (email == data['email'] && data["status"] == "Đang giao") {
-        Order2 order = Order2(
-            data["productName"],
-            data["quantity"],
-            data["email"],
-            data["userAddress"],
-            data["totalAmount"],
-            data["status"],
-            data["image"],
-            data["nameShop"]);
-        oders.add(order);
-      }
-    }
-  }
 
-  static Stream<List<Order2>> streamData(String? email) {
+  static Stream<List<Order2>> streamData(String? email, String status) {
     CollectionReference orders =
         FirebaseFirestore.instance.collection('orders');
     return orders
         .where('email', isEqualTo: email)
-        .where('status', isEqualTo: 'Chờ Xác Nhận')
+        .where('status', isEqualTo: status)
         .snapshots()
         .map(
           (QuerySnapshot querySnapshot) => querySnapshot.docs
@@ -61,24 +40,29 @@ class Order2 {
         );
   }
 
-  static Future<void> getHuy(String? email) async {
-    CollectionReference users = FirebaseFirestore.instance.collection('orders');
-    QuerySnapshot querySnapshot = await users.get();
-    for (var doc in querySnapshot.docs) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      if (email == data['email'] && data["status"] == "Đã hủy") {
-        Order2 order = Order2(
-            data["productName"],
-            data["quantity"],
-            data["email"],
-            data["userAddress"],
-            data["totalAmount"],
-            data["status"],
-            data["image"],
-            data["nameShop"]);
-        odersHuy.add(order);
-      }
-    }
+  static Stream<List<Order2>> load(String tenShop) {
+    CollectionReference orders =
+        FirebaseFirestore.instance.collection('orders');
+    return orders
+        .where('nameShop', isEqualTo: tenShop)
+        .where('status', isEqualTo: "Chờ xác nhận")
+        .snapshots()
+        .map(
+          (QuerySnapshot querySnapshot) => querySnapshot.docs
+              .map(
+                (QueryDocumentSnapshot document) => Order2(
+                  document["productName"],
+                  document["quantity"],
+                  document["email"],
+                  document["userAddress"],
+                  document["totalAmount"],
+                  document["status"],
+                  document["image"],
+                  document["nameShop"],
+                ),
+              )
+              .toList(),
+        );
   }
 
   static Future<void> Huy(String? email, String namesp, String nameshop) async {
@@ -91,6 +75,37 @@ class Order2 {
       if (email == data['email'] &&
           data["nameShop"] == nameshop &&
           data["productName"] == namesp) {
+        DocumentReference document = users.doc(doc.id);
+        document.update(dataToUpdate);
+      }
+    }
+  }
+
+  static Future<void> DaNhan(
+      String? email, String namesp, String nameshop) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('orders');
+    QuerySnapshot querySnapshot = await users.get();
+    Map<String, dynamic> dataToUpdate = {"status": "Đã giao"};
+
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (email == data['email'] &&
+          data["nameShop"] == nameshop &&
+          data["productName"] == namesp) {
+        DocumentReference document = users.doc(doc.id);
+        document.update(dataToUpdate);
+      }
+    }
+  }
+
+  static Future<void> Xacnhan(String namesp, String nameshop) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('orders');
+    QuerySnapshot querySnapshot = await users.get();
+    Map<String, dynamic> dataToUpdate = {"status": "Đang giao hàng"};
+
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (data["nameShop"] == nameshop && data["productName"] == namesp) {
         DocumentReference document = users.doc(doc.id);
         document.update(dataToUpdate);
       }

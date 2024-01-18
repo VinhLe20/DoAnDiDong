@@ -72,7 +72,7 @@ class Product {
     QuerySnapshot querySnapshot = await users.get();
     for (var doc in querySnapshot.docs) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      if (data["Tenshop"] == tenshop) {
+      if (data["Tenshop"] == tenshop && data["TrangThai"] == true) {
         Product product = Product(
             TenSP: data["tensp"],
             GiaSP: data["giasp"],
@@ -83,7 +83,7 @@ class Product {
             Sdt: data["Sdt"],
             Trangthai: data["TrangThai"],
             Image: data["Image"],
-            loai: data["loaisơ"]);
+            loai: data["loaisp"]);
         products.add(product);
       }
     }

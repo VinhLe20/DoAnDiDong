@@ -13,20 +13,22 @@ class ShopsManager extends StatefulWidget {
 
 class _ShopsManagerState extends State<ShopsManager> {
   User? user = FirebaseAuth.instance.currentUser;
-    static Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: '', Tenshop: "");
+  static Saler shop =
+      Saler(Phone: "", CCCD: "", Diachi: "", Email: '', Tenshop: "");
   void _loadNameShop() {
-   Saler.getData(user?.email).then((value) {
-    setState(() {
+    Saler.getData(user?.email).then((value) {
+      setState(() {
         shop = Saler.saler;
-    });
+      });
     });
   }
+
   @override
   void initState() {
     super.initState();
     _loadNameShop();
-   
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +42,8 @@ class _ShopsManagerState extends State<ShopsManager> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProductMangerScreen(nameShop: shop.Tenshop)));
+                      builder: (context) =>
+                          ProductMangerScreen(nameShop: shop.Tenshop)));
             },
             child: Container(
               height: 50,
@@ -66,7 +69,9 @@ class _ShopsManagerState extends State<ShopsManager> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const OrderConfirmationPage()));
+                      builder: (context) => OrderConfirmationPage(
+                            tenShop: shop.Tenshop,
+                          )));
             },
             child: Container(
               height: 50,

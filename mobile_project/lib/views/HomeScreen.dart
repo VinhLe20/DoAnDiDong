@@ -25,7 +25,6 @@ List<Product> products = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -41,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    products.clear();
     futureProducts = getProducts();
   }
 
@@ -76,8 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CartScreen()),
+                  MaterialPageRoute(builder: (context) => CartScreen()),
                 );
+                updatetatcatrangthai(false);
               },
             ),
             IconButton(
@@ -135,7 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<Product> products = snapshot.data ?? [];
                     return GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 8.0,
                         mainAxisSpacing: 8.0,
@@ -162,10 +164,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Image.asset(
-                                        "assets/h2.jpg",
-                                        height: 120,
-                                        width: 120,
+                                      Container(
+                                        height: 100,
+                                        width: 100,
+                                        child: Image.network(
+                                          products[index].Image,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -238,4 +243,32 @@ class CustomSearchDelegate extends SearchDelegate<String> {
       child: Text('Gợi ý tìm kiếm'),
     );
   }
+}
+
+Future<void> updatetatcatrangthai(bool trangthai) async {
+  Map<String, dynamic> dataToUpdate;
+  CollectionReference cartproduct =
+      FirebaseFirestore.instance.collection('CartProduct');
+  QuerySnapshot querySnapshot = await cartproduct.get();
+  querySnapshot.docs.forEach((doc) async {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    {
+      CollectionReference collection =
+          FirebaseFirestore.instance.collection('CartProduct');
+      DocumentReference document = collection.doc(doc.id);
+      if (trangthai == true)
+        dataToUpdate = {
+          'TrangThai': trangthai,
+        };
+      else {
+        dataToUpdate = {
+          'TrangThai': trangthai,
+        };
+      }
+      try {
+        await document.update(dataToUpdate);
+      } catch (e) {}
+    }
+//    }
+  });
 }

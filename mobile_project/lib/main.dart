@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mobile_project/views/AccountScreen.dart';
+import 'package:mobile_project/views/AddProductsPage.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/CategoryDetail.dart';
 import 'package:mobile_project/views/CategoryScreen.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MainScreen(),
-        '/cart': (context) => const CartScreen(),
+        '/cart': (context) => CartScreen(),
         '/changeProfile': (context) => const Profile(),
         '/profile': (context) => const AccountScreen()
       },
