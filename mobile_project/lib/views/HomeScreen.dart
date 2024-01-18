@@ -145,19 +145,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailProduct(
-                                  pro: products[index],
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailProduct(
+                                    pro: products[index],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          child: Card(
-                            child: ListTile(
-                              subtitle: Column(
+                              );
+                            },
+                            child: Card(
+                              child: ListTile(
+                                  subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
@@ -173,26 +173,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    ' ${products[index].TenSP.toString()}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17,
+                                  Expanded(
+                                    child: Text(
+                                      ' ${products[index].TenSP.toString()}',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17,
+                                      ),
                                     ),
                                   ),
-                                  Text(
-                                    ' ${products[index].GiaSP.toString()} VND',
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
+                                  Expanded(
+                                    child: Text(
+                                      ' ${products[index].GiaSP.toString()} VND',
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      ' ${products[index].Giamgia.toString()} VND',
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                 ],
-                              ),
-                            ),
-                          ),
-                        );
+                              )),
+                            ));
                       },
                     );
                   }

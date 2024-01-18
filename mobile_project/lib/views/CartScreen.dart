@@ -196,11 +196,15 @@ class _CartScreenState extends State<CartScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(cartproduct[index].TenSP),
+                                        Expanded(
+                                            child:
+                                                Text(cartproduct[index].TenSP)),
                                         SizedBox(
                                           height: 50.0,
                                         ),
-                                        Text('${cartproduct[index].GiaSP}'),
+                                        Expanded(
+                                            child: Text(
+                                                '${cartproduct[index].GiaSP}')),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
