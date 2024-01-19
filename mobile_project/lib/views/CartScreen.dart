@@ -104,14 +104,6 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 Row(
                   children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value;
-                        });
-                      },
-                    ),
                     const Padding(
                       padding: EdgeInsets.only(left: 10.0),
                       child: Text("Tất cả sản phẩm"),
@@ -120,7 +112,11 @@ class _CartScreenState extends State<CartScreen> {
                     )
                   ],
                 ),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.delete))
+                IconButton(
+                    onPressed: () {
+                      updatetatcaxoa2(false);
+                    },
+                    icon: const Icon(Icons.delete))
               ],
             ),
           ),
@@ -139,10 +135,12 @@ class _CartScreenState extends State<CartScreen> {
                   return ListView.builder(
                     itemCount: cartproduct.length,
                     itemBuilder: (context, index) {
+                      int gia = cartproduct[index].Giamgia == 0
+                          ? cartproduct[index].GiaSP
+                          : cartproduct[index].Giamgia;
                       soluong = cartproduct[index].SoLuong;
                       productname = cartproduct[index].Tenshop;
-                      tongtiendon =
-                          cartproduct[index].SoLuong * cartproduct[index].GiaSP;
+                      tongtiendon = cartproduct[index].SoLuong * gia;
                       tenshop = cartproduct[index].Tenshop;
                       image = cartproduct[index].img;
 
@@ -169,13 +167,13 @@ class _CartScreenState extends State<CartScreen> {
                                           setState(() {
                                             tongtien -=
                                                 cartproduct[index].SoLuong *
-                                                    cartproduct[index].GiaSP;
+                                                    gia;
                                           });
                                         } else {
                                           setState(() {
                                             tongtien +=
                                                 cartproduct[index].SoLuong *
-                                                    cartproduct[index].GiaSP;
+                                                    gia;
                                           });
                                         }
                                       },
@@ -203,9 +201,7 @@ class _CartScreenState extends State<CartScreen> {
                                         SizedBox(
                                           height: 50.0,
                                         ),
-                                        Expanded(
-                                            child: Text(
-                                                '${cartproduct[index].GiaSP}')),
+                                        Text('${gia}'),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -235,9 +231,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                 .SoLuong >
                                                             0) {
                                                       setState(() {
-                                                        tongtien -=
-                                                            cartproduct[index]
-                                                                .GiaSP;
+                                                        tongtien -= gia;
                                                       });
                                                     }
                                                   },
@@ -258,9 +252,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     if (cartproduct[index]
                                                         .Trangthai) {
                                                       setState(() {
-                                                        tongtien +=
-                                                            cartproduct[index]
-                                                                .GiaSP;
+                                                        tongtien += gia;
                                                       });
                                                     }
                                                   },
@@ -453,6 +445,30 @@ Future<void> updatetatcaxoa(bool trangthai, bool xoa) async {
           await document.update(dataToUpdate);
         } catch (e) {}
       }
+    }
+//    }
+  });
+}
+
+Future<void> updatetatcaxoa2(bool xoa) async {
+  Map<String, dynamic> dataToUpdate;
+  CollectionReference cartproduct =
+      FirebaseFirestore.instance.collection('CartProduct');
+  QuerySnapshot querySnapshot = await cartproduct.get();
+  querySnapshot.docs.forEach((doc) async {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    {
+      CollectionReference collection =
+          FirebaseFirestore.instance.collection('CartProduct');
+      DocumentReference document = collection.doc(doc.id);
+      if (xoa == true)
+        dataToUpdate = {'xoa': xoa};
+      else {
+        dataToUpdate = {'xoa': xoa};
+      }
+      try {
+        await document.update(dataToUpdate);
+      } catch (e) {}
     }
 //    }
   });

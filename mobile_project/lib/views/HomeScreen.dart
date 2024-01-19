@@ -95,12 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               child: CarouselSlider(
                 options: CarouselOptions(
-                  height: 200,
+                  height: 400,
                   enlargeCenterPage: true,
                   autoPlay: true,
                   autoPlayInterval: const Duration(seconds: 3),
                   autoPlayAnimationDuration: const Duration(milliseconds: 800),
                   autoPlayCurve: Curves.fastOutSlowIn,
+                  viewportFraction: 1.0,
                 ),
                 items: imagelist.map((imagePath) {
                   return Builder(

@@ -19,6 +19,7 @@ class DetailProduct extends StatefulWidget {
 
 var Tensp = '';
 var Giasp;
+var giamgia;
 var soluong = 0;
 
 Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: "", Tenshop: "");
@@ -80,7 +81,7 @@ class _DetailProductState extends State<DetailProduct> {
         SoLuong: soluong + 1,
         TenSP: Tensp,
         GiaSP: Giasp,
-        Giamgia: Giasp,
+        Giamgia: giamgia,
         Tenshop: widget.pro.Tenshop,
         img: widget.pro.Image);
     addSaler(cartProduct);
@@ -89,8 +90,11 @@ class _DetailProductState extends State<DetailProduct> {
   @override
   Widget build(BuildContext context) {
     Tensp = widget.pro.TenSP;
-    Giasp = int.parse(widget.pro.GiaSP);
-    // soluong = ;
+   String gia = widget.pro.Giamgia;
+    if (gia == "0") {
+      gia = widget.pro.GiaSP;
+    }
+
     return Scaffold(
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,7 +227,7 @@ class _DetailProductState extends State<DetailProduct> {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        widget.pro.GiaSP,
+                       gia,
                         style: const TextStyle(
                           fontSize: 18.0,
                           color: Colors.red,

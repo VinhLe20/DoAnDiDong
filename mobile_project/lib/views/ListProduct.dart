@@ -28,7 +28,6 @@ class ProductList extends StatelessWidget {
             })
             .where((product) => product.Trangthai == true)
             .toList();
-
         List<CardProduct> productCards = products.map((product) {
           return CardProduct(product: product);
         }).toList();
