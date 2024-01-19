@@ -108,8 +108,6 @@ class _CartScreenState extends State<CartScreen> {
                     const Padding(
                       padding: EdgeInsets.only(left: 10.0),
                       child: Text("Tất cả sản phẩm"),
-
-                      ///   Text()
                     )
                   ],
                 ),

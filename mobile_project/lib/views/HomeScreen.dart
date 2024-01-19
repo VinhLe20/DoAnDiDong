@@ -5,6 +5,7 @@ import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
+import 'package:mobile_project/views/LoginScreen.dart';
 
 Future<List<Product>> getProducts() async {
   QuerySnapshot querySnapshot =
@@ -74,6 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: const Icon(Icons.shopping_cart),
               onPressed: () {
+                if (!Account.isUserLoggedIn) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
+                  return;
+                }
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => CartScreen()),

@@ -224,14 +224,6 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(child: Text("Số lượng: $quantity")),
-                  Expanded(
-                    child: TextButton(
-                        onPressed: () async {},
-                        child: const Text(
-                          "Bình luận",
-                          style: TextStyle(color: Colors.red),
-                        )),
-                  )
                 ],
               ),
             ],

@@ -5,6 +5,7 @@ import 'package:mobile_project/views/ForgetScreen.dart';
 import 'package:mobile_project/views/MainSCreen.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/Register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,6 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
       Account.isUserLoggedIn = true;
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('login', true);
+      print(prefs.getBool('login')??false);
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {

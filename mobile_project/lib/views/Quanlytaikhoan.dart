@@ -20,18 +20,18 @@ class _QuanlytaikhoanState extends State<Quanlytaikhoan> {
       body: Center(
         child: Column(children: [
           Container(
-            // color: Colors.white38,
+            
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white, // Màu của hộp
-              // borderRadius: BorderRadius.circular(10.0), // Độ cong của góc
+              color: Colors.white, 
+              
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(
-                      0.5), // Màu của bóng (có thể điều chỉnh độ đậm của bóng bằng opacity)
-                  spreadRadius: 2.0, // Kích thước mở rộng của bóng
-                  blurRadius: 2.0, // Độ mờ của bóng
-                  offset: const Offset(0, 1), // Độ dịch của bóng theo trục X và Y
+                      0.5), 
+                  spreadRadius: 2.0, 
+                  blurRadius: 2.0, 
+                  offset: const Offset(0, 1), 
                 ),
               ],
             ),
@@ -63,18 +63,18 @@ class _QuanlytaikhoanState extends State<Quanlytaikhoan> {
             height: 10,
           ),
           Container(
-            // color: Colors.white38,
+            
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white, // Màu của hộp
-              // borderRadius: BorderRadius.circular(10.0), // Độ cong của góc
+              color: Colors.white, 
+              
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(
-                      0.5), // Màu của bóng (có thể điều chỉnh độ đậm của bóng bằng opacity)
-                  spreadRadius: 2.0, // Kích thước mở rộng của bóng
-                  blurRadius: 2.0, // Độ mờ của bóng
-                  offset: const Offset(0, 1), // Độ dịch của bóng theo trục X và Y
+                      0.5), 
+                  spreadRadius: 2.0, 
+                  blurRadius: 2.0, 
+                  offset: const Offset(0, 1), 
                 ),
               ],
             ),
@@ -106,18 +106,18 @@ class _QuanlytaikhoanState extends State<Quanlytaikhoan> {
             height: 10,
           ),
           Container(
-            // color: Colors.white38,
+            
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white, // Màu của hộp
-              // borderRadius: BorderRadius.circular(10.0), // Độ cong của góc
+              color: Colors.white, 
+              
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(
-                      0.5), // Màu của bóng (có thể điều chỉnh độ đậm của bóng bằng opacity)
-                  spreadRadius: 2.0, // Kích thước mở rộng của bóng
-                  blurRadius: 2.0, // Độ mờ của bóng
-                  offset: const Offset(0, 1), // Độ dịch của bóng theo trục X và Y
+                      0.5), 
+                  spreadRadius: 2.0, 
+                  blurRadius: 2.0, 
+                  offset: const Offset(0, 1), 
                 ),
               ],
             ),

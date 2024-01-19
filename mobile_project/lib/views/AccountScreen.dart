@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/MainScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
 import 'package:mobile_project/views/ShopManager.dart';
@@ -16,6 +17,12 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  String name = "";
+  String address = "";
+  String phone = "";
+  String email = "";
+  bool shop = false;
+
   static Account acc = Account("", "", "", "", false, "");
   User? user = FirebaseAuth.instance.currentUser;
   void _loadData() {
@@ -24,6 +31,7 @@ class _AccountScreenState extends State<AccountScreen> {
         acc = Account.acc;
       });
     });
+    saveUser();
   }
 
   @override
@@ -32,8 +40,36 @@ class _AccountScreenState extends State<AccountScreen> {
     _loadData();
   }
 
+  void saveUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('name', acc.name);
+    prefs.setString('email', acc.email);
+    prefs.setString('phone', acc.phone);
+    prefs.setString('address', acc.adress);
+    prefs.setBool('shop', acc.shop);
+  }
+
+  void loadUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    name = prefs.getString('name') ?? "";
+    email = prefs.getString('email') ?? "";
+    phone = prefs.getString('phone') ?? "";
+    address = prefs.getString('address') ?? "";
+    shop = prefs.getBool('shop') ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (name == "") {
+      setState(() {
+        name = acc.name;
+        email = acc.email;
+        phone = acc.phone;
+        address = acc.adress;
+        shop = acc.shop;
+      });
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tài khoản"),
@@ -68,7 +104,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(acc.name),
+                        Text(name),
                         const SizedBox(height: 10),
                         InkWell(
                           onTap: () async {
@@ -208,12 +244,13 @@ class _AccountScreenState extends State<AccountScreen> {
             const SizedBox(height: 20),
             MaterialButton(
               onPressed: () async {
+                bool manager = shop;
                 final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((context) => !acc.shop
-                            ? const SalesRegistration()
-                            : const ShopsManager())));
+                        builder: ((context) => manager
+                            ? const ShopsManager()
+                            : const SalesRegistration())));
                 if (result) {
                   setState(() {
                     _loadData();
@@ -230,9 +267,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         const Icon(Icons.store),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(!acc.shop
-                              ? "Đăng ký bán hàng"
-                              : "Kênh người bán"),
+                          child: Text(
+                              shop ? "Kênh người bán" : "Đăng ký bán hàng"),
                         )
                       ],
                     ),
@@ -245,6 +281,7 @@ class _AccountScreenState extends State<AccountScreen> {
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
                 Account.isUserLoggedIn = false;
+                
                 final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
