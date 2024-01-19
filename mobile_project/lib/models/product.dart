@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
@@ -37,6 +39,15 @@ class Product {
     };
   }
 
+  String toJson() {
+    return '{"tensp": "$TenSP", "giasp": "$GiaSP", "Tenshop": "$Tenshop", '
+        '"MoTa": "$MoTa", "SoLuong": "$SoLuong", "GiamGia": "$Giamgia", '
+        '"Sdt": "$Sdt", "TrangThai": $Trangthai, "Image": "$Image", '
+        '"loaisp": "$loai"}';
+  }
+
+  factory Product.fromJson(String source) =>
+      Product.fromMap(json.decode(source));
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
         TenSP: map['tensp'] ?? '',

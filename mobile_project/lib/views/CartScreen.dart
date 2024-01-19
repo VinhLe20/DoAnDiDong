@@ -22,6 +22,16 @@ class CartScreen extends StatefulWidget {
 
 // CartProduct? cartpro;
 class _CartScreenState extends State<CartScreen> {
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
+  String? fileName;
   User? user = FirebaseAuth.instance.currentUser;
   Stream<List<CartProduct>> streamData(String? email) {
     CollectionReference orders =
@@ -62,7 +72,7 @@ class _CartScreenState extends State<CartScreen> {
       };
       await FirebaseFirestore.instance.collection('orders').add(orderMap);
       print('Đơn hàng đã được tạo thành công!');
-      Navigator.pop(context);
+      // Navigator.pop(context);
     } catch (e) {
       print('Lỗi khi tạo đơn hàng: $e');
     }
@@ -194,9 +204,7 @@ class _CartScreenState extends State<CartScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Expanded(
-                                            child:
-                                                Text(cartproduct[index].TenSP)),
+                                        Text(cartproduct[index].TenSP),
                                         SizedBox(
                                           height: 50.0,
                                         ),
@@ -272,6 +280,7 @@ class _CartScreenState extends State<CartScreen> {
                                       onPressed: () {
                                         xoaCartProduct(email?.email,
                                             cartproduct[index].TenSP, false);
+                                        _showSnackBar("Bạn đã xóa thành công");
                                       },
                                       child: Text("Xóa"),
                                     ),
@@ -303,10 +312,12 @@ class _CartScreenState extends State<CartScreen> {
                   child: TextButton(
                     child: Text("Mua hàng"),
                     onPressed: () {
+                      _showSnackBar("Bạn đã mua hàng thành công");
                       Order2 order2 = Order2(Tensp, soluong, '', '',
                           tongtiendon, 'Chờ xác nhận', image, tenshop);
                       createOrder(order2);
                       updatetatcaxoa(true, false);
+
                       setState(() {
                         tongtien = 0;
                       });
