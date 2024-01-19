@@ -27,7 +27,7 @@ class _CartScreenState extends State<CartScreen> {
     CollectionReference orders =
         FirebaseFirestore.instance.collection('CartProduct');
     return orders
-        .where('email', isEqualTo: email)
+        .where('email', isEqualTo: user?.email)
         .where('xoa', isEqualTo: true)
         .snapshots()
         .map(
@@ -76,7 +76,7 @@ class _CartScreenState extends State<CartScreen> {
 
   //UserProfile userProfile = UserProfile();
   var tongtien = 0;
-  bool? isChecked = false;
+  //bool? isChecked = false;
   @override
   Widget build(BuildContext context) {
     User? email = FirebaseAuth.instance.currentUser;
@@ -130,7 +130,6 @@ class _CartScreenState extends State<CartScreen> {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  //   updatetatcatrangthai(false);
                   List<CartProduct> cartproduct = snapshot.data ?? [];
                   return ListView.builder(
                     itemCount: cartproduct.length,
@@ -226,7 +225,8 @@ class _CartScreenState extends State<CartScreen> {
                                                                     .SoLuong -
                                                                 1);
                                                     if (cartproduct[index]
-                                                            .Trangthai &&
+                                                                .Trangthai ==
+                                                            true &&
                                                         cartproduct[index]
                                                                 .SoLuong >
                                                             0) {
@@ -250,7 +250,8 @@ class _CartScreenState extends State<CartScreen> {
                                                                     .SoLuong +
                                                                 1);
                                                     if (cartproduct[index]
-                                                        .Trangthai) {
+                                                            .Trangthai ==
+                                                        true) {
                                                       setState(() {
                                                         tongtien += gia;
                                                       });

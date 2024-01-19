@@ -90,10 +90,12 @@ class _DetailProductState extends State<DetailProduct> {
   @override
   Widget build(BuildContext context) {
     Tensp = widget.pro.TenSP;
-   String gia = widget.pro.Giamgia;
+    String gia = widget.pro.Giamgia;
     if (gia == "0") {
       gia = widget.pro.GiaSP;
     }
+    Giasp = int.parse(widget.pro.GiaSP);
+    giamgia = int.parse(widget.pro.Giamgia);
 
     return Scaffold(
       bottomNavigationBar: Row(
@@ -227,7 +229,7 @@ class _DetailProductState extends State<DetailProduct> {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                       gia,
+                        gia,
                         style: const TextStyle(
                           fontSize: 18.0,
                           color: Colors.red,
