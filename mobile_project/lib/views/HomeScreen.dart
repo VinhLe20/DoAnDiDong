@@ -31,6 +31,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> imagelist = [
+    "assets/hinhslogan.jpg",
     "assets/h1.jpg",
     "assets/h2.jpg",
     "assets/h1.jpg",
