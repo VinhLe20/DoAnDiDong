@@ -90,27 +90,29 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Các Đơn Cần Xác Nhận"),
-      ),
-      body: StreamBuilder<List<Order2>>(
-        stream: Order2.load(widget.tenShop),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            List<Order2> orders = snapshot.data ?? [];
-            return ListView.builder(
-              itemCount: orders.length,
-              itemBuilder: (context, index) {
-                return buildOrderConfirmation(orders[index]);
-              },
-            );
-          }
-        },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Các Đơn Cần Xác Nhận"),
+        ),
+        body: StreamBuilder<List<Order2>>(
+          stream: Order2.load(widget.tenShop),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              List<Order2> orders = snapshot.data ?? [];
+              return ListView.builder(
+                itemCount: orders.length,
+                itemBuilder: (context, index) {
+                  return buildOrderConfirmation(orders[index]);
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

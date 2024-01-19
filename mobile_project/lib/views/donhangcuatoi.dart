@@ -302,142 +302,144 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: widget.initialIndex,
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back)),
-          title: const Text(
-            "Đơn hàng của tôi",
-            style: TextStyle(
-              fontSize: 25,
+    return SafeArea(
+      child: DefaultTabController(
+        initialIndex: widget.initialIndex,
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back)),
+            title: const Text(
+              "Đơn hàng của tôi",
+              style: TextStyle(
+                fontSize: 25,
+              ),
             ),
+            bottom: const TabBar(
+                labelColor: Colors.red, // Màu của tab được chọn
+                unselectedLabelColor: Colors.black,
+                indicatorColor: Colors.red,
+                tabs: [
+                  Tab(child: Text("Chờ xác nhận")),
+                  Tab(
+                    child: Text("Chờ giao hàng"),
+                  ),
+                  Tab(
+                    child: Text("Đã giao"),
+                  ),
+                  Tab(
+                    child: Text("Đã hủy"),
+                  ),
+                ]),
           ),
-          bottom: const TabBar(
-              labelColor: Colors.red, // Màu của tab được chọn
-              unselectedLabelColor: Colors.black,
-              indicatorColor: Colors.red,
-              tabs: [
-                Tab(child: Text("Chờ xác nhận")),
-                Tab(
-                  child: Text("Chờ giao hàng"),
-                ),
-                Tab(
-                  child: Text("Đã giao"),
-                ),
-                Tab(
-                  child: Text("Đã hủy"),
-                ),
-              ]),
-        ),
-        body: TabBarView(
-          children: [
-            StreamBuilder<List<Order2>>(
-              stream: Order2.streamData(user?.email, "Chờ xác nhận"),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  List<Order2> orders = snapshot.data ?? [];
-                  return ListView.builder(
-                    itemCount: orders.length,
-                    itemBuilder: (context, index) {
-                      return ChoXacNhan(
-                        orders[index].image,
-                        orders[index].productName,
-                        orders[index].totalAmount,
-                        orders[index].quantity,
-                        orders[index].status,
-                        orders[index].nameShop,
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-            StreamBuilder<List<Order2>>(
-              stream: Order2.streamData(user?.email, "Đang giao hàng"),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  List<Order2> orders = snapshot.data ?? [];
-                  return ListView.builder(
-                    itemCount: orders.length,
-                    itemBuilder: (context, index) {
-                      return DangGiao(
-                        orders[index].image,
-                        orders[index].productName,
-                        orders[index].totalAmount,
-                        orders[index].quantity,
-                        orders[index].status,
-                        orders[index].nameShop,
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-            StreamBuilder<List<Order2>>(
-              stream: Order2.streamData(user?.email, "Đã giao"),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  List<Order2> orders = snapshot.data ?? [];
-                  return ListView.builder(
-                    itemCount: orders.length,
-                    itemBuilder: (context, index) {
-                      return DaGiao(
-                        orders[index].image,
-                        orders[index].productName,
-                        orders[index].totalAmount,
-                        orders[index].quantity,
-                        orders[index].status,
-                        orders[index].nameShop,
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-            StreamBuilder<List<Order2>>(
-              stream: Order2.streamData(user?.email, "Đã hủy"),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  List<Order2> orders = snapshot.data ?? [];
-                  return ListView.builder(
-                    itemCount: orders.length,
-                    itemBuilder: (context, index) {
-                      return Huy(
-                        orders[index].image,
-                        orders[index].productName,
-                        orders[index].totalAmount,
-                        orders[index].quantity,
-                        orders[index].status,
-                        orders[index].nameShop,
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-          ],
+          body: TabBarView(
+            children: [
+              StreamBuilder<List<Order2>>(
+                stream: Order2.streamData(user?.email, "Chờ xác nhận"),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    List<Order2> orders = snapshot.data ?? [];
+                    return ListView.builder(
+                      itemCount: orders.length,
+                      itemBuilder: (context, index) {
+                        return ChoXacNhan(
+                          orders[index].image,
+                          orders[index].productName,
+                          orders[index].totalAmount,
+                          orders[index].quantity,
+                          orders[index].status,
+                          orders[index].nameShop,
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+              StreamBuilder<List<Order2>>(
+                stream: Order2.streamData(user?.email, "Đang giao hàng"),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    List<Order2> orders = snapshot.data ?? [];
+                    return ListView.builder(
+                      itemCount: orders.length,
+                      itemBuilder: (context, index) {
+                        return DangGiao(
+                          orders[index].image,
+                          orders[index].productName,
+                          orders[index].totalAmount,
+                          orders[index].quantity,
+                          orders[index].status,
+                          orders[index].nameShop,
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+              StreamBuilder<List<Order2>>(
+                stream: Order2.streamData(user?.email, "Đã giao"),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    List<Order2> orders = snapshot.data ?? [];
+                    return ListView.builder(
+                      itemCount: orders.length,
+                      itemBuilder: (context, index) {
+                        return DaGiao(
+                          orders[index].image,
+                          orders[index].productName,
+                          orders[index].totalAmount,
+                          orders[index].quantity,
+                          orders[index].status,
+                          orders[index].nameShop,
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+              StreamBuilder<List<Order2>>(
+                stream: Order2.streamData(user?.email, "Đã hủy"),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    List<Order2> orders = snapshot.data ?? [];
+                    return ListView.builder(
+                      itemCount: orders.length,
+                      itemBuilder: (context, index) {
+                        return Huy(
+                          orders[index].image,
+                          orders[index].productName,
+                          orders[index].totalAmount,
+                          orders[index].quantity,
+                          orders[index].status,
+                          orders[index].nameShop,
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
