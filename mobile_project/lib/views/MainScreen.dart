@@ -47,9 +47,15 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
+        selectedLabelStyle: TextStyle(color: Colors.lightBlue[200]),
+        unselectedLabelStyle: TextStyle(color: Colors.black),
+        selectedItemColor: Colors.lightBlue[200],
+        unselectedItemColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+            ),
             label: 'Trang chủ',
           ),
           BottomNavigationBarItem(

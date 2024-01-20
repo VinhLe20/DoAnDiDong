@@ -315,6 +315,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.lightBlue[200],
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);

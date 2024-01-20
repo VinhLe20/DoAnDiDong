@@ -102,7 +102,7 @@ class _OrderPageState extends State<OrderPage> {
                         height: 30,
                       ),
                       Text(
-                        "đ ${gia.toString()}",
+                        " giá : ${gia.toString()} đ",
                         style: const TextStyle(color: Colors.red, fontSize: 18),
                       ),
                       const SizedBox(
@@ -110,6 +110,10 @@ class _OrderPageState extends State<OrderPage> {
                       ),
                       Row(
                         children: [
+                          const Text(
+                            "Số Lượng : ",
+                            style: TextStyle(fontSize: 18),
+                          ),
                           IconButton(
                             onPressed: () {
                               setState(() {
@@ -140,13 +144,13 @@ class _OrderPageState extends State<OrderPage> {
                 ],
               ),
               const SizedBox(
-                height: 60,
+                height: 100,
               ),
               const Row(
                 children: [
                   Expanded(
                       child: Text(
-                    "Phương Thức Thanh Toán",
+                    "Phương Thức Thanh Toán : ",
                     textAlign: TextAlign.left,
                     style: TextStyle(fontSize: 20),
                   )),
@@ -158,8 +162,8 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                 ],
               ),
-              const Divider(
-                color: Colors.black,
+              Divider(
+                color: Colors.lightBlue[200],
                 thickness: 2,
                 height: 20,
               ),
@@ -170,7 +174,7 @@ class _OrderPageState extends State<OrderPage> {
                 children: [
                   const Expanded(
                       child: Text(
-                    "Điện Thoại",
+                    "Điện Thoại : ",
                     textAlign: TextAlign.left,
                     style: TextStyle(fontSize: 20),
                   )),
@@ -182,8 +186,8 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                 ],
               ),
-              const Divider(
-                color: Colors.black,
+              Divider(
+                color: Colors.lightBlue[200],
                 thickness: 2,
                 height: 20,
               ),
@@ -194,7 +198,7 @@ class _OrderPageState extends State<OrderPage> {
                 children: [
                   const Expanded(
                       child: Text(
-                    "Địa Chỉ",
+                    "Địa Chỉ : ",
                     textAlign: TextAlign.left,
                     style: TextStyle(fontSize: 20),
                   )),
@@ -206,8 +210,8 @@ class _OrderPageState extends State<OrderPage> {
                   )),
                 ],
               ),
-              const Divider(
-                color: Colors.black,
+              Divider(
+                color: Colors.lightBlue[200],
                 thickness: 2,
                 height: 20,
               ),
@@ -251,8 +255,8 @@ class _OrderPageState extends State<OrderPage> {
                     style: ElevatedButton.styleFrom(
                         fixedSize: const Size(180, 60),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0)),
-                        backgroundColor: Colors.blue),
+                            borderRadius: BorderRadius.circular(10.0)),
+                        backgroundColor: Colors.lightBlue[200]),
                     child: const Text(
                       "Mua Hàng",
                       style: TextStyle(fontSize: 20, color: Colors.white),

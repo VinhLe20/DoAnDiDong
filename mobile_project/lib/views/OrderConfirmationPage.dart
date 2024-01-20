@@ -92,6 +92,7 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
         title: const Text("Các Đơn Cần Xác Nhận"),
       ),
       body: StreamBuilder<List<Order2>>(

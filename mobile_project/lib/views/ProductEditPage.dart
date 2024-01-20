@@ -14,15 +14,12 @@ class ProductEditPage extends StatefulWidget {
 }
 
 class _ProductEditPageState extends State<ProductEditPage> {
-
-    final TextEditingController _name = TextEditingController();
+  final TextEditingController _name = TextEditingController();
   final TextEditingController _price = TextEditingController();
   final TextEditingController _discount = TextEditingController();
   final TextEditingController _describe = TextEditingController();
   final TextEditingController _quantity = TextEditingController();
-  String selectedValue = ''; 
-
-  
+  String selectedValue = '';
 
   @override
   void initState() {
@@ -34,51 +31,54 @@ class _ProductEditPageState extends State<ProductEditPage> {
     _quantity.text = widget.product.SoLuong;
     selectedValue = widget.product.loai;
   }
+
   imagePicker image = imagePicker();
   bool onTap = false;
   @override
   Widget build(BuildContext context) {
-    droop(){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 62.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0), // Set your desired border radius here
-        border: Border.all(
-          color: Colors.grey,
-          width: 1.0,
+    droop() {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: 62.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+              10.0), // Set your desired border radius here
+          border: Border.all(
+            color: Colors.grey,
+            width: 1.0,
+          ),
         ),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 12.0),
-      child: DropdownButton<String>(
-        value: selectedValue,
-        onChanged: (String? newValue) {
-          setState(() {
-            selectedValue = newValue!;
-          });
-        },
-        items: <String>[
-          'Thể thao & du lịch', 
-          'Ô tô - xe máy', 
-          'Bách hóa online', 
-          'Nhà cửa',
-          'Giày dép',
-          'Máy tính & Đồ công nghệ',
-          'Đồng hồ',
-          'Thời trang nam',
-          'Thời trang nữ'
-          ]
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-      ),
-    );
-  }
+        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        child: DropdownButton<String>(
+          value: selectedValue,
+          onChanged: (String? newValue) {
+            setState(() {
+              selectedValue = newValue!;
+            });
+          },
+          items: <String>[
+            'Thể thao & du lịch',
+            'Ô tô - xe máy',
+            'Bách hóa online',
+            'Nhà cửa',
+            'Giày dép',
+            'Máy tính & Đồ công nghệ',
+            'Đồng hồ',
+            'Thời trang nam',
+            'Thời trang nữ'
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context, true);
@@ -247,7 +247,6 @@ class _ProductEditPageState extends State<ProductEditPage> {
             ),
             const SizedBox(
               height: 8.0,
-             
             ),
             const Row(
               children: [
@@ -255,7 +254,6 @@ class _ProductEditPageState extends State<ProductEditPage> {
                   child: Text(
                     "Loại Sản Phẩm",
                     style: TextStyle(fontSize: 20),
-                    
                   ),
                 ),
               ],
@@ -277,8 +275,8 @@ class _ProductEditPageState extends State<ProductEditPage> {
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(150, 60),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0)),
-                      backgroundColor: Colors.blue),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      backgroundColor: Colors.lightBlue[200]),
                   child: const Text(
                     "Xóa",
                     style: TextStyle(fontSize: 20, color: Colors.white),
@@ -306,8 +304,8 @@ class _ProductEditPageState extends State<ProductEditPage> {
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(150, 60),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0)),
-                      backgroundColor: Colors.blue),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      backgroundColor: Colors.lightBlue[200]),
                   child: const Text(
                     "Lưu",
                     style: TextStyle(fontSize: 20, color: Colors.white),
@@ -376,4 +374,3 @@ class _ProductEditPageState extends State<ProductEditPage> {
   //   updateProduct(product);
   // }
 }
-

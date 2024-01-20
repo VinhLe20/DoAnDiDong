@@ -33,10 +33,14 @@ class _ShopsManagerState extends State<ShopsManager> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
         title: const Text('Shop'),
       ),
       body: Column(
         children: [
+          const SizedBox(
+            height: 20,
+          ),
           MaterialButton(
             onPressed: () {
               Navigator.push(

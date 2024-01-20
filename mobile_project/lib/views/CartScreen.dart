@@ -82,6 +82,7 @@ class _CartScreenState extends State<CartScreen> {
     User? email = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);

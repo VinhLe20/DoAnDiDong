@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Account.isUserLoggedIn = true;
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('login', true);
-      print(prefs.getBool('login')??false);
+      print(prefs.getBool('login') ?? false);
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
@@ -84,7 +84,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const Register()));
                         },
-                        child: const Text("Tạo Tài Khoản Mới"))
+                        child: Text(
+                          "Tạo Tài Khoản Mới",
+                          style: TextStyle(color: Colors.lightBlue[200]),
+                        ))
                   ],
                 ),
                 const SizedBox(
@@ -175,7 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const ForgetScreen()));
                         },
-                        child: const Text("Bạn đã quên mật khẩu ?"))
+                        child: Text(
+                          "Bạn đã quên mật khẩu ?",
+                          style: TextStyle(color: Colors.lightBlue[200]),
+                        ))
                   ],
                 )
               ],

@@ -42,6 +42,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -239,7 +240,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(20.0),
                   minimumSize: const Size(400.0, 50.0),
-                  backgroundColor: Colors.blue),
+                  backgroundColor: Colors.lightBlue[200]),
               child: const Text(
                 "Lưu",
                 style: TextStyle(color: Colors.white, fontSize: 20),

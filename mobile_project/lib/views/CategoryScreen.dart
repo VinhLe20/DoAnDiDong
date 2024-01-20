@@ -23,6 +23,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       //bottomNavigationBar: BottomNavigator(),
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
         title: const Text("Danh mục sản phẩm"),
         actions: const [
           Icon(Icons.shopping_cart),
@@ -51,7 +52,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Container(
                   height: 120,
                   width: MediaQuery.of(context).size.width / 3 - 30,
-                  decoration: const BoxDecoration(color: Colors.grey),
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlue[200],
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,7 +82,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Container(
                   height: 120,
                   width: MediaQuery.of(context).size.width / 3 - 30,
-                  decoration: const BoxDecoration(color: Colors.grey),
+                  decoration: BoxDecoration(color: Colors.lightBlue[200]),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,7 +110,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Container(
                   height: 120,
                   width: MediaQuery.of(context).size.width / 3 - 30,
-                  decoration: const BoxDecoration(color: Colors.grey),
+                  decoration: BoxDecoration(color: Colors.lightBlue[200]),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,7 +145,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Container(
                     height: 120,
                     width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.grey),
+                    decoration: BoxDecoration(color: Colors.lightBlue[200]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,7 +173,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Container(
                     height: 120,
                     width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.grey),
+                    decoration: BoxDecoration(color: Colors.lightBlue[200]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -197,7 +200,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Container(
                     height: 120,
                     width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.grey),
+                    decoration: BoxDecoration(color: Colors.lightBlue[200]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -233,7 +236,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Container(
                     height: 120,
                     width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.grey),
+                    decoration: BoxDecoration(color: Colors.lightBlue[200]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -261,7 +264,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Container(
                     height: 120,
                     width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.grey),
+                    decoration: BoxDecoration(color: Colors.lightBlue[200]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -289,7 +292,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Container(
                     height: 120,
                     width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.grey),
+                    decoration: BoxDecoration(color: Colors.lightBlue[200]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

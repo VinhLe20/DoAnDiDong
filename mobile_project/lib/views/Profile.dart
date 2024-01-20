@@ -50,6 +50,7 @@ class _ProfileState extends State<Profile> {
     _diachi.text = acc.adress;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
