@@ -70,229 +70,194 @@ class _AccountScreenState extends State<AccountScreen> {
         shop = acc.shop;
       });
     }
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Tài khoản"),
-        actions: const [
-          Icon(Icons.shopping_cart),
-          Padding(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-            child: Icon(Icons.chat_outlined),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Tài khoản"),
+          actions: const [
+            Icon(Icons.shopping_cart),
             Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 90.0,
-                    height: 90.0,
-                    child: ClipOval(
-                      child: Image.network(
-                        acc.image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(name),
-                        const SizedBox(height: 10),
-                        InkWell(
-                          onTap: () async {
-                            final result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Profile(),
-                              ),
-                            );
-                            if (result) {
-                              _loadData();
-                            }
-                          },
-                          child: const Text(
-                            "Thay đổi thông tin cá nhân",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Đơn hàng của tôi",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => donhangcuatoi(
-                            initialIndex: 2,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Row(
-                      children: [
-                        Text("Xem lịch sử mua hàng"),
-                        Icon(Icons.arrow_forward_ios)
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => donhangcuatoi(
-                            initialIndex: 0,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const SizedBox(
-                      width: 90,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 10),
-                            child: Icon(Icons.account_balance_wallet),
-                          ),
-                          Text("Chờ xác nhận")
-                        ],
-                      ),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => donhangcuatoi(
-                            initialIndex: 1,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const SizedBox(
-                      width: 90,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 10),
-                            child: Icon(Icons.local_shipping),
-                          ),
-                          Text("Đang giao")
-                        ],
-                      ),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => donhangcuatoi(
-                            initialIndex: 3,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const SizedBox(
-                      width: 90,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 10),
-                            child: Icon(Icons.highlight_remove_rounded),
-                          ),
-                          Text("Đã hủy"),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            MaterialButton(
-              onPressed: () async {
-                bool manager = shop;
-                final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => manager
-                            ? const ShopsManager()
-                            : const SalesRegistration())));
-                if (result) {
-                  setState(() {
-                    _loadData();
-                  });
-                }
-              },
-              child: SizedBox(
-                height: 50,
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: Icon(Icons.chat_outlined),
+            )
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.store),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                              shop ? "Kênh người bán" : "Đăng ký bán hàng"),
-                        )
-                      ],
+                    SizedBox(
+                      width: 90.0,
+                      height: 90.0,
+                      child: ClipOval(
+                        child: Image.network(
+                          acc.image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                    const Icon(Icons.arrow_forward_ios)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(name),
+                          const SizedBox(height: 10),
+                          InkWell(
+                            onTap: () async {
+                              final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Profile(),
+                                ),
+                              );
+                              if (result) {
+                                _loadData();
+                              }
+                            },
+                            child: const Text(
+                              "Thay đổi thông tin cá nhân",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
-            ),
-            MaterialButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                Account.isUserLoggedIn = false;
-                
-                final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ));
-                if (result) {
-                  Navigator.pushReplacementNamed(context, '/');
-                }
-              },
-              child: const SizedBox(
-                height: 50,
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Đơn hàng của tôi",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => donhangcuatoi(
+                              initialIndex: 2,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Row(
+                        children: [
+                          Text("Xem lịch sử mua hàng"),
+                          Icon(Icons.arrow_forward_ios)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => donhangcuatoi(
+                              initialIndex: 0,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const SizedBox(
+                        width: 90,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              child: Icon(Icons.account_balance_wallet),
+                            ),
+                            Text("Chờ xác nhận")
+                          ],
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => donhangcuatoi(
+                              initialIndex: 1,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const SizedBox(
+                        width: 90,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              child: Icon(Icons.local_shipping),
+                            ),
+                            Text("Đang giao")
+                          ],
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => donhangcuatoi(
+                              initialIndex: 3,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const SizedBox(
+                        width: 90,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              child: Icon(Icons.highlight_remove_rounded),
+                            ),
+                            Text("Đã hủy"),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              MaterialButton(
+                onPressed: () async {
+                  bool manager = shop;
+                  final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => manager
+                              ? const ShopsManager()
+                              : const SalesRegistration())));
+                  if (result) {
+                    setState(() {
+                      _loadData();
+                    });
+                  }
+                },
                 child: SizedBox(
                   height: 50,
                   child: Row(
@@ -300,20 +265,57 @@ class _AccountScreenState extends State<AccountScreen> {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.logout),
+                          const Icon(Icons.store),
                           Padding(
-                            padding: EdgeInsets.only(left: 10.0),
-                            child: Text("Đăng xuất"),
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                                shop ? "Kênh người bán" : "Đăng ký bán hàng"),
                           )
                         ],
                       ),
-                      Icon(Icons.arrow_forward_ios)
+                      const Icon(Icons.arrow_forward_ios)
                     ],
                   ),
                 ),
               ),
-            )
-          ],
+              MaterialButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Account.isUserLoggedIn = false;
+
+                  final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ));
+                  if (result) {
+                    Navigator.pushReplacementNamed(context, '/');
+                  }
+                },
+                child: const SizedBox(
+                  height: 50,
+                  child: SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.logout),
+                            Padding(
+                              padding: EdgeInsets.only(left: 10.0),
+                              child: Text("Đăng xuất"),
+                            )
+                          ],
+                        ),
+                        Icon(Icons.arrow_forward_ios)
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

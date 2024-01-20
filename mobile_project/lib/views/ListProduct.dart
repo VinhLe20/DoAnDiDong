@@ -22,7 +22,7 @@ class ProductList extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         }
-       List<Product> products = snapshot.data!.docs
+        List<Product> products = snapshot.data!.docs
             .map((DocumentSnapshot document) {
               return Product.fromMap(document.data() as Map<String, dynamic>);
             })

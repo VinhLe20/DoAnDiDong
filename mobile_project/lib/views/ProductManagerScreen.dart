@@ -90,7 +90,6 @@ class _ProductMangerScreenState extends State<ProductMangerScreen> {
     prefs.setStringList("NameProduct", tensp);
     prefs.setStringList("GiaProduct", giasp);
     prefs.setStringList("SoLuongProduct", soluongsp);
-  
   }
 
   Item(Product pro) {
@@ -151,39 +150,40 @@ class _ProductMangerScreenState extends State<ProductMangerScreen> {
   Widget build(BuildContext context) {
     if (productslocal.isNotEmpty) {
       setState(() {
-          
         products = productslocal;
         print("${productslocal[0]}");
       });
     }
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Quản lý sản phẩm"),
-      ),
-      floatingActionButton: IconButton(
-        icon: const Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 226, 13, 13),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Quản lý sản phẩm"),
         ),
-        onPressed: () async {
-          final result = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      AddProductsPage(nameShop: widget.nameShop)));
-          if (result) {
-            setState(() {
-              Product.products.clear();
-              _loadData(widget.nameShop);
-            });
-          }
-        },
-      ),
-      body: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Item(products[index]);
-        },
+        floatingActionButton: IconButton(
+          icon: const Icon(
+            Icons.add,
+            color: Color.fromARGB(255, 226, 13, 13),
+          ),
+          onPressed: () async {
+            final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        AddProductsPage(nameShop: widget.nameShop)));
+            if (result) {
+              setState(() {
+                Product.products.clear();
+                _loadData(widget.nameShop);
+              });
+            }
+          },
+        ),
+        body: ListView.builder(
+          itemCount: products.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Item(products[index]);
+          },
+        ),
       ),
     );
   }
