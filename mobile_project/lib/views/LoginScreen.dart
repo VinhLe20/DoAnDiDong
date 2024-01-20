@@ -25,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
       Account.isUserLoggedIn = true;
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('login', true);
-      print(prefs.getBool('login')??false);
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {

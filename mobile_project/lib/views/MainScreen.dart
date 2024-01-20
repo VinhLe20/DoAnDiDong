@@ -6,6 +6,7 @@ import 'package:mobile_project/views/CategoryScreen.dart';
 import 'package:mobile_project/views/HomeScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/NotificationsScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -31,8 +32,11 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
-        onTap: (index) {
-          if (index == 3 && !Account.isUserLoggedIn) {
+        onTap: (index) async {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          bool login = prefs.getBool("login") ?? false;
+          Account.isUserLoggedIn = login;
+          if (index == 3 && !Account.isUserLoggedIn || index == 3 && !login) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const LoginScreen()),
