@@ -60,14 +60,14 @@ class _ProfileState extends State<Profile> {
             ]),
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: () {
+        onPressed: ()async {
           image.uploadImageToFirebase();
           netword = imagePicker.imageNetwork;
           try {
             if (onTap) {
-              acc.updateAccount(user?.email, netword, _ten.text, _diachi.text);
+              await acc.updateAccount(user?.email, netword, _ten.text, _diachi.text);
             } else {
-              acc.updateAccount(user?.email, "", _ten.text, _diachi.text);
+             await acc.updateAccount(user?.email, "", _ten.text, _diachi.text);
             }
             _showSnackBar("Thay đổi thông tin thành công");
           } catch (e) {}
@@ -76,7 +76,7 @@ class _ProfileState extends State<Profile> {
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                  0.0), // Đặt độ cong của góc thành 0 để tạo nút vuông
+                  0.0), 
             ),
           ),
           minimumSize: MaterialStateProperty.all(const Size(90, 50)),

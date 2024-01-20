@@ -38,7 +38,6 @@ class _AccountScreenState extends State<AccountScreen> {
   void initState() {
     super.initState();
     _loadData();
-    loadUser();
   }
 
   void saveUser() async {
@@ -52,17 +51,25 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void loadUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      name = prefs.getString('name') ?? "";
-      email = prefs.getString('email') ?? "";
-      phone = prefs.getString('phone') ?? "";
-      address = prefs.getString('address') ?? "";
-      shop = prefs.getBool('shop') ?? false;
-    });
+
+    name = prefs.getString('name') ?? "";
+    email = prefs.getString('email') ?? "";
+    phone = prefs.getString('phone') ?? "";
+    address = prefs.getString('address') ?? "";
+    shop = prefs.getBool('shop') ?? false;
   }
 
   @override
   Widget build(BuildContext context) {
+    if (name == "") {
+      setState(() {
+        name = acc.name;
+        email = acc.email;
+        phone = acc.phone;
+        address = acc.adress;
+        shop = acc.shop;
+      });
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tài khoản"),
@@ -237,12 +244,13 @@ class _AccountScreenState extends State<AccountScreen> {
             const SizedBox(height: 20),
             MaterialButton(
               onPressed: () async {
+                bool manager = shop;
                 final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((context) => !acc.shop
-                            ? const SalesRegistration()
-                            : const ShopsManager())));
+                        builder: ((context) => manager
+                            ? const ShopsManager()
+                            : const SalesRegistration())));
                 if (result) {
                   setState(() {
                     _loadData();
@@ -259,9 +267,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         const Icon(Icons.store),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(!acc.shop
-                              ? "Đăng ký bán hàng"
-                              : "Kênh người bán"),
+                          child: Text(
+                              shop ? "Kênh người bán" : "Đăng ký bán hàng"),
                         )
                       ],
                     ),
@@ -274,6 +281,7 @@ class _AccountScreenState extends State<AccountScreen> {
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
                 Account.isUserLoggedIn = false;
+                
                 final result = await Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -22,10 +22,12 @@ class ProductList extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         }
-        List<Product> products =
-            snapshot.data!.docs.map((DocumentSnapshot document) {
-          return Product.fromMap(document.data() as Map<String, dynamic>);
-        }).toList();
+       List<Product> products = snapshot.data!.docs
+            .map((DocumentSnapshot document) {
+              return Product.fromMap(document.data() as Map<String, dynamic>);
+            })
+            .where((product) => product.Trangthai == true)
+            .toList();
         List<CardProduct> productCards = products.map((product) {
           return CardProduct(product: product);
         }).toList();
