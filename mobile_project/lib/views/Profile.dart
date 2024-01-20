@@ -45,9 +45,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     String netword;
-    _phone.text = acc.phone;
-    _ten.text = acc.name;
-    _diachi.text = acc.adress;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
