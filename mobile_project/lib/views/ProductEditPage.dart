@@ -76,258 +76,244 @@ class _ProductEditPageState extends State<ProductEditPage> {
       );
     }
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context, true);
-              },
-              icon: const Icon(Icons.arrow_back_rounded)),
-          title: const Text("Chỉnh Sửa Sản Phẩm"),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await image.pickImage();
-                    setState(() {
-                      onTap = true;
-                    });
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            icon: const Icon(Icons.arrow_back_rounded)),
+        title: const Text("Chỉnh Sửa Sản Phẩm"),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await image.pickImage();
+                  setState(() {
+                    onTap = true;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(300, 200),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0))),
+                child: Container(
+                  child: onTap
+                      ? Image.file(File(imagePicker.path), fit: BoxFit.cover)
+                      : Image.network(widget.product.Image, fit: BoxFit.cover),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Tên Sản Phẩm ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextField(
+              controller: _name,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                prefixIcon: const Icon(Icons.shopping_cart_rounded),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Gía Sản Phẩm ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextField(
+              controller: _price,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                prefixIcon: const Icon(Icons.price_change),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Giảm Gía Sản Phẩm ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextField(
+              controller: _discount,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                prefixIcon: const Icon(Icons.price_change),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Mô Tả Sản Phẩm ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextField(
+              controller: _describe,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                prefixIcon: const Icon(Icons.description),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Số lượng",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextField(
+              controller: _quantity,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                prefixIcon: const Icon(Icons.class_),
+              ),
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Loại Sản Phẩm",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            droop(),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // delProduct();
                   },
                   style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(300, 200),
+                      fixedSize: const Size(150, 60),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0))),
-                  child: Container(
-                    child: onTap
-                        ? Image.file(File(imagePicker.path), fit: BoxFit.cover)
-                        : Image.network(widget.product.Image,
-                            fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      backgroundColor: Colors.lightBlue[200]),
+                  child: const Text(
+                    "Xóa",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Tên Sản Phẩm ",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextField(
-                controller: _name,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  prefixIcon: const Icon(Icons.shopping_cart_rounded),
+                const SizedBox(
+                  width: 65,
                 ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Gía Sản Phẩm ",
-                      style: TextStyle(fontSize: 20),
-                    ),
+                ElevatedButton(
+                  onPressed: () {
+                    image.uploadImageToFirebase();
+                    Product update = Product(
+                        Image: imagePicker.imageNetwork,
+                        TenSP: _name.text,
+                        GiaSP: _price.text,
+                        MoTa: _describe.text,
+                        SoLuong: _quantity.text,
+                        Trangthai: true,
+                        Tenshop: widget.nameShop,
+                        Giamgia: _discount.text,
+                        Sdt: '',
+                        loai: selectedValue);
+                    upProduct(update, widget.product.TenSP);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(150, 60),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      backgroundColor: Colors.lightBlue[200]),
+                  child: const Text(
+                    "Lưu",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextField(
-                controller: _price,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  prefixIcon: const Icon(Icons.price_change),
                 ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Giảm Gía Sản Phẩm ",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextField(
-                controller: _discount,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  prefixIcon: const Icon(Icons.price_change),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Mô Tả Sản Phẩm ",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextField(
-                controller: _describe,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  prefixIcon: const Icon(Icons.description),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Số lượng",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextField(
-                controller: _quantity,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  prefixIcon: const Icon(Icons.class_),
-                ),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              const Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Loại Sản Phẩm",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              droop(),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Product update = Product(
-                          Image: "",
-                          TenSP: _name.text,
-                          GiaSP: _price.text,
-                          MoTa: _describe.text,
-                          SoLuong: _quantity.text,
-                          Trangthai: false,
-                          Tenshop: widget.product.Tenshop,
-                          Giamgia: _discount.text,
-                          Sdt: '',
-                          loai: selectedValue);
-                      delProduct(update, widget.product.TenSP);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(150, 60),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0)),
-                        backgroundColor: Colors.blue),
-                    child: const Text(
-                      "Xóa",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 65,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      image.uploadImageToFirebase();
-                      Product update = Product(
-                          Image: imagePicker.imageNetwork,
-                          TenSP: _name.text,
-                          GiaSP: _price.text,
-                          MoTa: _describe.text,
-                          SoLuong: _quantity.text,
-                          Trangthai: true,
-                          Tenshop: widget.nameShop,
-                          Giamgia: _discount.text,
-                          Sdt: '',
-                          loai: selectedValue);
-                      upProduct(update, widget.product.TenSP);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(150, 60),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0)),
-                        backgroundColor: Colors.blue),
-                    child: const Text(
-                      "Lưu",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
-                ],
-              )
-            ]),
-          ),
+              ],
+            )
+          ]),
         ),
       ),
     );

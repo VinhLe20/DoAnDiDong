@@ -74,214 +74,161 @@ class _HomeScreenState extends State<HomeScreen> {
   //String userPhone = UserProfile.userPhone;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 50,
-                width: MediaQuery.of(context).size.width / 1.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () {
-                        showSearch(
-                          context: context,
-                          delegate: CustomSearchDelegate(),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.shopping_cart),
-                onPressed: () async {
-                  bool hasNetwork = await checkNetwork();
-
-                  if (!hasNetwork) {
-                    // Nếu không có mạng, sử dụng dữ liệu cục bộ
-                    List<Product> localProducts = await getLocalProducts();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CartScreen()),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CartScreen()),
-                    );
-                  }
-                  updatetatcatrangthai(false);
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.chat_sharp),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    height: 400,
-                    enlargeCenterPage: true,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    viewportFraction: 1.0,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                      showSearch(
+                        context: context,
+                        delegate: CustomSearchDelegate(),
+                      );
+                    },
                   ),
-                  items: imagelist.map((imagePath) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: const BoxDecoration(
-                            color: Colors.amber,
-                          ),
-                          child: Image.asset(
-                            imagePath,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      },
-                    );
-                  }).toList(),
+                ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartScreen()),
+                );
+                updatetatcatrangthai(false);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.chat_sharp),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: 200,
+                  enlargeCenterPage: true,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              InkWell(
-                child: FutureBuilder<List<Product>>(
-                  future: futureProducts,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Đã xảy ra lỗi: ${snapshot.error}');
-                    } else {
-                      List<Product> products = snapshot.data ?? [];
-                      bool hasNetwork =
-                          snapshot.connectionState == ConnectionState.done;
-
-                      if (!hasNetwork) {
-                        getLocalProducts().then((localProducts) {
-                          products = localProducts;
-                        });
-                      }
-                      return GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 8.0,
-                          mainAxisSpacing: 8.0,
+                items: imagelist.map((imagePath) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: const BoxDecoration(
+                          color: Colors.amber,
                         ),
-                        itemCount: products.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailProduct(
-                                      pro: products[index],
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            InkWell(
+              child: FutureBuilder<List<Product>>(
+                future: futureProducts,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                  } else {
+                    List<Product> products = snapshot.data ?? [];
+                    return GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
+                      ),
+                      itemCount: products.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailProduct(
+                                  pro: products[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            child: ListTile(
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height: 100,
+                                        width: 100,
+                                        child: Image.network(
+                                          products[index].Image,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    ' ${products[index].TenSP.toString()}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
                                     ),
                                   ),
-                                );
-                              },
-                              child: Card(
-                                elevation: 7.0, //
-                                child: ListTile(
-                                    subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: 100,
-                                          width: 100,
-                                          child: Image.network(
-                                            products[index].Image,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ],
+                                  Text(
+                                    ' ${products[index].GiaSP.toString()} VND',
+                                    style: const TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    Text(
-                                      ' ${products[index].TenSP.toString()}',
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                      ),
-                                    ),
-                                    products[index].Giamgia.toString() != "0"
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                                Text(
-                                                  ' ${products[index].GiaSP.toString()} VND',
-                                                  style: const TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      decoration: TextDecoration
-                                                          .lineThrough),
-                                                ),
-                                                Text(
-                                                  ' ${products[index].Giamgia.toString()} VND',
-                                                  style: const TextStyle(
-                                                    color: Colors.red,
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                )
-                                              ])
-                                        : Column(
-                                            children: [
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                ' ${products[index].GiaSP.toString()} VND',
-                                                style: const TextStyle(
-                                                  color: Colors.red,
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                  ],
-                                )),
-                              ));
-                        },
-                      );
-                    }
-                  },
-                ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

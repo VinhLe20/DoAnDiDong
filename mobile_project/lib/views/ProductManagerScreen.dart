@@ -157,6 +157,7 @@ class _ProductMangerScreenState extends State<ProductMangerScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.lightBlue[200],
           title: const Text("Quản lý sản phẩm"),
         ),
         floatingActionButton: IconButton(
