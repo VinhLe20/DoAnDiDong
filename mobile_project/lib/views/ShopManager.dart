@@ -49,19 +49,28 @@ class _ShopsManagerState extends State<ShopsManager> {
                       builder: (context) =>
                           ProductMangerScreen(nameShop: shop.Tenshop)));
             },
-            child: Container(
+            child: const SizedBox(
               height: 50,
-              color: Colors.grey.shade400,
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Quản lý sản phẩm',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  Icon(Icons.arrow_right_alt_rounded)
-                ],
+              child: SizedBox(
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Text("Quản lý sản phẩm",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                        )
+                      ],
+                    ),
+                    Icon(Icons.arrow_forward_ios)
+                  ],
+                ),
               ),
             ),
           ),
@@ -77,19 +86,28 @@ class _ShopsManagerState extends State<ShopsManager> {
                             tenShop: shop.Tenshop,
                           )));
             },
-            child: Container(
+            child: const SizedBox(
               height: 50,
-              color: Colors.grey.shade400,
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Các đơn cần xác nhận',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  Icon(Icons.arrow_right_alt_rounded)
-                ],
+              child: SizedBox(
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Text("Các đơn cần xác nhận",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                        )
+                      ],
+                    ),
+                    Icon(Icons.arrow_forward_ios)
+                  ],
+                ),
               ),
             ),
           ),

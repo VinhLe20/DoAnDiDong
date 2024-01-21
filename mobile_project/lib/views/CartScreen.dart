@@ -90,248 +90,245 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     User? email = FirebaseAuth.instance.currentUser;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlue[200],
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back)),
-          title: const Text("Giỏ hàng"),
-          actions: const [
-            Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-              child: Icon(Icons.chat_outlined),
-            )
-          ],
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10.0),
-                        child: Text("Tất cả sản phẩm"),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back)),
+        title: const Text("Giỏ hàng"),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: Icon(Icons.chat_outlined),
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10.0),
+                      child: Text("Tất cả sản phẩm"),
 
-                        ///   Text()
-                      )
-                    ],
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        updatetatcaxoa2(false);
-                      },
-                      icon: const Icon(Icons.delete))
-                ],
-              ),
+                      ///   Text()
+                    )
+                  ],
+                ),
+                IconButton(
+                    onPressed: () {
+                      updatetatcaxoa2(false);
+                    },
+                    icon: const Icon(Icons.delete))
+              ],
             ),
-            Expanded(
-                child: InkWell(
-              child: StreamBuilder<List<CartProduct>>(
-                stream: streamData(email?.email),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    List<CartProduct> cartproduct = snapshot.data ?? [];
-                    return ListView.builder(
-                      itemCount: cartproduct.length,
-                      itemBuilder: (context, index) {
-                        int gia = cartproduct[index].Giamgia == 0
-                            ? cartproduct[index].GiaSP
-                            : cartproduct[index].Giamgia;
-                        soluong = cartproduct[index].SoLuong;
-                        productname = cartproduct[index].Tenshop;
-                        tongtiendon = cartproduct[index].SoLuong * gia;
-                        tenshop = cartproduct[index].Tenshop;
-                        image = cartproduct[index].img;
+          ),
+          Expanded(
+              child: InkWell(
+            child: StreamBuilder<List<CartProduct>>(
+              stream: streamData(email?.email),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  List<CartProduct> cartproduct = snapshot.data ?? [];
+                  return ListView.builder(
+                    itemCount: cartproduct.length,
+                    itemBuilder: (context, index) {
+                      int gia = cartproduct[index].Giamgia == 0
+                          ? cartproduct[index].GiaSP
+                          : cartproduct[index].Giamgia;
+                      soluong = cartproduct[index].SoLuong;
+                      productname = cartproduct[index].Tenshop;
+                      tongtiendon = cartproduct[index].SoLuong * gia;
+                      tenshop = cartproduct[index].Tenshop;
+                      image = cartproduct[index].img;
 
-                        return Card(
-                          child: Column(
-                            children: [
-                              const Divider(),
-                              Row(
-                                children: [
-                                  const Icon(Icons.store),
-                                  Text(cartproduct[index].Tenshop)
-                                ],
-                              ),
-                              Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Row(
-                                    children: [
-                                      Checkbox(
-                                        value: cartproduct[index].Trangthai,
-                                        onChanged: (bool? value) async {
-                                          await updatetrangthai(
-                                              cartproduct[index].TenSP, value!);
-                                          if (value == false) {
-                                            setState(() {
-                                              tongtien -=
-                                                  cartproduct[index].SoLuong *
-                                                      gia;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              tongtien +=
-                                                  cartproduct[index].SoLuong *
-                                                      gia;
-                                            });
-                                          }
-                                        },
+                      return Card(
+                        child: Column(
+                          children: [
+                            const Divider(),
+                            Row(
+                              children: [
+                                const Icon(Icons.store),
+                                Text(cartproduct[index].Tenshop)
+                              ],
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  children: [
+                                    Checkbox(
+                                      value: cartproduct[index].Trangthai,
+                                      onChanged: (bool? value) async {
+                                        await updatetrangthai(
+                                            cartproduct[index].TenSP, value!);
+                                        if (value == false) {
+                                          setState(() {
+                                            tongtien -=
+                                                cartproduct[index].SoLuong *
+                                                    gia;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            tongtien +=
+                                                cartproduct[index].SoLuong *
+                                                    gia;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                    Container(
+                                      width: 100,
+                                      height: 100,
+                                      child: Image.network(
+                                        cartproduct[index].img,
+                                        fit: BoxFit.cover,
                                       ),
-                                      Container(
-                                        width: 100,
-                                        height: 100,
-                                        child: Image.network(
-                                          cartproduct[index].img,
-                                          fit: BoxFit.cover,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    // Padding(
+                                    // padding: EdgeInsets.all(10.0),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(cartproduct[index].TenSP),
+                                        SizedBox(
+                                          height: 50.0,
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      // Padding(
-                                      // padding: EdgeInsets.all(10.0),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(cartproduct[index].TenSP),
-                                          SizedBox(
-                                            height: 50.0,
-                                          ),
-                                          Text('${gia}'),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  IconButton(
-                                                    icon: Icon(Icons.remove),
-                                                    onPressed: () {
-                                                      if (cartproduct[index]
-                                                                  .SoLuong -
-                                                              1 ==
-                                                          0) {
-                                                        return;
-                                                      }
-                                                      updatesoluong(
-                                                          cartproduct[index]
-                                                              .TenSP,
-                                                          cartproduct[index]
-                                                                  .SoLuong =
-                                                              cartproduct[index]
-                                                                      .SoLuong -
-                                                                  1);
-                                                      if (cartproduct[index]
-                                                                  .Trangthai ==
-                                                              true &&
-                                                          cartproduct[index]
-                                                                  .SoLuong >
-                                                              0) {
-                                                        setState(() {
-                                                          tongtien -= gia;
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                  Text(
-                                                      '${cartproduct[index].SoLuong}'),
-                                                  IconButton(
-                                                    icon: Icon(Icons.add),
-                                                    onPressed: () {
-                                                      updatesoluong(
-                                                          cartproduct[index]
-                                                              .TenSP,
-                                                          cartproduct[index]
-                                                                  .SoLuong =
-                                                              cartproduct[index]
-                                                                      .SoLuong +
-                                                                  1);
-                                                      if (cartproduct[index]
-                                                              .Trangthai ==
-                                                          true) {
-                                                        setState(() {
-                                                          tongtien += gia;
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      //  ),
-                                      const Spacer(),
-                                      TextButton(
-                                        // padding:
-                                        ///   const EdgeInsets.all(10.0),
-                                        onPressed: () {
-                                          xoaCartProduct(email?.email,
-                                              cartproduct[index].TenSP, false);
-                                          _showSnackBar(
-                                              "Bạn đã xóa thành công");
-                                        },
-                                        child: Text("Xóa"),
-                                      ),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
-            )),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text("Tong cong"), Text("$tongtien")],
-                  ),
-                  Container(
-                    decoration: BoxDecoration(color: Colors.blue),
-                    width: 110,
-                    height: 50,
-                    alignment: Alignment.center,
-                    child: TextButton(
-                      child: Text("Mua hàng"),
-                      onPressed: () {
-                        _showSnackBar("Bạn đã mua hàng thành công");
-                        Order2 order2 = Order2(Tensp, soluong, '', '',
-                            tongtiendon, 'Chờ xác nhận', image, tenshop);
-                        createOrder(order2);
-                        updatetatcaxoa(true, false);
+                                        Text('${gia}'),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                  icon: Icon(Icons.remove),
+                                                  onPressed: () {
+                                                    if (cartproduct[index]
+                                                                .SoLuong -
+                                                            1 ==
+                                                        0) {
+                                                      return;
+                                                    }
+                                                    updatesoluong(
+                                                        cartproduct[index]
+                                                            .TenSP,
+                                                        cartproduct[index]
+                                                                .SoLuong =
+                                                            cartproduct[index]
+                                                                    .SoLuong -
+                                                                1);
+                                                    if (cartproduct[index]
+                                                                .Trangthai ==
+                                                            true &&
+                                                        cartproduct[index]
+                                                                .SoLuong >
+                                                            0) {
+                                                      setState(() {
+                                                        tongtien -= gia;
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                                Text(
+                                                    '${cartproduct[index].SoLuong}'),
+                                                IconButton(
+                                                  icon: Icon(Icons.add),
+                                                  onPressed: () {
+                                                    updatesoluong(
+                                                        cartproduct[index]
+                                                            .TenSP,
+                                                        cartproduct[index]
+                                                                .SoLuong =
+                                                            cartproduct[index]
+                                                                    .SoLuong +
+                                                                1);
+                                                    if (cartproduct[index]
+                                                            .Trangthai ==
+                                                        true) {
+                                                      setState(() {
+                                                        tongtien += gia;
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    //  ),
+                                    const Spacer(),
+                                    TextButton(
+                                      // padding:
+                                      ///   const EdgeInsets.all(10.0),
+                                      onPressed: () {
+                                        xoaCartProduct(email?.email,
+                                            cartproduct[index].TenSP, false);
+                                        _showSnackBar("Bạn đã xóa thành công");
+                                      },
+                                      child: Text("Xóa"),
+                                    ),
+                                  ],
+                                ))
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+            ),
+          )),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text("Tong cong"), Text("$tongtien")],
+                ),
+                Container(
+                  decoration: BoxDecoration(color: Colors.blue),
+                  width: 110,
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: TextButton(
+                    child: Text("Mua hàng"),
+                    onPressed: () {
+                      _showSnackBar("Bạn đã mua hàng thành công");
+                      Order2 order2 = Order2(Tensp, soluong, '', '',
+                          tongtiendon, 'Chờ xác nhận', image, tenshop);
+                      createOrder(order2);
+                      updatetatcaxoa(true, false);
 
-                        setState(() {
-                          tongtien = 0;
-                        });
-                      },
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+                      setState(() {
+                        tongtien = 0;
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

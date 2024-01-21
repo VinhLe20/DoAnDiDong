@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
+import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/MainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,220 +71,255 @@ class _AccountScreenState extends State<AccountScreen> {
         shop = acc.shop;
       });
     }
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlue[200],
-          title: const Text("Tài khoản"),
-          actions: const [
-            Icon(Icons.shopping_cart),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
+        title: const Text("Tài khoản"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
+            icon: Icon(Icons.shopping_cart),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: Icon(Icons.chat_outlined),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-              child: Icon(Icons.chat_outlined),
-            )
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 90.0,
-                      height: 90.0,
-                      child: ClipOval(
-                        child: Image.network(
-                          acc.image,
-                          fit: BoxFit.cover,
-                        ),
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 90.0,
+                    height: 90.0,
+                    child: ClipOval(
+                      child: Image.network(
+                        acc.image,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(name),
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Profile(),
+                              ),
+                            );
+                            if (result) {
+                              _loadData();
+                            }
+                          },
+                          child: const Text(
+                            "Thay đổi thông tin cá nhân",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Đơn hàng của tôi",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => donhangcuatoi(
+                            initialIndex: 2,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Row(
+                      children: [
+                        Text("Xem lịch sử mua hàng"),
+                        Icon(Icons.arrow_forward_ios)
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => donhangcuatoi(
+                            initialIndex: 0,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const SizedBox(
+                      width: 90,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(name),
-                          const SizedBox(height: 10),
-                          InkWell(
-                            onTap: () async {
-                              final result = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Profile(),
-                                ),
-                              );
-                              if (result) {
-                                _loadData();
-                              }
-                            },
-                            child: const Text(
-                              "Thay đổi thông tin cá nhân",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          )
+                          Padding(
+                            padding: EdgeInsets.only(top: 10, bottom: 10),
+                            child: Icon(Icons.account_balance_wallet),
+                          ),
+                          Text("Chờ xác nhận")
                         ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => donhangcuatoi(
+                            initialIndex: 1,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const SizedBox(
+                      width: 90,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 10, bottom: 10),
+                            child: Icon(Icons.local_shipping),
+                          ),
+                          Text("Đang giao")
+                        ],
+                      ),
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => donhangcuatoi(
+                            initialIndex: 3,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const SizedBox(
+                      width: 90,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 10, bottom: 10),
+                            child: Icon(Icons.highlight_remove_rounded),
+                          ),
+                          Text("Đã hủy"),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
+            ),
+            const SizedBox(height: 20),
+            MaterialButton(
+              onPressed: () async {
+                bool manager = shop;
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => manager
+                            ? const ShopsManager()
+                            : const SalesRegistration())));
+                if (result) {
+                  setState(() {
+                    _loadData();
+                  });
+                }
+              },
+              child: SizedBox(
+                height: 50,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Đơn hàng của tôi",
-                      style: TextStyle(fontSize: 20),
+                    Row(
+                      children: [
+                        const Icon(Icons.store),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                              shop ? "Kênh người bán" : "Đăng ký bán hàng"),
+                        )
+                      ],
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => donhangcuatoi(
-                              initialIndex: 2,
-                            ),
-                          ),
-                        );
-                      },
-                      child: const Row(
-                        children: [
-                          Text("Xem lịch sử mua hàng"),
-                          Icon(Icons.arrow_forward_ios)
-                        ],
-                      ),
-                    )
+                    const Icon(Icons.arrow_forward_ios)
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    MaterialButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => donhangcuatoi(
-                              initialIndex: 0,
-                            ),
-                          ),
-                        );
-                      },
-                      child: const SizedBox(
-                        width: 90,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Icon(Icons.account_balance_wallet),
-                            ),
-                            Text("Chờ xác nhận")
-                          ],
+            ),
+            MaterialButton(
+              onPressed: () async {
+                bool xacnhan = false;
+                await showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Đăng xuất'),
+                      content: Text('Nhấn OK để đăng xuất khỏi tài khoản'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Cancel'),
                         ),
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => donhangcuatoi(
-                              initialIndex: 1,
-                            ),
-                          ),
-                        );
-                      },
-                      child: const SizedBox(
-                        width: 90,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Icon(Icons.local_shipping),
-                            ),
-                            Text("Đang giao")
-                          ],
+                        TextButton(
+                          onPressed: () {
+                            xacnhan = true;
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('OK'),
                         ),
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => donhangcuatoi(
-                              initialIndex: 3,
-                            ),
-                          ),
-                        );
-                      },
-                      child: const SizedBox(
-                        width: 90,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Icon(Icons.highlight_remove_rounded),
-                            ),
-                            Text("Đã hủy"),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              MaterialButton(
-                onPressed: () async {
-                  bool manager = shop;
-                  final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => manager
-                              ? const ShopsManager()
-                              : const SalesRegistration())));
-                  if (result) {
-                    setState(() {
-                      _loadData();
-                    });
-                  }
-                },
-                child: SizedBox(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.store),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Text(
-                                shop ? "Kênh người bán" : "Đăng ký bán hàng"),
-                          )
-                        ],
-                      ),
-                      const Icon(Icons.arrow_forward_ios)
-                    ],
-                  ),
-                ),
-              ),
-              MaterialButton(
-                onPressed: () async {
+                      ],
+                    );
+                  },
+                );
+                if (xacnhan) {
                   await FirebaseAuth.instance.signOut();
+                  final SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.clear();
                   Account.isUserLoggedIn = false;
-
                   final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -292,31 +328,31 @@ class _AccountScreenState extends State<AccountScreen> {
                   if (result) {
                     Navigator.pushReplacementNamed(context, '/');
                   }
-                },
-                child: const SizedBox(
+                }
+              },
+              child: const SizedBox(
+                height: 50,
+                child: SizedBox(
                   height: 50,
-                  child: SizedBox(
-                    height: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.logout),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Text("Đăng xuất"),
-                            )
-                          ],
-                        ),
-                        Icon(Icons.arrow_forward_ios)
-                      ],
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.logout),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Text("Đăng xuất"),
+                          )
+                        ],
+                      ),
+                      Icon(Icons.arrow_forward_ios)
+                    ],
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

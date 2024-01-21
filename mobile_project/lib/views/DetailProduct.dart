@@ -205,7 +205,7 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         const SizedBox(height: 8.0),
                         Text(
-                          gia,
+                          "$gia VND",
                           style: const TextStyle(
                             fontSize: 18.0,
                             color: Colors.red,
@@ -243,7 +243,8 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         Container(
                             width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(color: Colors.grey),
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 217, 217, 217)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(

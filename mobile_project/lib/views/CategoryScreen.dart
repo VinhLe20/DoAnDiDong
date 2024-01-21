@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/CategoryDetail.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -25,8 +26,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[200],
         title: const Text("Danh mục sản phẩm"),
-        actions: const [
-          Icon(Icons.shopping_cart),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
+            icon: Icon(Icons.shopping_cart),
+          ),
           Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: Icon(Icons.chat_outlined),
@@ -236,7 +245,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Container(
                     height: 120,
                     width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.grey),
+                    decoration: BoxDecoration(color: Colors.lightBlue[200]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -264,7 +273,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Container(
                     height: 120,
                     width: MediaQuery.of(context).size.width / 3 - 30,
-                    decoration: const BoxDecoration(color: Colors.grey),
+                    decoration: BoxDecoration(color: Colors.lightBlue[200]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
