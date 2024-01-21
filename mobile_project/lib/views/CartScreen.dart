@@ -104,6 +104,7 @@ class _CartScreenState extends State<CartScreen> {
             padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: Icon(Icons.chat_outlined),
           )
+          //
         ],
       ),
       body: Column(
