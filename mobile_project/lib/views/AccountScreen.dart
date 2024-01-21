@@ -73,6 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.lightBlue[200],
           title: const Text("Tài khoản"),
           actions: const [
             Icon(Icons.shopping_cart),
