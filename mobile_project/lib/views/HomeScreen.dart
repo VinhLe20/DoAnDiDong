@@ -3,12 +3,10 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 Future<List<Product>> getProducts(List<Product> productList) async {
   QuerySnapshot querySnapshot =
       await FirebaseFirestore.instance.collection('product').get();
@@ -109,12 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<Product> localProducts = await getLocalProducts();
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CartScreen()),
+                      MaterialPageRoute(builder: (context) => const CartScreen()),
                     );
                   } else {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CartScreen()),
+                      MaterialPageRoute(builder: (context) => const CartScreen()),
                     );
                   }
                   updatetatcatrangthai(false);
@@ -215,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           height: 100,
                                           width: 100,
                                           child: Image.network(
@@ -258,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ])
                                         : Column(
                                             children: [
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               Text(
@@ -346,11 +344,11 @@ Future<void> updatetatcatrangthai(bool trangthai) async {
       CollectionReference collection =
           FirebaseFirestore.instance.collection('CartProduct');
       DocumentReference document = collection.doc(doc.id);
-      if (trangthai == true)
+      if (trangthai == true) {
         dataToUpdate = {
           'TrangThai': trangthai,
         };
-      else {
+      } else {
         dataToUpdate = {
           'TrangThai': trangthai,
         };

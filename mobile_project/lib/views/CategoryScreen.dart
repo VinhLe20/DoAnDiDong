@@ -31,12 +31,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CartScreen()),
+                MaterialPageRoute(builder: (context) => const CartScreen()),
               );
             },
-            icon: Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.shopping_cart),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: Icon(Icons.chat_outlined),
           )

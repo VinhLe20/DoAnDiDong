@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/CartScreen.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
-import 'package:mobile_project/views/MainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
@@ -80,12 +79,12 @@ class _AccountScreenState extends State<AccountScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CartScreen()),
+                MaterialPageRoute(builder: (context) => const CartScreen()),
               );
             },
-            icon: Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.shopping_cart),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: Icon(Icons.chat_outlined),
           )
@@ -298,21 +297,21 @@ class _AccountScreenState extends State<AccountScreen> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Đăng xuất'),
-                      content: Text('Nhấn OK để đăng xuất khỏi tài khoản'),
+                      title: const Text('Đăng xuất'),
+                      content: const Text('Nhấn OK để đăng xuất khỏi tài khoản'),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text('Cancel'),
+                          child: const Text('Cancel'),
                         ),
                         TextButton(
                           onPressed: () {
                             xacnhan = true;
                             Navigator.of(context).pop();
                           },
-                          child: Text('OK'),
+                          child: const Text('OK'),
                         ),
                       ],
                     );

@@ -24,7 +24,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
         title: Text(widget.categoryName),
       ),
       body: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ProductList(loaiSp: widget.categoryName)),
     );
   }

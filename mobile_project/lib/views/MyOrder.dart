@@ -23,16 +23,16 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
             padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
-                Icon(Icons.store),
-                SizedBox(
+                const Icon(Icons.store),
+                const SizedBox(
                   width: 5,
                 ),
                 Text(nameShop),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
+          const Padding(
+            padding: EdgeInsets.all(10.0),
             child: Text(
               "Chờ Xác Nhận",
               style: TextStyle(fontSize: 20, color: Colors.red),
@@ -100,16 +100,16 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
             padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
-                Icon(Icons.store),
-                SizedBox(
+                const Icon(Icons.store),
+                const SizedBox(
                   width: 5,
                 ),
                 Text(nameShop),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
+          const Padding(
+            padding: EdgeInsets.all(10.0),
             child: Text(
               "Đang giao",
               style: TextStyle(fontSize: 20, color: Colors.red),
@@ -178,16 +178,16 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
             padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
-                Icon(Icons.store),
-                SizedBox(
+                const Icon(Icons.store),
+                const SizedBox(
                   width: 5,
                 ),
                 Text(nameShop),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
+          const Padding(
+            padding: EdgeInsets.all(10.0),
             child: Text(
               "Đã giao",
               style: TextStyle(fontSize: 20, color: Colors.red),
@@ -233,7 +233,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Bình luận'),
+                                title: const Text('Bình luận'),
                                 content: TextField(
                                   controller: binhluan,
                                   keyboardType: TextInputType.text,
@@ -249,7 +249,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('Cancel'),
+                                    child: const Text('Cancel'),
                                   ),
                                   TextButton(
                                     onPressed: () {
@@ -260,7 +260,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
                                           nameShop, binhluan.text, time);
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                   ),
                                 ],
                               );
@@ -291,16 +291,16 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
             padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
-                Icon(Icons.store),
-                SizedBox(
+                const Icon(Icons.store),
+                const SizedBox(
                   width: 5,
                 ),
                 Text(nameShop),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
+          const Padding(
+            padding: EdgeInsets.all(10.0),
             child: Text(
               "Đã hủy",
               style: TextStyle(fontSize: 20, color: Colors.red),
@@ -390,7 +390,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
               stream: Order2.streamData(user?.email, "Chờ xác nhận"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
@@ -415,7 +415,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
               stream: Order2.streamData(user?.email, "Đang giao hàng"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
@@ -440,7 +440,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
               stream: Order2.streamData(user?.email, "Đã giao"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
@@ -465,7 +465,7 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
               stream: Order2.streamData(user?.email, "Đã hủy"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {

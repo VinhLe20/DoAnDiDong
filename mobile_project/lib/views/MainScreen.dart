@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/AccountScreen.dart';
@@ -48,7 +47,7 @@ class _MainScreenState extends State<MainScreen> {
           });
         },
         selectedLabelStyle: TextStyle(color: Colors.lightBlue[200]),
-        unselectedLabelStyle: TextStyle(color: Colors.black),
+        unselectedLabelStyle: const TextStyle(color: Colors.black),
         selectedItemColor: Colors.lightBlue[200],
         unselectedItemColor: Colors.black,
         items: const [

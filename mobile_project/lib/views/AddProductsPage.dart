@@ -21,7 +21,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
   final TextEditingController _quantity = TextEditingController();
   final TextEditingController _Tenshop = TextEditingController();
 
-  var _phone = '0927968410';
+  final _phone = '0927968410';
   String selectedValue = 'Thể thao & du lịch';
   String netword = "";
   Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: "", Tenshop: "");
@@ -66,7 +66,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
           width: 1.0,
         ),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: DropdownButton<String>(
         value: selectedValue,
         onChanged: (String? newValue) {

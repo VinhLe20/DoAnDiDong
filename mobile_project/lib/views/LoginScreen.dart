@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/views/ForgetScreen.dart';
-import 'package:mobile_project/views/MainSCreen.dart';
-import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/Register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

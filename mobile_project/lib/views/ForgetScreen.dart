@@ -29,7 +29,7 @@ class _ForgetScreenState extends State<ForgetScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   height: 250,
                   width: 450,
                   child: Image.asset("assets/Logo.jpg"),
@@ -80,7 +80,7 @@ class _ForgetScreenState extends State<ForgetScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 40),
                           backgroundColor: Colors.lightBlue[200]),
                       onPressed: () {
@@ -91,7 +91,7 @@ class _ForgetScreenState extends State<ForgetScreen> {
                         Navigator.pop(context);
                         Navigator.pushReplacementNamed(context, '/');
                       },
-                      child: Text(
+                      child: const Text(
                         "Gửi",
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),

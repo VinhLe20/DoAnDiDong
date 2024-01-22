@@ -63,7 +63,7 @@ class _OrderPageState extends State<OrderPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[200],
-        title: Text("Đặt Hàng"),
+        title: const Text("Đặt Hàng"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_outlined),
           onPressed: () {

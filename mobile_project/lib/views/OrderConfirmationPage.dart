@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Order.dart';
 
 class OrderConfirmationPage extends StatefulWidget {
-  OrderConfirmationPage({Key? key, required this.tenShop}) : super(key: key);
+  const OrderConfirmationPage({Key? key, required this.tenShop}) : super(key: key);
   final String tenShop;
 
   @override
@@ -18,7 +18,7 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
           const SizedBox(
             height: 30,
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
@@ -51,14 +51,14 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
                   children: [
                     Text(
                       order.productName,
-                      style: TextStyle(fontSize: 15),
+                      style: const TextStyle(fontSize: 15),
                     ),
                     const SizedBox(
                       height: 60,
                     ),
                     Text(
                       "Tổng: đ${order.totalAmount}",
-                      style: TextStyle(color: Colors.red, fontSize: 15),
+                      style: const TextStyle(color: Colors.red, fontSize: 15),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -99,7 +99,7 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
         stream: Order2.load(widget.tenShop),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {

@@ -48,7 +48,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
             width: 1.0,
           ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: DropdownButton<String>(
           value: selectedValue,
           onChanged: (String? newValue) {

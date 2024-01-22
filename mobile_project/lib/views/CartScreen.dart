@@ -1,18 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/CartProduct.dart';
-import 'package:mobile_project/models/User.dart';
-import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
-import 'package:mobile_project/views/OrderPage.dart';
 
 import '../models/Order.dart';
-import '../models/SalesRegistration.dart';
 
 class CartScreen extends StatefulWidget {
-  CartScreen({
+  const CartScreen({
     super.key,
   });
 
@@ -114,9 +109,9 @@ class _CartScreenState extends State<CartScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                const Row(
                   children: [
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 10.0),
                       child: Text("Tất cả sản phẩm"),
 
@@ -138,7 +133,7 @@ class _CartScreenState extends State<CartScreen> {
               stream: streamData(email?.email),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
@@ -189,7 +184,7 @@ class _CartScreenState extends State<CartScreen> {
                                         }
                                       },
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: 100,
                                       height: 100,
                                       child: Image.network(
@@ -197,7 +192,7 @@ class _CartScreenState extends State<CartScreen> {
                                         fit: BoxFit.cover,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
                                     // Padding(
@@ -206,10 +201,10 @@ class _CartScreenState extends State<CartScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 50.0,
                                         ),
-                                        Text('${gia}'),
+                                        Text('$gia'),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -217,7 +212,7 @@ class _CartScreenState extends State<CartScreen> {
                                             Row(
                                               children: [
                                                 IconButton(
-                                                  icon: Icon(Icons.remove),
+                                                  icon: const Icon(Icons.remove),
                                                   onPressed: () {
                                                     if (cartproduct[index]
                                                                 .SoLuong -
@@ -248,7 +243,7 @@ class _CartScreenState extends State<CartScreen> {
                                                 Text(
                                                     '${cartproduct[index].SoLuong}'),
                                                 IconButton(
-                                                  icon: Icon(Icons.add),
+                                                  icon: const Icon(Icons.add),
                                                   onPressed: () {
                                                     updatesoluong(
                                                         cartproduct[index]
@@ -283,7 +278,7 @@ class _CartScreenState extends State<CartScreen> {
                                             cartproduct[index].TenSP, false);
                                         _showSnackBar("Bạn đã xóa thành công");
                                       },
-                                      child: Text("Xóa"),
+                                      child: const Text("Xóa"),
                                     ),
                                   ],
                                 ))
@@ -303,15 +298,15 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text("Tong cong"), Text("$tongtien")],
+                  children: [const Text("Tong cong"), Text("$tongtien")],
                 ),
                 Container(
-                  decoration: BoxDecoration(color: Colors.blue),
+                  decoration: const BoxDecoration(color: Colors.blue),
                   width: 110,
                   height: 50,
                   alignment: Alignment.center,
                   child: TextButton(
-                    child: Text("Mua hàng"),
+                    child: const Text("Mua hàng"),
                     onPressed: () {
                       _showSnackBar("Bạn đã mua hàng thành công");
                       Order2 order2 = Order2(Tensp, soluong, '', '',
@@ -346,9 +341,9 @@ Future<void> xoaCartProduct(String? email, String Tensp, bool trangthai) async {
         CollectionReference collection =
             FirebaseFirestore.instance.collection('CartProduct');
         DocumentReference document = collection.doc(doc.id);
-        if (trangthai == true)
+        if (trangthai == true) {
           dataToUpdate = {'xoa': trangthai};
-        else {
+        } else {
           dataToUpdate = {'xoa': trangthai};
         }
         try {
@@ -371,9 +366,9 @@ Future<void> updatesoluong(String Tensp, int Soluong) async {
         CollectionReference collection =
             FirebaseFirestore.instance.collection('CartProduct');
         DocumentReference document = collection.doc(doc.id);
-        if (Soluong >= 0)
+        if (Soluong >= 0) {
           dataToUpdate = {'SoLuong': Soluong};
-        else {
+        } else {
           dataToUpdate = {};
         }
         try {
@@ -396,9 +391,9 @@ Future<void> updatetrangthai(String Tensp, bool trangthai) async {
         CollectionReference collection =
             FirebaseFirestore.instance.collection('CartProduct');
         DocumentReference document = collection.doc(doc.id);
-        if (trangthai == false)
+        if (trangthai == false) {
           dataToUpdate = {'TrangThai': trangthai};
-        else {
+        } else {
           dataToUpdate = {'TrangThai': trangthai};
         }
         try {
@@ -420,11 +415,11 @@ Future<void> updatetatcatrangthai(bool trangthai) async {
       CollectionReference collection =
           FirebaseFirestore.instance.collection('CartProduct');
       DocumentReference document = collection.doc(doc.id);
-      if (trangthai == true)
+      if (trangthai == true) {
         dataToUpdate = {
           'TrangThai': trangthai,
         };
-      else {
+      } else {
         dataToUpdate = {
           'TrangThai': trangthai,
         };
@@ -449,9 +444,9 @@ Future<void> updatetatcaxoa(bool trangthai, bool xoa) async {
         CollectionReference collection =
             FirebaseFirestore.instance.collection('CartProduct');
         DocumentReference document = collection.doc(doc.id);
-        if (trangthai == true)
+        if (trangthai == true) {
           dataToUpdate = {'TrangThai': trangthai, 'xoa': xoa};
-        else {
+        } else {
           dataToUpdate = {'TrangThai': trangthai, 'xoa': xoa};
         }
         try {
@@ -474,9 +469,9 @@ Future<void> updatetatcaxoa2(bool xoa) async {
       CollectionReference collection =
           FirebaseFirestore.instance.collection('CartProduct');
       DocumentReference document = collection.doc(doc.id);
-      if (xoa == true)
+      if (xoa == true) {
         dataToUpdate = {'xoa': xoa};
-      else {
+      } else {
         dataToUpdate = {'xoa': xoa};
       }
       try {

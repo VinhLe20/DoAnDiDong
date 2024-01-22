@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/DetailProduct.dart';
@@ -26,12 +25,12 @@ class CardProduct extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: 150,
                   height: 150,
                   child: Image.network(product.Image),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Expanded(
@@ -39,22 +38,22 @@ class CardProduct extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${product.TenSP}',
-                      style: TextStyle(fontSize: 15),
+                      product.TenSP,
+                      style: const TextStyle(fontSize: 15),
                     ),
                     const SizedBox(
                       height: 35,
                     ),
                     Text(
                       'Gía : ${product.GiaSP}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.red,
                           fontSize: 15,
                           decoration: TextDecoration.lineThrough),
                     ),
                     Text(
                       'Gía giảm : ${product.Giamgia}',
-                      style: TextStyle(color: Colors.red, fontSize: 15),
+                      style: const TextStyle(color: Colors.red, fontSize: 15),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

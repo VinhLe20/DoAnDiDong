@@ -6,7 +6,7 @@ import 'package:mobile_project/views/CardProduct.dart';
 class ProductList extends StatelessWidget {
   final String loaiSp;
 
-  ProductList({required this.loaiSp});
+  const ProductList({super.key, required this.loaiSp});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ProductList extends StatelessWidget {
           return Text('Error: ${snapshot.error}');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
         List<Product> products = snapshot.data!.docs
             .map((DocumentSnapshot document) {

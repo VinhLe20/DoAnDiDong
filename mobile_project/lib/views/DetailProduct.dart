@@ -78,11 +78,11 @@ class _DetailProductState extends State<DetailProduct> {
             children: [
               Text(
                 id,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(comment),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(time)
             ],
           ),
