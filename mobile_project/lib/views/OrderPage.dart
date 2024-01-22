@@ -50,7 +50,7 @@ class _OrderPageState extends State<OrderPage> {
     _loadData();
   }
 
-  int SoLuong = 0;
+  int SoLuong = 1;
   @override
   Widget build(BuildContext context) {
     String userPhone = UserProfile.userPhone;
@@ -59,7 +59,7 @@ class _OrderPageState extends State<OrderPage> {
     if (gia == "0") {
       gia = widget.product.GiaSP;
     }
-    print(widget.product.GiaSP);
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[200],
@@ -114,8 +114,8 @@ class _OrderPageState extends State<OrderPage> {
                             onPressed: () {
                               setState(() {
                                 SoLuong--;
-                                if (SoLuong < 0) {
-                                  SoLuong = 0;
+                                if (SoLuong < 1) {
+                                  SoLuong = 1;
                                 }
                               });
                             },
@@ -242,7 +242,7 @@ class _OrderPageState extends State<OrderPage> {
                           userPhone,
                           userAddress,
                           (SoLuong *
-                              int.parse(widget.product.GiaSP.toString())),
+                              int.parse(gia)),
                           'Chờ xác nhận',
                           widget.product.Image,
                           widget.product.Tenshop);

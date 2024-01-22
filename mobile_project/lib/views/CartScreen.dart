@@ -206,7 +206,6 @@ class _CartScreenState extends State<CartScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(cartproduct[index].TenSP),
                                         SizedBox(
                                           height: 50.0,
                                         ),

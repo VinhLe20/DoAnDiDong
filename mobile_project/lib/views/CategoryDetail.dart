@@ -12,22 +12,20 @@ class CategoryDetail extends StatefulWidget {
 class _CategoryDetailState extends State<CategoryDetail> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlue[200],
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
-          ),
-          title: Text(widget.categoryName),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue[200],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
         ),
-        body: Padding(
-            padding: EdgeInsets.all(8),
-            child: ProductList(loaiSp: widget.categoryName)),
+        title: Text(widget.categoryName),
       ),
+      body: Padding(
+          padding: EdgeInsets.all(8),
+          child: ProductList(loaiSp: widget.categoryName)),
     );
   }
 }

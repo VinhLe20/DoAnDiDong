@@ -103,43 +103,45 @@ class _ProductMangerScreenState extends State<ProductMangerScreen> {
             child: Image.network(pro.Image, fit: BoxFit.cover),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Tên sản phẩm: ${pro.TenSP}"),
-              const SizedBox(
-                height: 40.0,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 140,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text("Số lượng: ${pro.SoLuong}"),
-                    // Text("da ban"),
-                    IconButton(
-                      onPressed: () async {
-                        final result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductEditPage(
-                                    product: pro, nameShop: widget.nameShop)));
-                        if (result) {
-                          setState(() {
-                            Product.products.clear();
-                            _loadData(widget.nameShop);
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.edit),
-                    )
-                  ],
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Tên sản phẩm: ${pro.TenSP}"),
+                const SizedBox(
+                  height: 40.0,
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 140,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Số lượng: ${pro.SoLuong}"),
+                      // Text("da ban"),
+                      IconButton(
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProductEditPage(
+                                      product: pro, nameShop: widget.nameShop)));
+                          if (result) {
+                            setState(() {
+                              Product.products.clear();
+                              _loadData(widget.nameShop);
+                            });
+                          }
+                        },
+                        icon: const Icon(Icons.edit),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
