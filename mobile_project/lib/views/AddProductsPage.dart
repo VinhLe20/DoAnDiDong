@@ -264,17 +264,6 @@ class _AddProductsPageState extends State<AddProductsPage> {
               height: 8.0,
             ),
             droop(),
-            // TextField(
-            //   controller: _Loaisp,
-            //   keyboardType: TextInputType.number,
-            //   decoration: InputDecoration(
-            //     border: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(10.0)),
-            //     focusedBorder: const OutlineInputBorder(
-            //         borderSide: BorderSide(color: Colors.black)),
-            //     prefixIcon: Icon(Icons.category),
-            //   ),
-            // ),
             const SizedBox(
               height: 16,
             ),
@@ -286,8 +275,6 @@ class _AddProductsPageState extends State<AddProductsPage> {
                     await image.uploadImageToFirebase();
                     netword = imagePicker.imageNetwork;
                     saveProduct();
-                    //   updateProduct(_user?.phoneNumber, _Tenshop.text);
-                    // updateProduct(_phone, _Tenshop.text);
                   },
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(180, 60),

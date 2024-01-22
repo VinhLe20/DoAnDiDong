@@ -31,7 +31,14 @@ class _ProductEditPageState extends State<ProductEditPage> {
     _quantity.text = widget.product.SoLuong;
     selectedValue = widget.product.loai;
   }
-
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
   imagePicker image = imagePicker();
   bool onTap = false;
   @override
@@ -350,7 +357,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
         }
         try {
           await document.update(dataToUpdate);
-        } catch (e) {}
+          _showSnackBar("Lưu thành công");
+        } catch (e) {
+          _showSnackBar("Lưu thất bại");
+        }
       }
     });
   }
@@ -375,7 +385,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
         dataToUpdate = {'TrangThai': false};
         try {
           await document.update(dataToUpdate);
-        } catch (e) {}
+          _showSnackBar("Xóa thành công");
+        } catch (e) {
+          _showSnackBar("Xóa thất bại");
+        }
       }
     });
   }
