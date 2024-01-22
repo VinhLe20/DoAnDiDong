@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/SalesRegistration.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SalesRegistration extends StatefulWidget {
   const SalesRegistration({super.key});
@@ -198,7 +199,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
               height: 30,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async{
                 if (_Tenshop.text.isEmpty ||
                     _CCCD.text.isEmpty ||
                     _Diachi.text.isEmpty ||
@@ -219,7 +220,7 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                               width: 300,
                               height: 50,
                               child: FloatingActionButton(
-                                onPressed: () {
+                                onPressed: ()  {
                                   Navigator.of(context).pop();
                                 },
                                 backgroundColor: Colors.blue,
@@ -232,9 +233,12 @@ class _SalesRegistrationState extends State<SalesRegistration> {
                           ],
                         );
                       });
-                } else {
+                } else  {
                   saveSaler();
                   updateAccount();
+                  final SharedPreferences pref = await SharedPreferences.getInstance();
+                  pref.setBool("shop", true);
+                  Navigator.pop(context,true);
                 }
               },
               style: ElevatedButton.styleFrom(

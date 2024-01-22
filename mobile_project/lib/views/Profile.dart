@@ -81,7 +81,8 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           minimumSize: MaterialStateProperty.all(const Size(90, 50)),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          backgroundColor: MaterialStateProperty.all<Color>( Colors.lightBlue[200]!),
+          
         ),
         child: const Text(
           "Lưu",
@@ -92,7 +93,7 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 15.0),
+              padding: const EdgeInsets.all( 15.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -123,11 +124,11 @@ class _ProfileState extends State<Profile> {
                                       height: 130,
                                       width: 130,
                                       child: ClipOval(
-                                        child: onTap
+                                        child:acc.image.isNotEmpty? onTap
                                             ? Image.file(File(imagePicker.path),
                                                 fit: BoxFit.cover)
                                             : Image.network(acc.image,
-                                                fit: BoxFit.cover),
+                                                fit: BoxFit.cover):Image.asset("assets/Logo.jpg"),
                                       ),
                                     ),
                                   ]),
@@ -141,10 +142,7 @@ class _ProfileState extends State<Profile> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Divider(
-                      // thickness: 2,
-                      color: Colors.black,
-                    ),
+                
                     const SizedBox(
                       height: 20,
                     ),
@@ -217,10 +215,7 @@ class _ProfileState extends State<Profile> {
                     const SizedBox(
                       height: 50,
                     ),
-                    const Divider(
-                      // thickness: 2,
-                      color: Colors.black,
-                    ),
+                 
                     const SizedBox(
                       height: 170,
                     ),

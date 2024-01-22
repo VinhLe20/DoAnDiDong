@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mobile_project/views/Profile.dart';
 import 'package:mobile_project/views/SalesRegistration.dart';
 import 'package:mobile_project/views/ShopManager.dart';
-import 'package:mobile_project/views/donhangcuatoi.dart';
+import 'package:mobile_project/views/MyOrder.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -103,10 +103,12 @@ class _AccountScreenState extends State<AccountScreen> {
                     width: 90.0,
                     height: 90.0,
                     child: ClipOval(
-                      child: Image.network(
-                        acc.image,
-                        fit: BoxFit.cover,
-                      ),
+                      child: acc.image.isEmpty
+                          ? Image.asset("assets/Logo.jpg")
+                          : Image.network(
+                              acc.image,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                   Padding(
@@ -264,6 +266,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 if (result) {
                   setState(() {
                     _loadData();
+
+                    shop = acc.shop;
                   });
                 }
               },

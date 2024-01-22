@@ -133,7 +133,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0.0))),
                 child: Container(
-                  child: Image.file(File(imagePicker.path), fit: BoxFit.cover),
+                  child: imagePicker.path.isEmpty ?Image.asset("assets/Logo.jpg"): Image.file(File(imagePicker.path), fit: BoxFit.cover),
                 ),
               ),
             ),
