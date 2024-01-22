@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/CartProduct.dart';
+import 'package:mobile_project/models/Comment.dart';
 import 'package:mobile_project/models/product.dart';
 import 'package:mobile_project/views/LoginScreen.dart';
 import 'package:mobile_project/views/OrderPage.dart';
@@ -26,6 +27,8 @@ Saler shop = Saler(Phone: "", CCCD: "", Diachi: "", Email: "", Tenshop: "");
 
 class _DetailProductState extends State<DetailProduct> {
   SalesRegistration? saler;
+  List<Comment> lstComment =
+      List.filled(0, Comment("", "", "", "", ""), growable: true);
   User? user = FirebaseAuth.instance.currentUser;
 
   void _loadData() {
@@ -36,10 +39,19 @@ class _DetailProductState extends State<DetailProduct> {
     });
   }
 
+  void loadComment() {
+    Comment.getData(widget.pro.TenSP, widget.pro.Tenshop).then((value) {
+      setState(() {
+        lstComment = Comment.comments;
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _loadData();
+    loadComment();
   }
 
   Future<void> addSaler(CartProduct cartProduct) async {
@@ -52,6 +64,29 @@ class _DetailProductState extends State<DetailProduct> {
     } catch (e) {
       print('Error adding profile to Firestore: $e');
     }
+  }
+
+  Widget comment(String id, String comment, String time) {
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        decoration:
+            const BoxDecoration(color: Color.fromARGB(255, 217, 217, 217)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                id,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(height: 10),
+              Text(comment),
+              SizedBox(height: 10),
+              Text(time)
+            ],
+          ),
+        ));
   }
 
   void saveSaler() {
@@ -240,6 +275,9 @@ class _DetailProductState extends State<DetailProduct> {
                       const SizedBox(
                         height: 20.0,
                       ),
+                      const Text('Mô tả sản phẩm',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.0)),
                       Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: const BoxDecoration(
@@ -248,17 +286,19 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('Mô tả sản phẩm',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.0)),
-                                Text(widget.pro.MoTa)
-                              ],
+                              children: [Text(widget.pro.MoTa)],
                             ),
                           )),
                       const SizedBox(
                         height: 20.0,
+                      ),
+                      const Text('Comment',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.0)),
+                      Column(
+                        children: lstComment.map((item) {
+                          return comment(item.id, item.comment, item.time);
+                        }).toList(),
                       ),
                     ],
                   ),

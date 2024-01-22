@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_project/models/Account.dart';
 import 'package:mobile_project/models/Order.dart';
 
 class donhangcuatoi extends StatefulWidget {
@@ -11,7 +12,7 @@ class donhangcuatoi extends StatefulWidget {
 
 class _donhangcuatoiState extends State<donhangcuatoi> {
   User? user = FirebaseAuth.instance.currentUser;
-
+  var binhluan = TextEditingController();
   ChoXacNhan(String image, String name, int total, int quantity, String status,
       String nameShop) {
     return Column(children: [
@@ -221,9 +222,55 @@ class _donhangcuatoiState extends State<donhangcuatoi> {
                 style: const TextStyle(color: Colors.red, fontSize: 15),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: Text("Số lượng: $quantity")),
+                  Expanded(child: Text("Số Lượng : $quantity")),
+                  Expanded(
+                    child: TextButton(
+                        onPressed: () async {
+                          showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Bình luận'),
+                                content: TextField(
+                                  controller: binhluan,
+                                  keyboardType: TextInputType.text,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    hintText: "Bình luận",
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      DateTime now = DateTime.now();
+                                      String time =
+                                          '${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}';
+                                      Account.addBinhLuan(user?.email, name,
+                                          nameShop, binhluan.text, time);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: const Text(
+                          "Bình luận",
+                          style: TextStyle(color: Colors.red),
+                        )),
+                  )
                 ],
               ),
             ],

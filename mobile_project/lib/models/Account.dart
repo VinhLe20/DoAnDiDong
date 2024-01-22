@@ -69,4 +69,20 @@ class Account {
     await users.doc(id).set(dataToUpdate);
     print(dataToUpdate);
   }
+
+  static Future<void> addBinhLuan(String? id, String nameProduct,
+      String nameShop, String comment, String time) async {
+    Map<String, dynamic> dataToUpdate;
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('comments');
+    dataToUpdate = {
+      "NameProduct": nameProduct,
+      "Email": id,
+      "NameShop": nameShop,
+      "Comment": comment,
+      "Time": time
+    };
+    await users.doc(id).set(dataToUpdate);
+    print(dataToUpdate);
+  }
 }
