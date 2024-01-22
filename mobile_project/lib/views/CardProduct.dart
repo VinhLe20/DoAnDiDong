@@ -8,6 +8,7 @@ class CardProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String gia = product.Giamgia == "0" ? product.GiaSP : product.Giamgia;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -45,15 +46,11 @@ class CardProduct extends StatelessWidget {
                       height: 35,
                     ),
                     Text(
-                      'Gía : ${product.GiaSP}',
+                      'Giá : ${gia}',
                       style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 15,
-                          decoration: TextDecoration.lineThrough),
-                    ),
-                    Text(
-                      'Gía giảm : ${product.Giamgia}',
-                      style: const TextStyle(color: Colors.red, fontSize: 15),
+                        color: Colors.red,
+                        fontSize: 15,
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

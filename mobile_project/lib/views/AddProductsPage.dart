@@ -173,7 +173,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
               children: [
                 Expanded(
                   child: Text(
-                    "Gía Sản Phẩm ",
+                    "Giá Sản Phẩm ",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),

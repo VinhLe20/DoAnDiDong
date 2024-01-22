@@ -223,9 +223,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                   Text(
-                                    products[index].TenSP.toString().length < 15
+                                    products[index].TenSP.toString().length < 13
                                         ? products[index].TenSP.toString()
-                                        : "${products[index].TenSP.toString().substring(0, 15)}...",
+                                        : "${products[index].TenSP.toString().substring(0, 13)}...",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 17,

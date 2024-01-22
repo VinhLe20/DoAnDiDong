@@ -59,7 +59,7 @@ class _OrderPageState extends State<OrderPage> {
     if (gia == "0") {
       gia = widget.product.GiaSP;
     }
-    
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[200],
@@ -102,7 +102,7 @@ class _OrderPageState extends State<OrderPage> {
                         height: 30,
                       ),
                       Text(
-                        " giá : ${gia.toString()} đ",
+                        "Giá : ${gia.toString()} đ",
                         style: const TextStyle(color: Colors.red, fontSize: 18),
                       ),
                       const SizedBox(
@@ -241,8 +241,7 @@ class _OrderPageState extends State<OrderPage> {
                           SoLuong,
                           userPhone,
                           userAddress,
-                          (SoLuong *
-                              int.parse(gia)),
+                          (SoLuong * int.parse(gia)),
                           'Chờ xác nhận',
                           widget.product.Image,
                           widget.product.Tenshop);
