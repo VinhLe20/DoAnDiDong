@@ -313,7 +313,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
         Tenshop: shop.Tenshop,
         TenSP: _name.text,
         GiaSP: _price.text,
-        Giamgia: _price.text,
+        Giamgia: "0",
         MoTa: _describe.text,
         SoLuong: _quantity.text,
         loai: selectedValue,

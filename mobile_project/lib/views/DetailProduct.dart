@@ -78,7 +78,8 @@ class _DetailProductState extends State<DetailProduct> {
             children: [
               Text(
                 id,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
               const SizedBox(height: 10),
               Text(comment),
@@ -292,7 +293,7 @@ class _DetailProductState extends State<DetailProduct> {
                       const SizedBox(
                         height: 20.0,
                       ),
-                      const Text('Comment',
+                      const Text('Bình luận',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.0)),
                       Column(
