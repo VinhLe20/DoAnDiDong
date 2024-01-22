@@ -133,7 +133,9 @@ class _AddProductsPageState extends State<AddProductsPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0.0))),
                 child: Container(
-                  child: imagePicker.path.isEmpty ?Image.asset("assets/Logo.jpg"): Image.file(File(imagePicker.path), fit: BoxFit.cover),
+                  child: imagePicker.path.isEmpty
+                      ? Image.asset("assets/Logo.jpg")
+                      : Image.file(File(imagePicker.path), fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -304,28 +306,6 @@ class _AddProductsPageState extends State<AddProductsPage> {
       ),
     );
   }
-
-  // Future<void> updateProduct(String? phone, String tenshop) async {
-  //   Map<String, dynamic> dataToUpdate;
-  //   CollectionReference saler = FirebaseFirestore.instance.collection('saler');
-  //   QuerySnapshot querySnapshot = await saler.get();
-  //   querySnapshot.docs.forEach((doc) async {
-  //     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-  //     if (phone == data["phone"]) {
-  //       CollectionReference collection =
-  //           FirebaseFirestore.instance.collection('product');
-  //       DocumentReference document = collection.doc(doc.id);
-  //       if (!tenshop.isNotEmpty)
-  //         dataToUpdate = {'Tenshop': tenshop};
-  //       else {
-  //         dataToUpdate = {'Tenshop': tenshop};
-  //       }
-  //       try {
-  //         await document.update(dataToUpdate);
-  //       } catch (e) {}
-  //     }
-  //   });
-  // }
 
   Future<void> addProduct(Product product) async {
     String fileName = DateTime.now().millisecondsSinceEpoch.toString();
