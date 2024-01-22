@@ -26,6 +26,7 @@ class _ProfileState extends State<Profile> {
       });
     });
   }
+
 //merge
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -45,6 +46,10 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     String netword;
+    _ten.text = acc.name;
+    _diachi.text = acc.adress;
+    _phone.text = acc.phone;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[200],
@@ -61,14 +66,15 @@ class _ProfileState extends State<Profile> {
             ]),
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: ()async {
+        onPressed: () async {
           image.uploadImageToFirebase();
           netword = imagePicker.imageNetwork;
           try {
             if (onTap) {
-              await acc.updateAccount(user?.email, netword, _ten.text, _diachi.text);
+              await acc.updateAccount(
+                  user?.email, netword, _ten.text, _diachi.text);
             } else {
-             await acc.updateAccount(user?.email, "", _ten.text, _diachi.text);
+              await acc.updateAccount(user?.email, "", _ten.text, _diachi.text);
             }
             _showSnackBar("Thay đổi thông tin thành công");
           } catch (e) {}
@@ -76,13 +82,12 @@ class _ProfileState extends State<Profile> {
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  0.0), 
+              borderRadius: BorderRadius.circular(0.0),
             ),
           ),
           minimumSize: MaterialStateProperty.all(const Size(90, 50)),
-          backgroundColor: MaterialStateProperty.all<Color>( Colors.lightBlue[200]!),
-          
+          backgroundColor:
+              MaterialStateProperty.all<Color>(Colors.lightBlue[200]!),
         ),
         child: const Text(
           "Lưu",
@@ -93,7 +98,7 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all( 15.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -124,11 +129,11 @@ class _ProfileState extends State<Profile> {
                                       height: 130,
                                       width: 130,
                                       child: ClipOval(
-                                        child:acc.image.isNotEmpty? onTap
+                                        child: onTap
                                             ? Image.file(File(imagePicker.path),
                                                 fit: BoxFit.cover)
                                             : Image.network(acc.image,
-                                                fit: BoxFit.cover):Image.asset("assets/Logo.jpg"),
+                                                fit: BoxFit.cover),
                                       ),
                                     ),
                                   ]),
@@ -142,7 +147,6 @@ class _ProfileState extends State<Profile> {
                     const SizedBox(
                       height: 10,
                     ),
-                
                     const SizedBox(
                       height: 20,
                     ),
@@ -215,7 +219,6 @@ class _ProfileState extends State<Profile> {
                     const SizedBox(
                       height: 50,
                     ),
-                 
                     const SizedBox(
                       height: 170,
                     ),
