@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
       });
     });
   }
-
+//merge
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
