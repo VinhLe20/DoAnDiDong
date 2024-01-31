@@ -298,7 +298,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: const Text('Đăng xuất'),
-                      content: const Text('Nhấn OK để đăng xuất khỏi tài khoản'),
+                      content:
+                          const Text('Nhấn OK để đăng xuất khỏi tài khoản'),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {

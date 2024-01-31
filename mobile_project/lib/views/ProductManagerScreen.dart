@@ -48,7 +48,7 @@ class _ProductMangerScreenState extends State<ProductMangerScreen> {
     super.initState();
     Product.products.clear();
     _loadData(widget.nameShop);
-    loadUser();
+    loadProduct();
   }
 
   void _loadData(String shop) {
@@ -60,7 +60,7 @@ class _ProductMangerScreenState extends State<ProductMangerScreen> {
     saveUser();
   }
 
-  void loadUser() {
+  void loadProduct() {
     local();
   }
 
@@ -127,7 +127,8 @@ class _ProductMangerScreenState extends State<ProductMangerScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ProductEditPage(
-                                      product: pro, nameShop: widget.nameShop)));
+                                      product: pro,
+                                      nameShop: widget.nameShop)));
                           if (result) {
                             setState(() {
                               Product.products.clear();

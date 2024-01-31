@@ -51,6 +51,7 @@ class _DetailProductState extends State<DetailProduct> {
   void initState() {
     super.initState();
     _loadData();
+    Comment.comments.clear();
     loadComment();
   }
 
